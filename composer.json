@@ -1,0 +1,18 @@
+{
+    "name": "brickner/podsumer",
+    "description": "An open, self-hosted podcatcher.",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Brickner\\Podsumer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "y"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
