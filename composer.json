@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Brickner\\Podsumer\\": "src/"
+            "Brickner\\Podsumer\\": "src/Brickner/Podsumer"
         }
     },
     "authors": [

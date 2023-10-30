@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  php:
+    image: php:8.2.10-fpm-bookworm
+    container_name: php
+    volumes:
+      - ./php-fpm.conf:/usr/local/etc/php-fpm.d/zzz-podsumer.conf
+      - ./:/opt/podsumer
+    networks:
+      - backplane
+  web:
+    image: caddy:2.7.4-alpine
+    container_name: web
+    ports:
+      - 8433:8433
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./:/opt/podsumer
+    networks:
+      - backplane
+      - default
+networks:
+  backplane:
+    driver: bridge
+

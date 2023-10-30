@@ -1,0 +1,14 @@
+{
+	http_port  8433
+	https_port 4433
+  auto_https off
+}
+
+127.0.0.1:8433/* {
+    root * /opt/podsumer/www
+    encode gzip
+    php_fastcgi php:9000 {
+        root /opt/podsumer/www
+    }
+}
+

@@ -1,0 +1,1206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+xmlns:podcast="https://podcastindex.org/namespace/1.0"
+xmlns:rawvoice="http://www.rawvoice.com/rawvoiceRssModule/"
+xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0"
+>
+<channel>
+	<title>The Martyrmade Podcast</title>
+	<atom:link href="https://martyrmade.com/feed/podcast/" rel="self" type="application/rss+xml" />
+	<link>https://martyrmade.com/</link>
+	<description>Mythology &#038; Religion in the Human Story</description>
+	<lastBuildDate>Mon, 26 Jun 2023 04:35:08 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>Blubrry PowerPress/11.0.14</generator>
+		<atom:link rel="hub" href="https://pubsubhubbub.appspot.com/" />
+	<itunes:summary>Religion, ritual, ideology, nationalism, identity... Human beings are meaning-seeking creatures, and history is the tale of the many ways our remarkable species has sought to orient itself in the world. From Zionist zealots and radical Islam to human sacrifice and aboriginal mythology, The MartyrMade Podcast will jump into the transcendent dreams and dark nightmares we&#039;ve conjured in our search for significance.</itunes:summary>
+	<itunes:author>Darryl Cooper</itunes:author>
+	<itunes:explicit>true</itunes:explicit>
+	<itunes:image href="https://martyrmade.com/wp-content/uploads/2021/06/Boxer.jpg" />
+	<itunes:owner>
+		<itunes:name>Darryl Cooper</itunes:name>
+	</itunes:owner>
+	<podcast:medium>podcast</podcast:medium>
+	<itunes:subtitle>Mythology &amp; Religion in the Human Story</itunes:subtitle>
+	<image>
+		<title>The Martyrmade Podcast</title>
+		<url>https://martyrmade.com/wp-content/uploads/2021/06/Boxer.jpg</url>
+		<link>https://martyrmade.com</link>
+	</image>
+	<itunes:category text="History" />
+	<googleplay:category text="Society &amp; Culture"/>
+	<itunes:category text="Religion &amp; Spirituality" />
+	<itunes:category text="News">
+		<itunes:category text="Politics" />
+	</itunes:category>
+	<rawvoice:rating>TV-MA</rawvoice:rating>
+	<rawvoice:location>Los Angeles, CA</rawvoice:location>
+	<podcast:location>Los Angeles, CA</podcast:location>
+	<podcast:podping usesPodping="true" />
+	<podcast:guid>db5e45da-1617-51b0-a20f-d02f533550a3</podcast:guid>
+	<rawvoice:subscribe feed="https://martyrmade.com/feed/podcast/" itunes="https://martyrmade.com/feed/podcast/"></rawvoice:subscribe>
+	<item>
+		<title>Sticky: #23 &#8211; Whose America?, pt. 2: Inner City Blues</title>
+		<link>https://martyrmade.com/23-whose-america-pt-2-inner-city-blues/</link>
+		<pubDate>Mon, 26 Jun 2023 04:35:08 +0000</pubDate>
+		<guid isPermaLink="false">https://martyrmade.com/?p=758</guid>
+		<comments>https://martyrmade.com/23-whose-america-pt-2-inner-city-blues/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/23-whose-america-pt-2-inner-city-blues/feed/</wfw:commentRss>
+		<slash:comments>2</slash:comments>
+		<category><![CDATA[1960s]]></category>
+		<category><![CDATA[Anti-Semitism]]></category>
+		<category><![CDATA[History]]></category>
+		<category><![CDATA[Malcolm X]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Radicalism]]></category>
+		<description>SUPPORT THE SHOW! I don&#039;t use sponsors for this show. I work for you guys. If you&#039;d like to help out, become a subscriber to the MartyrMade Substack. It&#039;s just $5 p/month or $50 p/year, and you&#039;ll have access to subscribers-only podcasts, essays (w/audio versions), interviews, and more. New subscribers will have some catching up to do. If anyone would like to be a subscriber, but can&#039;t swing it right now, just shoot me an email and we&#039;ll get you hooked up. I appreciate you guys letting me do this show. And this one is a doozy:
+
+The Great Migration of 1915-1960 saw over six million African Americans move from the rural South to the big cities of the North and West. It was one of the largest mass migrations in human history, and one whose consequences defined American domestic politics throughout the 20th century. But it wasn’t the first time the industrial cities of America had experienced massive demographic transformation, and the black migrants would run smack into the immigrants of previous generations. In the 1960s, frustration and anger turned to conflict, as race riots drove what was left of the white ethnics out of the inner cities. Today we tell the story of the battle for control of the Ocean Hill-Brownsville school district in New York City - a topic which might sound a bit dull, but was one of the most intense periods of racial conflict in recent American history. The conflict captured the attention of the country for months, and led to a split in the alliance between American blacks and American Jews that had powered the civil rights movement until the late 1960s.</description>
+		<content:encoded><![CDATA[<p>SUPPORT THE SHOW! I don&#8217;t use sponsors for this show. I work for you guys. If you&#8217;d like to help out, become a subscriber to <a href="https://martyrmade.substack.com/">the MartyrMade Substack</a>. It&#8217;s just $5 p/month or $50 p/year, and you&#8217;ll have access to subscribers-only podcasts, essays (w/audio versions), interviews, and more. New subscribers will have some catching up to do. If anyone would like to be a subscriber, but can&#8217;t swing it right now, just shoot me an email and we&#8217;ll get you hooked up. I appreciate you guys letting me do this show. And this one is a doozy:</p>
+<p>The Great Migration of 1915-1960 saw over six million African Americans move from the rural South to the big cities of the North and West. It was one of the largest mass migrations in human history, and one whose consequences defined American domestic politics throughout the 20th century. But it wasn’t the first time the industrial cities of America had experienced massive demographic transformation, and the black migrants would run smack into the immigrants of previous generations. In the 1960s, frustration and anger turned to conflict, as race riots drove what was left of the white ethnics out of the inner cities. Today we tell the story of the battle for control of the Ocean Hill-Brownsville school district in New York City &#8211; a topic which might sound a bit dull, but was one of the most intense periods of racial conflict in recent American history. The conflict captured the attention of the country for months, and led to a split in the alliance between American blacks and American Jews that had powered the civil rights movement until the late 1960s.</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/martyrmade.com/wp-content/uploads/Podcast_Episodes/Labor3.mp3" length="421478509" type="audio/mpeg" />
+		<itunes:subtitle>SUPPORT THE SHOW! I don&#039;t use sponsors for this show. I work for you guys. If you&#039;d like to help out, become a subscriber to the MartyrMade Substack. It&#039;s just $5 p/month or $50 p/year, and you&#039;ll have access to subscribers-only podcasts,</itunes:subtitle>
+		<itunes:summary><![CDATA[SUPPORT THE SHOW! I don't use sponsors for this show. I work for you guys. If you'd like to help out, become a subscriber to <a href="https://martyrmade.substack.com/">the MartyrMade Substack</a>. It's just $5 p/month or $50 p/year, and you'll have access to subscribers-only podcasts, essays (w/audio versions), interviews, and more. New subscribers will have some catching up to do. If anyone would like to be a subscriber, but can't swing it right now, just shoot me an email and we'll get you hooked up. I appreciate you guys letting me do this show. And this one is a doozy:<br />
+<br />
+The Great Migration of 1915-1960 saw over six million African Americans move from the rural South to the big cities of the North and West. It was one of the largest mass migrations in human history, and one whose consequences defined American domestic politics throughout the 20th century. But it wasn’t the first time the industrial cities of America had experienced massive demographic transformation, and the black migrants would run smack into the immigrants of previous generations. In the 1960s, frustration and anger turned to conflict, as race riots drove what was left of the white ethnics out of the inner cities. Today we tell the story of the battle for control of the Ocean Hill-Brownsville school district in New York City - a topic which might sound a bit dull, but was one of the most intense periods of racial conflict in recent American history. The conflict captured the attention of the country for months, and led to a split in the alliance between American blacks and American Jews that had powered the civil rights movement until the late 1960s.]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>6:41:53</itunes:duration>
+	</item>
+	<item>
+		<title>*BONUS* Epstein, pt. 3</title>
+		<link>https://martyrmade.com/bonus-epstein-pt-3/</link>
+		<pubDate>Mon, 17 Oct 2022 01:34:04 +0000</pubDate>
+		<guid isPermaLink="false">https://martyrmade.com/?p=747</guid>
+		<comments>https://martyrmade.com/bonus-epstein-pt-3/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/bonus-epstein-pt-3/feed/</wfw:commentRss>
+		<slash:comments>3</slash:comments>
+		<category><![CDATA[Uncategorized]]></category>
+		<description>Hey everybody.  I just wanted to touch base. I&#039;m over here working on the next episode of the labor series (Whose America?), and it&#039;s coming along nicely, but I thought I&#039;d give you something to tide you over. Some of you may have already heard this since I released it on the MartyrMade Substack, but I figured it’s approaching the holiday season, so why not give this one to the whole family.
+
+Like I said, this episode has been on the Substack for a while, along with a lot of other written and recorded content you won’t find anywhere else. Those of you who are already subscribed, for just $5 p/month or $50 p/year, thank you. You are literally the reason I’m able to do this. You know, a couple years ago, after the Jonestown series, I was thinking about calling it quits. I was spending my early mornings, my lunch hours, my evenings and my weekends working on the podcast, and I thought that there was no way I’d be able to keep that up once I had a family, so I really was thinking about wrapping it up. Jocko changed my mind, and those of you who decided to subscribe to the Substack have helped me helped me take a few breaths and every once in a while forget the fact that I don’t have the financial safety net I did when I was working for the DOD. So when I say that you make this possible, I really mean it. Thank you. If anyone out there is not yet subscribed to the Substack, and you can spare $5 p/month or $50 p/year, please consider subscribing so we can keep this thing going. I know it&#039;s not easy out there right now, and everything seems to be getting more expensive by the day, so if you really can&#039;t swing it, I understand, I&#039;ve been there, so just shoot me an email at martyrmade @ gmail and we&#039;ll work something out.
+
+This is the third episode of the series I put together on Jeffrey Epstein. You might have heard the first two on this main feed, but I thought it was time to release this one into the wild. Bring your own torches and pitchforks, I&#039;ll bring the flamethrower.</description>
+		<content:encoded><![CDATA[<p><span style="font-weight: 400;">Hey everybody.  I just wanted to touch base. I&#8217;m over here working on the next episode of the labor series (Whose America?), and it&#8217;s coming along nicely, but I thought I&#8217;d give you something to tide you over. Some of you may have already heard this since I released it on the <a href="https://martyrmade.substack.com/" target="_blank" rel="noopener">MartyrMade Substack</a>, but I figured it’s approaching the holiday season, so why not give this one to the whole family.</span></p>
+<p><span style="font-weight: 400;">Like I said, this episode has been on the <a href="https://martyrmade.substack.com/" target="_blank" rel="noopener">Substack</a> for a while, along with a lot of other written and recorded content you won’t find anywhere else. Those of you who are already subscribed, for just $5 p/month or $50 p/year, thank you. You are literally the reason I’m able to do this. You know, a couple years ago, after the Jonestown series, I was thinking about calling it quits. I was spending my early mornings, my lunch hours, my evenings and my weekends working on the podcast, and I thought that there was no way I’d be able to keep that up once I had a family, so I really was thinking about wrapping it up. Jocko changed my mind, and those of you who decided to subscribe to the <a href="https://martyrmade.substack.com/" target="_blank" rel="noopener">Substack</a> have helped me helped me take a few breaths and every once in a while forget the fact that I don’t have the financial safety net I did when I was working for the DOD. So when I say that you make this possible, I really mean it. Thank you. If anyone out there is not yet subscribed to the <a href="https://martyrmade.substack.com/" target="_blank" rel="noopener">Substack</a>, and you can spare $5 p/month or $50 p/year, please consider subscribing so we can keep this thing going. I know it&#8217;s not easy out there right now, and everything seems to be getting more expensive by the day, so if you really can&#8217;t swing it, I understand, I&#8217;ve been there, so just shoot me an email at martyrmade @ gmail and we&#8217;ll work something out.</span></p>
+<p><span style="font-weight: 400;">This is the third episode of the series I put together on Jeffrey Epstein. You might have heard the first two on this main feed, but I thought it was time to release this one into the wild. Bring your own torches and pitchforks, I&#8217;ll bring the flamethrower.</span></p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/martyrmade.com/wp-content/uploads/Podcast_Episodes/Epstein3.mp3" length="122642277" type="audio/mpeg" />
+		<itunes:subtitle>Hey everybody.  I just wanted to touch base. I&#039;m over here working on the next episode of the labor series (Whose America?), and it&#039;s coming along nicely, but I thought I&#039;d give you something to tide you over.</itunes:subtitle>
+		<itunes:summary><![CDATA[Hey everybody.  I just wanted to touch base. I'm over here working on the next episode of the labor series (Whose America?), and it's coming along nicely, but I thought I'd give you something to tide you over. Some of you may have already heard this since I released it on the <a href="https://martyrmade.substack.com/" target="_blank" rel="noopener">MartyrMade Substack</a>, but I figured it’s approaching the holiday season, so why not give this one to the whole family.<br />
+<br />
+Like I said, this episode has been on the <a href="https://martyrmade.substack.com/" target="_blank" rel="noopener">Substack</a> for a while, along with a lot of other written and recorded content you won’t find anywhere else. Those of you who are already subscribed, for just $5 p/month or $50 p/year, thank you. You are literally the reason I’m able to do this. You know, a couple years ago, after the Jonestown series, I was thinking about calling it quits. I was spending my early mornings, my lunch hours, my evenings and my weekends working on the podcast, and I thought that there was no way I’d be able to keep that up once I had a family, so I really was thinking about wrapping it up. Jocko changed my mind, and those of you who decided to subscribe to the <a href="https://martyrmade.substack.com/" target="_blank" rel="noopener">Substack</a> have helped me helped me take a few breaths and every once in a while forget the fact that I don’t have the financial safety net I did when I was working for the DOD. So when I say that you make this possible, I really mean it. Thank you. If anyone out there is not yet subscribed to the <a href="https://martyrmade.substack.com/" target="_blank" rel="noopener">Substack</a>, and you can spare $5 p/month or $50 p/year, please consider subscribing so we can keep this thing going. I know it's not easy out there right now, and everything seems to be getting more expensive by the day, so if you really can't swing it, I understand, I've been there, so just shoot me an email at martyrmade @ gmail and we'll work something out.<br />
+<br />
+This is the third episode of the series I put together on Jeffrey Epstein. You might have heard the first two on this main feed, but I thought it was time to release this one into the wild. Bring your own torches and pitchforks, I'll bring the flamethrower.]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>2:08:31</itunes:duration>
+	</item>
+	<item>
+		<title>#22 &#8211; Whose America?, ep. 1: Rough Extraction</title>
+		<link>https://martyrmade.com/22-whose-america-ep-1-rough-extraction/</link>
+		<pubDate>Fri, 09 Sep 2022 00:02:45 +0000</pubDate>
+		<guid isPermaLink="false">https://martyrmade.com/?p=740</guid>
+		<comments>https://martyrmade.com/22-whose-america-ep-1-rough-extraction/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/22-whose-america-ep-1-rough-extraction/feed/</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		<category><![CDATA[Uncategorized]]></category>
+		<description>In August 1921, 10,000-20,000 armed coal miners marched on Mingo County, West Virginia to lift the martial law imposed there, free their jailed brethren, and avenge the assassination of one of their local heroes. At least 20,000 more wives, young boys and other civilians followed the army providing medical, logistical and other services. Before it was over, they would storm a mountainside under fire from entrenched machine guns, and while being bombed from the air. It was the largest and most serious armed insurrection in US history since the Civil War. This episode is going to discuss the West Virginia Coal Mine Wars, and The Battle of Blair Mountain.
+These episodes are out a week or two early on the Substack feed. If you enjoy this content or want more essays and podcasts not available here, please consider becoming a subscriber over at Substack, it&#039;s how I manage to be able to do this at all.
+Here’s the link to Jocko’s company, Origin, that I mention in the intro. Go there and check out the high-end clothing, boots, jiu jitsu gis, hunting gear and more, all hand-made in the United States.
+
+Here&#039;s the link to Daniele Bolelli&#039;s History on Fire podcast (also available wherever you get your podcasts).</description>
+		<content:encoded><![CDATA[<p data-pm-slice="1 1 []">In August 1921, 10,000-20,000 armed coal miners marched on Mingo County, West Virginia to lift the martial law imposed there, free their jailed brethren, and avenge the assassination of one of their local heroes. At least 20,000 more wives, young boys and other civilians followed the army providing medical, logistical and other services. Before it was over, they would storm a mountainside under fire from entrenched machine guns, and while being bombed from the air. It was the largest and most serious armed insurrection in US history since the Civil War. This episode is going to discuss the West Virginia Coal Mine Wars, and The Battle of Blair Mountain.</p>
+<p data-pm-slice="1 1 []">These episodes are out a week or two early on <a href="https://martyrmade.substack.com/" target="_blank" rel="noopener">the Substack feed</a>. If you enjoy this content or want more essays and podcasts not available here, please consider becoming a subscriber over at Substack, it&#8217;s how I manage to be able to do this at all.</p>
+<p>Here’s the <a href="https://originmaine.com/" target="_blank" rel="noopener noreferrer nofollow">link to Jocko’s company, Origin</a>, that I mention in the intro. Go there and check out the high-end clothing, boots, jiu jitsu gis, hunting gear and more, all hand-made in the United States.</p>
+<p>Here&#8217;s the link to Daniele Bolelli&#8217;s <a href="http://historyonfirepodcast.com/" target="_blank" rel="noopener">History on Fire podcast</a> (also available wherever you get your podcasts).</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/martyrmade.com/wp-content/uploads/Podcast_Episodes/RoughExtraction1.mp3" length="321191409" type="audio/mpeg" />
+		<itunes:subtitle>In August 1921, 10,000-20,000 armed coal miners marched on Mingo County, West Virginia to lift the martial law imposed there, free their jailed brethren, and avenge the assassination of one of their local heroes. At least 20,000 more wives,</itunes:subtitle>
+		<itunes:summary><![CDATA[In August 1921, 10,000-20,000 armed coal miners marched on Mingo County, West Virginia to lift the martial law imposed there, free their jailed brethren, and avenge the assassination of one of their local heroes. At least 20,000 more wives, young boys and other civilians followed the army providing medical, logistical and other services. Before it was over, they would storm a mountainside under fire from entrenched machine guns, and while being bombed from the air. It was the largest and most serious armed insurrection in US history since the Civil War. This episode is going to discuss the West Virginia Coal Mine Wars, and The Battle of Blair Mountain.<br />
+These episodes are out a week or two early on <a href="https://martyrmade.substack.com/" target="_blank" rel="noopener">the Substack feed</a>. If you enjoy this content or want more essays and podcasts not available here, please consider becoming a subscriber over at Substack, it's how I manage to be able to do this at all.<br />
+Here’s the <a href="https://originmaine.com/" target="_blank" rel="noopener noreferrer nofollow">link to Jocko’s company, Origin</a>, that I mention in the intro. Go there and check out the high-end clothing, boots, jiu jitsu gis, hunting gear and more, all hand-made in the United States.<br />
+<br />
+Here's the link to Daniele Bolelli's <a href="http://historyonfirepodcast.com/" target="_blank" rel="noopener">History on Fire podcast</a> (also available wherever you get your podcasts).]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>5:34:35</itunes:duration>
+	</item>
+	<item>
+		<title>*BONUS* The Jeffrey Epstein Series, pts. 1 &#038; 2 (of 3)</title>
+		<link>https://martyrmade.com/bonus-the-jeffrey-epstein-series-pts-1-2-of-3/</link>
+		<pubDate>Mon, 27 Jun 2022 03:03:59 +0000</pubDate>
+		<guid isPermaLink="false">https://martyrmade.com/?p=729</guid>
+		<comments>https://martyrmade.com/bonus-the-jeffrey-epstein-series-pts-1-2-of-3/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/bonus-the-jeffrey-epstein-series-pts-1-2-of-3/feed/</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		<category><![CDATA[Uncategorized]]></category>
+		<description>Here are Parts 1 &amp; 2 of a series exploring potential truth about the Jeffrey Epstein scandal. Part 3 is available on The Martyr Made Substack, so if you aren&#039;t tapped out on this topic by the end of two episodes, head over to martyrmade.substack.com and become a subscriber for just $5 p/month or $50 p/year to hear that, as well as other subscribers-only MartyrMade podcasts and written content. Thanks again everyone for listening.
+*Correction* A few people have informed me that my description of how a hedge fund manager calculates his cut is off in Episode 1. I meant to correct it in the show, but forgot. The general point remains, however: there is no way Jeffrey Epstein made the kind of money he was showing by managing one guy’s account over the years.</description>
+		<content:encoded><![CDATA[<p>Here are Parts 1 &amp; 2 of a series exploring potential truth about the Jeffrey Epstein scandal. Part 3 is available on <a href="http://martyrmade.substack.com">The Martyr Made Substack</a>, so if you aren&#8217;t tapped out on this topic by the end of two episodes, head over to martyrmade.substack.com and become a subscriber for just $5 p/month or $50 p/year to hear that, as well as other subscribers-only MartyrMade podcasts and written content. Thanks again everyone for listening.</p>
+<p data-pm-slice="1 1 []">*Correction* A few people have informed me that my description of how a hedge fund manager calculates his cut is off in Episode 1. I meant to correct it in the show, but forgot. The general point remains, however: there is no way Jeffrey Epstein made the kind of money he was showing by managing one guy’s account over the years.</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/2022/06/Epstein_pt_1-2.mp3" length="203796730" type="audio/mpeg" />
+		<itunes:subtitle>Here are Parts 1 &amp; 2 of a series exploring potential truth about the Jeffrey Epstein scandal. Part 3 is available on The Martyr Made Substack, so if you aren&#039;t tapped out on this topic by the end of two episodes, head over to martyrmade.substack.</itunes:subtitle>
+		<itunes:summary><![CDATA[Here are Parts 1 &amp; 2 of a series exploring potential truth about the Jeffrey Epstein scandal. Part 3 is available on <a href="http://martyrmade.substack.com">The Martyr Made Substack</a>, so if you aren't tapped out on this topic by the end of two episodes, head over to martyrmade.substack.com and become a subscriber for just $5 p/month or $50 p/year to hear that, as well as other subscribers-only MartyrMade podcasts and written content. Thanks again everyone for listening.<br />
+*Correction* A few people have informed me that my description of how a hedge fund manager calculates his cut is off in Episode 1. I meant to correct it in the show, but forgot. The general point remains, however: there is no way Jeffrey Epstein made the kind of money he was showing by managing one guy’s account over the years.]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>3:27:33</itunes:duration>
+	</item>
+	<item>
+		<title>#21 &#8211; Whose America?: Prologue</title>
+		<link>https://martyrmade.com/21-whose-america-prologue/</link>
+		<pubDate>Mon, 23 May 2022 00:39:59 +0000</pubDate>
+		<guid isPermaLink="false">https://martyrmade.com/?p=713</guid>
+		<comments>https://martyrmade.com/21-whose-america-prologue/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/21-whose-america-prologue/feed/</wfw:commentRss>
+		<slash:comments>2</slash:comments>
+		<category><![CDATA[Uncategorized]]></category>
+		<description>Hi everyone. Here is the first episode - well, the prologue - for a brand new Martyr Made series called Whose America?, on the American labor wars. This is a series I&#039;ve been working on for a while, and a story very close to my heart.
+
+I appreciate the patience and support you guys have shown me. I have a habit of over-burdening myself until work grinds to a crawl, then I panic and work myself nearly insane to catch up. Well, the good news is that I only decided to do this prologue at the last minute to set the tone and get the ball rolling, when the *actual* first episode of this series, on the largest insurrection in American history before or since the Civil War, was already almost done. I&#039;ve got another two books to read before I&#039;m ready to release it into the wild, but it won&#039;t be too long.
+
+This episode has already been available to Substack subcribers for a week. I will be doing that from now on, so you can add that to the list of benefits available to subscribers for just $5 p/month or $50 p/year. If you enjoy this episode, or even if you don&#039;t but just want to keep my cats from starving, please consider supporting the podcast by becoming a paid subscriber to the MartyrMade Substack.
+
+Thanks for listening!</description>
+		<content:encoded><![CDATA[<p>Hi everyone. Here is the first episode &#8211; well, the prologue &#8211; for a brand new Martyr Made series called Whose America?, on the American labor wars. This is a series I&#8217;ve been working on for a while, and a story very close to my heart.</p>
+<p>I appreciate the patience and support you guys have shown me. I have a habit of over-burdening myself until work grinds to a crawl, then I panic and work myself nearly insane to catch up. Well, the good news is that I only decided to do this prologue at the last minute to set the tone and get the ball rolling, when the *actual* first episode of this series, on the largest insurrection in American history before or since the Civil War, was already almost done. I&#8217;ve got another two books to read before I&#8217;m ready to release it into the wild, but it won&#8217;t be too long.</p>
+<p>This episode has already been available to Substack subcribers for a week. I will be doing that from now on, so you can add that to the list of benefits available to subscribers for just $5 p/month or $50 p/year. If you enjoy this episode, or even if you don&#8217;t but just want to keep my cats from starving, please consider supporting the podcast by <a href="https://martyrmade.substack.com/" target="_blank" rel="noopener">becoming a paid subscriber to the MartyrMade Substack</a>.</p>
+<p>Thanks for listening!</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Labor1.mp3" length="98454144" type="audio/mpeg" />
+		<itunes:subtitle>Hi everyone. Here is the first episode - well, the prologue - for a brand new Martyr Made series called Whose America?, on the American labor wars. This is a series I&#039;ve been working on for a while, and a story very close to my heart. - </itunes:subtitle>
+		<itunes:summary><![CDATA[Hi everyone. Here is the first episode - well, the prologue - for a brand new Martyr Made series called Whose America?, on the American labor wars. This is a series I've been working on for a while, and a story very close to my heart.<br />
+<br />
+I appreciate the patience and support you guys have shown me. I have a habit of over-burdening myself until work grinds to a crawl, then I panic and work myself nearly insane to catch up. Well, the good news is that I only decided to do this prologue at the last minute to set the tone and get the ball rolling, when the *actual* first episode of this series, on the largest insurrection in American history before or since the Civil War, was already almost done. I've got another two books to read before I'm ready to release it into the wild, but it won't be too long.<br />
+<br />
+This episode has already been available to Substack subcribers for a week. I will be doing that from now on, so you can add that to the list of benefits available to subscribers for just $5 p/month or $50 p/year. If you enjoy this episode, or even if you don't but just want to keep my cats from starving, please consider supporting the podcast by <a href="https://martyrmade.substack.com/" target="_blank" rel="noopener">becoming a paid subscriber to the MartyrMade Substack</a>.<br />
+<br />
+Thanks for listening!]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>1:39:11</itunes:duration>
+	</item>
+	<item>
+		<title>On the Front Lines w/The Eastern Border (preview)</title>
+		<link>https://martyrmade.com/on-the-front-lines-w-the-eastern-border/</link>
+		<pubDate>Fri, 18 Mar 2022 20:01:59 +0000</pubDate>
+		<guid isPermaLink="false">https://martyrmade.com/?p=686</guid>
+		<comments>https://martyrmade.com/on-the-front-lines-w-the-eastern-border/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/on-the-front-lines-w-the-eastern-border/feed/</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		<category><![CDATA[Uncategorized]]></category>
+		<description>Hey everyone. After the recent Thoughts On Ukraine episode, I thought it would be a good idea to bring someone on the show who has a different perspective. Kristaps Andrejsons is a Latvian journalist, writer, and the host of The Eastern Border podcast - one of my go-to podcasts for Russian, Soviet, and Eastern European history for many years. He is a fluent Russian speaker, and provides insight that you’re simply not going to get on CNN or Fox News. That said, he and I have very different interpretations of the recent history between the West &amp; Russia, and this discussion was a great start at getting to the bottom of our disagreements. So, those of you who have been pining to see me get my ass handed to me by someone on this issue, maybe now’s your chance! This is a preview of a Substack subscribers-only episode, so if you can spare $5 a month to help me buy kibble, I&#039;m sure my cats, and certainly I, would really appreciate it.
+Follow him on Twitter for regular updates on the current Russian-Ukrainian war, and check out his website and podcast for longer form analysis.</description>
+		<content:encoded><![CDATA[<p data-pm-slice="1 1 []">Hey everyone. After the recent Thoughts On Ukraine episode, I thought it would be a good idea to bring someone on the show who has a different perspective. Kristaps Andrejsons is a Latvian journalist, writer, and the host of The Eastern Border podcast &#8211; one of my go-to podcasts for Russian, Soviet, and Eastern European history for many years. He is a fluent Russian speaker, and provides insight that you’re simply not going to get on CNN or Fox News. That said, he and I have very different interpretations of the recent history between the West &amp; Russia, and this discussion was a great start at getting to the bottom of our disagreements. So, those of you who have been pining to see me get my ass handed to me by someone on this issue, maybe now’s your chance! This is a preview of a <a href="https://martyrmade.substack.com/p/on-the-front-lines-wthe-eastern-border" target="_blank" rel="noopener">Substack subscribers-only episode</a>, so if you can spare $5 a month to help me buy kibble, I&#8217;m sure my cats, and certainly I, would really appreciate it.</p>
+<p>Follow him on <a href="https://twitter.com/Eastern_Border">Twitter</a> for regular updates on the current Russian-Ukrainian war, and check out his <a href="https://theeasternborder.lv/">website and podcast</a> for longer form analysis.</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/2022/03/Kristaps_Discussion_pt1_preview.mp3" length="21289536" type="audio/mpeg" />
+		<itunes:subtitle>Hey everyone. After the recent Thoughts On Ukraine episode, I thought it would be a good idea to bring someone on the show who has a different perspective. Kristaps Andrejsons is a Latvian journalist, writer,</itunes:subtitle>
+		<itunes:summary><![CDATA[Hey everyone. After the recent Thoughts On Ukraine episode, I thought it would be a good idea to bring someone on the show who has a different perspective. Kristaps Andrejsons is a Latvian journalist, writer, and the host of The Eastern Border podcast - one of my go-to podcasts for Russian, Soviet, and Eastern European history for many years. He is a fluent Russian speaker, and provides insight that you’re simply not going to get on CNN or Fox News. That said, he and I have very different interpretations of the recent history between the West &amp; Russia, and this discussion was a great start at getting to the bottom of our disagreements. So, those of you who have been pining to see me get my ass handed to me by someone on this issue, maybe now’s your chance! This is a preview of a <a href="https://martyrmade.substack.com/p/on-the-front-lines-wthe-eastern-border" target="_blank" rel="noopener">Substack subscribers-only episode</a>, so if you can spare $5 a month to help me buy kibble, I'm sure my cats, and certainly I, would really appreciate it.<br />
+Follow him on <a href="https://twitter.com/Eastern_Border">Twitter</a> for regular updates on the current Russian-Ukrainian war, and check out his <a href="https://theeasternborder.lv/">website and podcast</a> for longer form analysis.]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>22:11</itunes:duration>
+	</item>
+	<item>
+		<title>Thoughts on Ukraine (Updated and Remastered)</title>
+		<link>https://martyrmade.com/thoughts-on-ukraine/</link>
+		<pubDate>Mon, 14 Mar 2022 02:27:46 +0000</pubDate>
+		<guid isPermaLink="false">https://martyrmade.com/?p=682</guid>
+		<comments>https://martyrmade.com/thoughts-on-ukraine/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/thoughts-on-ukraine/feed/</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		<category><![CDATA[Uncategorized]]></category>
+		<description>Hey everybody. Many of you have asked for my thoughts on the crisis in Ukraine, so here they are. I re-recorded it because the audio was trash the first time around. Sorry about that.
+This is the kind of content I usually put on the Substack subscribers-only feed, so if you like this and can spare $5, please consider supporting the podcast by subscribing at martyrmade.substack.com.
+Here are some links I mention in the show:
+
+The Snipers Massacre On Maidan
+
+How the West Sowed the Seeds of War in Ukraine, by Pedro Gonzalez
+
+My Twitter thread on the Rand Corporation’s strategy white paper
+
+Scott Horton’s recent speech on the Ukraine crisis
+
+Thanks for listening.</description>
+		<content:encoded><![CDATA[<p data-pm-slice="1 1 []">Hey everybody. Many of you have asked for my thoughts on the crisis in Ukraine, so here they are. I re-recorded it because the audio was trash the first time around. Sorry about that.</p>
+<p data-pm-slice="1 1 []">This is the kind of content I usually put on the Substack subscribers-only feed, so if you like this and can spare $5, please consider supporting the podcast by subscribing at <a href="http://martyrmade.substack.com">martyrmade.substack.com</a>.</p>
+<p>Here are some links I mention in the show:</p>
+<p><a href="https://www.researchgate.net/publication/266855828_The_Snipers'_Massacre_on_the_Maidan_in_Ukraine">The Snipers Massacre On Maidan</a></p>
+<p><a href="https://contra.substack.com/p/how-the-west-sowed-the-seeds-of-war?s=r">How the West Sowed the Seeds of War in Ukraine, by Pedro Gonzalez</a></p>
+<p><a href="https://twitter.com/martyrmade/status/1499796614017273861">My Twitter thread on the Rand Corporation’s strategy white paper</a></p>
+<p><a href="https://www.youtube.com/watch?v=NbiuAfcpzQU&amp;t">Scott Horton’s recent speech on the Ukraine crisis</a></p>
+<p>Thanks for listening.</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/2022/03/Ukraine_v2.mp3" length="141588096" type="audio/mpeg" />
+		<itunes:subtitle>Hey everybody. Many of you have asked for my thoughts on the crisis in Ukraine, so here they are. I re-recorded it because the audio was trash the first time around. Sorry about that. This is the kind of content I usually put on the Substack subscribe...</itunes:subtitle>
+		<itunes:summary><![CDATA[Hey everybody. Many of you have asked for my thoughts on the crisis in Ukraine, so here they are. I re-recorded it because the audio was trash the first time around. Sorry about that.<br />
+This is the kind of content I usually put on the Substack subscribers-only feed, so if you like this and can spare $5, please consider supporting the podcast by subscribing at <a href="http://martyrmade.substack.com">martyrmade.substack.com</a>.<br />
+Here are some links I mention in the show:<br />
+<br />
+<a href="https://www.researchgate.net/publication/266855828_The_Snipers'_Massacre_on_the_Maidan_in_Ukraine">The Snipers Massacre On Maidan</a><br />
+<br />
+<a href="https://contra.substack.com/p/how-the-west-sowed-the-seeds-of-war?s=r">How the West Sowed the Seeds of War in Ukraine, by Pedro Gonzalez</a><br />
+<br />
+<a href="https://twitter.com/martyrmade/status/1499796614017273861">My Twitter thread on the Rand Corporation’s strategy white paper</a><br />
+<br />
+<a href="https://www.youtube.com/watch?v=NbiuAfcpzQU&amp;t">Scott Horton’s recent speech on the Ukraine crisis</a><br />
+<br />
+Thanks for listening.]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>2:27:29</itunes:duration>
+	</item>
+	<item>
+		<title>#20 &#8211; The Underground Spirit</title>
+		<link>https://martyrmade.com/20-the-underground-spirit/</link>
+		<pubDate>Tue, 31 Aug 2021 03:47:15 +0000</pubDate>
+		<guid isPermaLink="false">https://martyrmade.com/?p=615</guid>
+		<comments>https://martyrmade.com/20-the-underground-spirit/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/20-the-underground-spirit/feed/</wfw:commentRss>
+		<slash:comments>12</slash:comments>
+		<category><![CDATA[Existentialism]]></category>
+		<category><![CDATA[History]]></category>
+		<category><![CDATA[Literature]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Philosophy]]></category>
+		<category><![CDATA[Religion]]></category>
+		<category><![CDATA[Dostoevsky]]></category>
+		<category><![CDATA[Narcissism]]></category>
+		<category><![CDATA[Nietzsche]]></category>
+		<category><![CDATA[Psychology]]></category>
+		<description>There&#039;s a quote always attributed to Winston Churchill - falsely, I think? - that goes something like, &quot;If you&#039;re not a liberal at 20, you have no heart. If you&#039;re not a conservative by 30, you have no brain.&quot; I&#039;ve got a different version that I like a lot better, and it goes, &quot;If you&#039;re not reading Nietzsche at 20, you have no heart. But if you haven&#039;t transitioned to Dostoevsky by 30...&quot; In this episode, I look through the lives and work of the two 19th century existentialist authors, who have a great deal in common, but who, in the end, couldn&#039;t be more different.
+
+Support the show by subscribing to the MartyrMade Substack.</description>
+		<content:encoded><![CDATA[<p>There&#8217;s a quote always attributed to Winston Churchill &#8211; falsely, I think? &#8211; that goes something like, &#8220;If you&#8217;re not a liberal at 20, you have no heart. If you&#8217;re not a conservative by 30, you have no brain.&#8221; I&#8217;ve got a different version that I like a lot better, and it goes, &#8220;If you&#8217;re not reading Nietzsche at 20, you have no heart. But if you haven&#8217;t transitioned to Dostoevsky by 30&#8230;&#8221; In this episode, I look through the lives and work of the two 19th century existentialist authors, who have a great deal in common, but who, in the end, couldn&#8217;t be more different.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Ep20UndergroundSpirit.mp3" length="289571088" type="audio/mpeg" />
+		<itunes:subtitle>There&#039;s a quote always attributed to Winston Churchill - falsely, I think? - that goes something like, &quot;If you&#039;re not a liberal at 20, you have no heart. If you&#039;re not a conservative by 30, you have no brain.</itunes:subtitle>
+		<itunes:summary><![CDATA[There's a quote always attributed to Winston Churchill - falsely, I think? - that goes something like, "If you're not a liberal at 20, you have no heart. If you're not a conservative by 30, you have no brain." I've got a different version that I like a lot better, and it goes, "If you're not reading Nietzsche at 20, you have no heart. But if you haven't transitioned to Dostoevsky by 30..." In this episode, I look through the lives and work of the two 19th century existentialist authors, who have a great deal in common, but who, in the end, couldn't be more different.<br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>4:58:40</itunes:duration>
+	</item>
+	<item>
+		<title>#19 &#8211; The Anti-Humans</title>
+		<link>https://martyrmade.com/19-the-anti-humans/</link>
+		<pubDate>Mon, 31 May 2021 00:40:02 +0000</pubDate>
+		<guid isPermaLink="false">https://martyrmade.com/?p=483</guid>
+		<comments>https://martyrmade.com/19-the-anti-humans/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/19-the-anti-humans/feed/</wfw:commentRss>
+		<slash:comments>19</slash:comments>
+		<category><![CDATA[Communism]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Politics]]></category>
+		<category><![CDATA[Religion]]></category>
+		<category><![CDATA[Soviet Union]]></category>
+		<category><![CDATA[anti-humans]]></category>
+		<category><![CDATA[communist atroctities]]></category>
+		<category><![CDATA[forest brothers]]></category>
+		<category><![CDATA[gherla]]></category>
+		<category><![CDATA[holodomor]]></category>
+		<category><![CDATA[katyn massacre]]></category>
+		<category><![CDATA[pitesti prison]]></category>
+		<category><![CDATA[romanian prisons]]></category>
+		<category><![CDATA[stalin]]></category>
+		<category><![CDATA[witold pilecki]]></category>
+		<description>History is replete with examples of leaders, nations, and empires who left a trail of blood behind them. But with the Bolshevik takeover of Russia after the First World War, something new crawled from the depths of the earth onto the surface of the world. Never before had a government shown such uninhibited savagery toward its own people, during peacetime, as a matter of policy and in the name of scientific management. After Nazi Germany was defeated in the Second World War, Stalin&#039;s Soviet Union unleashed hell on the devastated nations of Eastern Europe, leaving behind an unmatched record of sadism and brutality.
+
+Support the show by subscribing to the MartyrMade Substack.</description>
+		<content:encoded><![CDATA[<p>History is replete with examples of leaders, nations, and empires who left a trail of blood behind them. But with the Bolshevik takeover of Russia after the First World War, something new crawled from the depths of the earth onto the surface of the world. Never before had a government shown such uninhibited savagery toward its own people, during peacetime, as a matter of policy and in the name of scientific management. After Nazi Germany was defeated in the Second World War, Stalin&#8217;s Soviet Union unleashed hell on the devastated nations of Eastern Europe, leaving behind an unmatched record of sadism and brutality.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack.</a></p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/AntiHumans.mp3" length="367699328" type="audio/mpeg" />
+		<itunes:subtitle>History is replete with examples of leaders, nations, and empires who left a trail of blood behind them. But with the Bolshevik takeover of Russia after the First World War, something new crawled from the depths of the earth onto the surface of the wor...</itunes:subtitle>
+		<itunes:summary><![CDATA[History is replete with examples of leaders, nations, and empires who left a trail of blood behind them. But with the Bolshevik takeover of Russia after the First World War, something new crawled from the depths of the earth onto the surface of the world. Never before had a government shown such uninhibited savagery toward its own people, during peacetime, as a matter of policy and in the name of scientific management. After Nazi Germany was defeated in the Second World War, Stalin's Soviet Union unleashed hell on the devastated nations of Eastern Europe, leaving behind an unmatched record of sadism and brutality.<br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack.</a>]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>3:53:03</itunes:duration>
+	</item>
+	<item>
+		<title>#18 &#8211; The Madame Butterfly Effect (bonus episode)</title>
+		<link>https://martyrmade.com/18-the-madame-butterfly-effect-bonus-episode/</link>
+		<pubDate>Wed, 11 Nov 2020 22:41:05 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=455</guid>
+		<comments>https://martyrmade.com/18-the-madame-butterfly-effect-bonus-episode/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/18-the-madame-butterfly-effect-bonus-episode/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[Communism]]></category>
+		<category><![CDATA[Radicalism]]></category>
+		<category><![CDATA[Suicide]]></category>
+		<category><![CDATA[Terrorism]]></category>
+		<category><![CDATA[Zionism]]></category>
+		<category><![CDATA[fusako shigenobu]]></category>
+		<category><![CDATA[japanese red army]]></category>
+		<category><![CDATA[lod airport attack]]></category>
+		<category><![CDATA[terrorism]]></category>
+		<description>This is a short piece I did for Daniele&#039;s History on Fire podcast. Many of you may have already heard it, but I thought I&#039;d put it on the main feed just in case. It was a fun break from Jim Jones, and nice to be a little less serious for once. Hope you enjoy.
+
+More short episodes like this will be available to subscribers only at the MartyrMade Substack.</description>
+		<content:encoded><![CDATA[<p>This is a short piece I did for Daniele&#8217;s History on Fire podcast. Many of you may have already heard it, but I thought I&#8217;d put it on the main feed just in case. It was a fun break from Jim Jones, and nice to be a little less serious for once. Hope you enjoy.</p>
+<p>More short episodes like this will be available to subscribers only at the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Ripples.mp3" length="40056297" type="audio/mpeg" />
+		<itunes:subtitle>This is a short piece I did for Daniele&#039;s History on Fire podcast. Many of you may have already heard it, but I thought I&#039;d put it on the main feed just in case. It was a fun break from Jim Jones, and nice to be a little less serious for once.</itunes:subtitle>
+		<itunes:summary><![CDATA[This is a short piece I did for Daniele's History on Fire podcast. Many of you may have already heard it, but I thought I'd put it on the main feed just in case. It was a fun break from Jim Jones, and nice to be a little less serious for once. Hope you enjoy.<br />
+<br />
+More short episodes like this will be available to subscribers only at the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>28:24</itunes:duration>
+	</item>
+	<item>
+		<title>#17 – God’s Socialist, pt. 7: A Gallant, Glorious, Screaming End</title>
+		<link>https://martyrmade.com/17-gods-socialist-pt-7-a-gallant-glorious-screaming-end/</link>
+		<pubDate>Sat, 17 Oct 2020 22:08:10 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=450</guid>
+		<comments>https://martyrmade.com/17-gods-socialist-pt-7-a-gallant-glorious-screaming-end/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/17-gods-socialist-pt-7-a-gallant-glorious-screaming-end/feed/</wfw:commentRss>
+		<slash:comments>11</slash:comments>
+		<category><![CDATA[1960s]]></category>
+		<category><![CDATA[Black Power]]></category>
+		<category><![CDATA[Civil Rights]]></category>
+		<category><![CDATA[Cults]]></category>
+		<category><![CDATA[History]]></category>
+		<category><![CDATA[Human Sacrifice]]></category>
+		<category><![CDATA[Jonestown]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[New World Liberation Front]]></category>
+		<category><![CDATA[Patty Hearst]]></category>
+		<category><![CDATA[Politics]]></category>
+		<category><![CDATA[Radicalism]]></category>
+		<category><![CDATA[Religion]]></category>
+		<category><![CDATA[Suicide]]></category>
+		<category><![CDATA[Symbionese Liberation Army]]></category>
+		<category><![CDATA[Jim Jones]]></category>
+		<category><![CDATA[martyrmade podcast]]></category>
+		<description>Jim Jones and Peoples Temple follow the remnants of the 1970s radical left into the fire.
+
+WARNING: Extreme language and disturbing content.
+
+Thank you to www.campuspress.com for sponsoring this series.
+
+Support the show by subscribing to the MartyrMade Substack.
+
+Huge thanks to the folks behind the Alternative Considerations of Jonestown Project. This podcast wouldn&#039;t have been possible without their indispensable hard work recording, organizing, and transcribing the Peoples Temple tapes and other source materials. For further information about Jonestown, you can&#039;t do better than their website. I did my best to tell the story here as I understand it, but if you ask me the work they&#039;re doing will lead to a fundamental future reassessment of what happened.</description>
+		<content:encoded><![CDATA[<p>Jim Jones and Peoples Temple follow the remnants of the 1970s radical left into the fire.</p>
+<p>WARNING: Extreme language and disturbing content.</p>
+<p>Thank you to www.campuspress.com for sponsoring this series.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.</p>
+<p>Huge thanks to the folks behind the Alternative Considerations of Jonestown Project. This podcast wouldn&#8217;t have been possible without their indispensable hard work recording, organizing, and transcribing the Peoples Temple tapes and other source materials. For further information about Jonestown, you can&#8217;t do better than their website. I did my best to tell the story here as I understand it, but if you ask me the work they&#8217;re doing will lead to a fundamental future reassessment of what happened.</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Jonestown_Final.mp3" length="665387911" type="audio/mpeg" />
+		<itunes:subtitle>Jim Jones and Peoples Temple follow the remnants of the 1970s radical left into the fire. - WARNING: Extreme language and disturbing content. - Thank you to www.campuspress.com for sponsoring this series. - </itunes:subtitle>
+		<itunes:summary><![CDATA[Jim Jones and Peoples Temple follow the remnants of the 1970s radical left into the fire.<br />
+<br />
+WARNING: Extreme language and disturbing content.<br />
+<br />
+Thank you to www.campuspress.com for sponsoring this series.<br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.<br />
+<br />
+Huge thanks to the folks behind the Alternative Considerations of Jonestown Project. This podcast wouldn't have been possible without their indispensable hard work recording, organizing, and transcribing the Peoples Temple tapes and other source materials. For further information about Jonestown, you can't do better than their website. I did my best to tell the story here as I understand it, but if you ask me the work they're doing will lead to a fundamental future reassessment of what happened.]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>true</itunes:explicit>
+		<itunes:duration>7:53:49</itunes:duration>
+	</item>
+	<item>
+		<title>#16 – God’s Socialist, pt. 6: No Driver At The Wheel</title>
+		<link>https://martyrmade.com/martyrmade-podcast-16-gods-socialist-pt-6-no-driver-at-the-wheel/</link>
+		<pubDate>Mon, 15 Jun 2020 06:36:35 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=430</guid>
+		<comments>https://martyrmade.com/martyrmade-podcast-16-gods-socialist-pt-6-no-driver-at-the-wheel/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/martyrmade-podcast-16-gods-socialist-pt-6-no-driver-at-the-wheel/feed/</wfw:commentRss>
+		<slash:comments>4</slash:comments>
+		<category><![CDATA[Black Power]]></category>
+		<category><![CDATA[Civil Rights]]></category>
+		<category><![CDATA[Cults]]></category>
+		<category><![CDATA[History]]></category>
+		<category><![CDATA[Jonestown]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Politics]]></category>
+		<category><![CDATA[Radicalism]]></category>
+		<category><![CDATA[Religion]]></category>
+		<category><![CDATA[Suicide]]></category>
+		<description>This was originally intended to be part of the previous episode, but I decided to break them up.
+
+Warning: EXTREME LANGUAGE AND GRAPHIC CONTENT
+
+The student movement is dead. The Black Panther Party is torn apart by J. Edgar Hoover&#039;s FBI. Activism devolves into struggle sessions and terrorism, as the movement for civil rights and social justice is left to &quot;drunks, hypes, freaks, and madmen.&quot; Treason drives Jim Jones off a cliff.
+
+Support the show by subscribing to the MartyrMade Substack.
+
+This series brought to you by the kind folks at CampusPress.</description>
+		<content:encoded><![CDATA[<p>This was originally intended to be part of the previous episode, but I decided to break them up.</p>
+<p>Warning: EXTREME LANGUAGE AND GRAPHIC CONTENT</p>
+<p>The student movement is dead. The Black Panther Party is torn apart by J. Edgar Hoover&#8217;s FBI. Activism devolves into struggle sessions and terrorism, as the movement for civil rights and social justice is left to &#8220;drunks, hypes, freaks, and madmen.&#8221; Treason drives Jim Jones off a cliff.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.</p>
+<p>This series brought to you by the kind folks at <a href="https://campuspress.com/" target="_blank" rel="noopener noreferrer">CampusPress</a>.</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Jonestown6.mp3" length="232146633" type="audio/mpeg" />
+		<itunes:subtitle>This was originally intended to be part of the previous episode, but I decided to break them up. - Warning: EXTREME LANGUAGE AND GRAPHIC CONTENT - The student movement is dead. The Black Panther Party is torn apart by J. Edgar Hoover&#039;s FBI.</itunes:subtitle>
+		<itunes:summary><![CDATA[This was originally intended to be part of the previous episode, but I decided to break them up.<br />
+<br />
+Warning: EXTREME LANGUAGE AND GRAPHIC CONTENT<br />
+<br />
+The student movement is dead. The Black Panther Party is torn apart by J. Edgar Hoover's FBI. Activism devolves into struggle sessions and terrorism, as the movement for civil rights and social justice is left to "drunks, hypes, freaks, and madmen." Treason drives Jim Jones off a cliff.<br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.<br />
+<br />
+This series brought to you by the kind folks at <a href="https://campuspress.com/" target="_blank" rel="noopener noreferrer">CampusPress</a>.]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>true</itunes:explicit>
+		<itunes:duration>2:43:24</itunes:duration>
+	</item>
+	<item>
+		<title>#15 - God’s Socialist, pt. 5: The Wounded King</title>
+		<link>https://martyrmade.com/martyrmade-podcast-15-gods-socialist-pt-5/</link>
+		<pubDate>Mon, 15 Jun 2020 03:13:41 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=427</guid>
+		<comments>https://martyrmade.com/martyrmade-podcast-15-gods-socialist-pt-5/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/martyrmade-podcast-15-gods-socialist-pt-5/feed/</wfw:commentRss>
+		<slash:comments>8</slash:comments>
+		<category><![CDATA[Black Power]]></category>
+		<category><![CDATA[Civil Rights]]></category>
+		<category><![CDATA[Cults]]></category>
+		<category><![CDATA[Jonestown]]></category>
+		<category><![CDATA[Politics]]></category>
+		<category><![CDATA[Radicalism]]></category>
+		<category><![CDATA[Religion]]></category>
+		<description>This episode begins where the &#039;60s end, when the radicalism of that decade crash headlong into the diminishing expectations of 1970s America. The Weather Underground veers off toward its explosive climax. As the idealism of the student movement is shunted into self-help fads and therapy sessions, what remaining energy of the radical left is drained into increasingly bizarre and violent channels.
+
+I broke this episode up into two parts, so it ends a bit abruptly. The second segment will be available a few hours after this is released.
+
+Support the show by subscribing to the MartyrMade Substack.
+
+This series brought to you by the good folks at CampusPress.</description>
+		<content:encoded><![CDATA[<p>This episode begins where the &#8217;60s end, when the radicalism of that decade crash headlong into the diminishing expectations of 1970s America. The Weather Underground veers off toward its explosive climax. As the idealism of the student movement is shunted into self-help fads and therapy sessions, what remaining energy of the radical left is drained into increasingly bizarre and violent channels.</p>
+<p>I broke this episode up into two parts, so it ends a bit abruptly. The second segment will be available a few hours after this is released.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.</p>
+<p>This series brought to you by the good folks at <a href="https://campuspress.com/" target="_blank" rel="noopener noreferrer">CampusPress</a>.</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Jonestown5.mp3" length="369107360" type="audio/mpeg" />
+		<itunes:subtitle>This episode begins where the &#039;60s end, when the radicalism of that decade crash headlong into the diminishing expectations of 1970s America. The Weather Underground veers off toward its explosive climax. As the idealism of the student movement is shun...</itunes:subtitle>
+		<itunes:summary><![CDATA[This episode begins where the '60s end, when the radicalism of that decade crash headlong into the diminishing expectations of 1970s America. The Weather Underground veers off toward its explosive climax. As the idealism of the student movement is shunted into self-help fads and therapy sessions, what remaining energy of the radical left is drained into increasingly bizarre and violent channels.<br />
+<br />
+I broke this episode up into two parts, so it ends a bit abruptly. The second segment will be available a few hours after this is released.<br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.<br />
+<br />
+This series brought to you by the good folks at <a href="https://campuspress.com/" target="_blank" rel="noopener noreferrer">CampusPress</a>.]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>true</itunes:explicit>
+		<itunes:duration>4:26:09</itunes:duration>
+	</item>
+	<item>
+		<title>#14 - God&#039;s Socialist, pt. 4: Sex, Drugs &amp; Revolution</title>
+		<link>https://martyrmade.com/martyrmade-podcast-14-gods-socialist-pt-4-sex-drugs-revolution/</link>
+		<pubDate>Mon, 10 Feb 2020 12:26:40 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=399</guid>
+		<comments>https://martyrmade.com/martyrmade-podcast-14-gods-socialist-pt-4-sex-drugs-revolution/#comments</comments>
+		<wfw:commentRss>https://martyrmade.com/martyrmade-podcast-14-gods-socialist-pt-4-sex-drugs-revolution/feed/</wfw:commentRss>
+		<slash:comments>2</slash:comments>
+		<category><![CDATA[1960s]]></category>
+		<category><![CDATA[Black Power]]></category>
+		<category><![CDATA[Civil Rights]]></category>
+		<category><![CDATA[Cults]]></category>
+		<category><![CDATA[History]]></category>
+		<category><![CDATA[Jonestown]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Radicalism]]></category>
+		<category><![CDATA[Communism]]></category>
+		<category><![CDATA[Peoples Temple]]></category>
+		<category><![CDATA[SDS]]></category>
+		<category><![CDATA[Socialism]]></category>
+		<category><![CDATA[Weathermen]]></category>
+		<description>This episode discusses the beginning of Peoples&#039; Temple&#039;s slide into radicalism after Jim Jones leads his people to California. We also talk about the development of 1960s radical political movements, and Jonestown conspiracy theories.
+
+
+
+I had to record this episode in a hotel bathroom while on travel for work. The audio quality has some issues at various points. Hopefully, it&#039;s not too bad.
+Support the show by subscribing to the MartyrMade Substack.</description>
+		<content:encoded><![CDATA[<p>This episode discusses the beginning of Peoples&#8217; Temple&#8217;s slide into radicalism after Jim Jones leads his people to California. We also talk about the development of 1960s radical political movements, and Jonestown conspiracy theories.</p>
+<p>I had to record this episode in a hotel bathroom while on travel for work. The audio quality has some issues at various points. Hopefully, it&#8217;s not too bad.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Jonestown4.mp3" length="574345598" type="audio/mpeg" />
+		<itunes:subtitle>In this episode, we discuss the beginning of Peoples&#039; Temple&#039;s slide into radicalism, the emergence of the New Left from the old student movement, Jonestown conspiracy theories, and more.</itunes:subtitle>
+		<itunes:summary><![CDATA[<br />
+This episode discusses the beginning of Peoples' Temple's slide into radicalism after Jim Jones leads his people to California. We also talk about the development of 1960s radical political movements, and Jonestown conspiracy theories.<br />
+<br />
+<br />
+<br />
+I had to record this episode in a hotel bathroom while on travel for work. The audio quality has some issues at various points. Hopefully, it's not too bad.<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.<br />]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>6:35:12</itunes:duration>
+	</item>
+	<item>
+		<title>#13 – God’s Socialist, pt. 3: Head North, Then Turn Left</title>
+		<link>https://martyrmade.com/martyrmade-podcast-13-gods-socialist-pt-3-head-north-then-turn-left/</link>
+		<pubDate>Mon, 24 Jun 2019 04:35:24 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=396</guid>
+		<comments>https://martyrmade.com/martyrmade-podcast-13-gods-socialist-pt-3-head-north-then-turn-left/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/martyrmade-podcast-13-gods-socialist-pt-3-head-north-then-turn-left/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[Black Power]]></category>
+		<category><![CDATA[Civil Rights]]></category>
+		<category><![CDATA[History]]></category>
+		<category><![CDATA[Politics]]></category>
+		<category><![CDATA[Malcolm X]]></category>
+		<category><![CDATA[SNCC]]></category>
+		<category><![CDATA[Stokely Carmichael]]></category>
+		<description>In this episode I trace the trajectory of the civil rights movement through the 1960s, and the gradual shift in emphasis and leadership from the stoic southern marchers following Martin Luther King, Jr to the militant Black Power soldiers of the northern ghettos.
+Support the show by subscribing to the MartyrMade Substack.</description>
+		<content:encoded><![CDATA[<p>In this episode I trace the trajectory of the civil rights movement through the 1960s, and the gradual shift in emphasis and leadership from the stoic southern marchers following Martin Luther King, Jr to the militant Black Power soldiers of the northern ghettos.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Jonestown3.mp3" length="327040898" type="audio/mpeg" />
+		<itunes:subtitle>In this episode I trace the trajectory of the civil rights movement through the 1960s, and the gradual shift in emphasis and leadership from the stoic southern marchers following Martin Luther King, Jr to the militant Black Power soldiers of the northe...</itunes:subtitle>
+		<itunes:summary><![CDATA[<br />
+In this episode I trace the trajectory of the civil rights movement through the 1960s, and the gradual shift in emphasis and leadership from the stoic southern marchers following Martin Luther King, Jr to the militant Black Power soldiers of the northern ghettos.<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>.<br />]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>4:00:43</itunes:duration>
+	</item>
+	<item>
+		<title>#12 - God&#039;s Socialist, pt. 2: What Child Is This?</title>
+		<link>https://martyrmade.com/martyrmade-podcast-12-gods-socialist-pt-2-what-child-is-this/</link>
+		<pubDate>Mon, 15 Apr 2019 05:14:03 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=381</guid>
+		<comments>https://martyrmade.com/martyrmade-podcast-12-gods-socialist-pt-2-what-child-is-this/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/martyrmade-podcast-12-gods-socialist-pt-2-what-child-is-this/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[Jonestown]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Religion]]></category>
+		<description>This is part 2 of a podcast series on Jim Jones and his Peoples Temple movement. An eccentric loner as a child, Jim Jones finds purpose in the fight for racial and economic justice.
+Support the show by subscribing to the MartyrMade Substack!</description>
+		<content:encoded><![CDATA[<p>This is part 2 of a podcast series on Jim Jones and his Peoples Temple movement. An eccentric loner as a child, Jim Jones finds purpose in the fight for racial and economic justice.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Jonestown2.mp3" length="274580697" type="audio/mpeg" />
+		<itunes:subtitle>This is part 2 of a podcast series on Jim Jones and his Peoples Temple movement. An eccentric loner as a child, Jim Jones finds purpose in the fight for racial and economic justice. Support the show by subscribing to the MartyrMade Substack!</itunes:subtitle>
+		<itunes:summary><![CDATA[<br />
+This is part 2 of a podcast series on Jim Jones and his Peoples Temple movement. An eccentric loner as a child, Jim Jones finds purpose in the fight for racial and economic justice.<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!<br />]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>3:17:39</itunes:duration>
+	</item>
+	<item>
+		<title>#11 - God&#039;s Socialist: Prologue</title>
+		<link>https://martyrmade.com/martyrmade-podcast-11-gods-socialist-prologue/</link>
+		<pubDate>Mon, 04 Mar 2019 06:44:09 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=365</guid>
+		<comments>https://martyrmade.com/martyrmade-podcast-11-gods-socialist-prologue/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/martyrmade-podcast-11-gods-socialist-prologue/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[Cults]]></category>
+		<category><![CDATA[Jonestown]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Radicalism]]></category>
+		<category><![CDATA[Religion]]></category>
+		<category><![CDATA[Suicide]]></category>
+		<description>This is the first episode of a series exploring Jim Jones and the Peoples Temple. This episode is only a prologue, a few stories and ideas to serve as a backdrop for everything to come. The next episode will be along in the next few weeks, and every few weeks after that until we figure out why over 900 people committed suicide in a South American jungle in 1978.
+
+Support the show by subscribing to the MartyrMade Substack!
+
+Listen on iTunes!</description>
+		<content:encoded><![CDATA[<p>This is the first episode of a series exploring Jim Jones and the Peoples Temple. This episode is only a prologue, a few stories and ideas to serve as a backdrop for everything to come. The next episode will be along in the next few weeks, and every few weeks after that until we figure out why over 900 people committed suicide in a South American jungle in 1978.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!</p>
+<p><a href="https://itunes.apple.com/us/podcast/the-martyrmade-podcast/id978322714?mt=2" target="_blank" rel="noopener noreferrer">Listen on iTunes!</a></p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Jonestown1.mp3" length="127385295" type="audio/mpeg" />
+		<itunes:subtitle>This is the first episode of a series exploring Jim Jones and the Peoples Temple. This episode is only a prologue, a few stories and ideas to serve as a backdrop for everything to come. The next episode will be along in the next few weeks,</itunes:subtitle>
+		<itunes:summary><![CDATA[This is the first episode of a series exploring Jim Jones and the Peoples Temple. This episode is only a prologue, a few stories and ideas to serve as a backdrop for everything to come. The next episode will be along in the next few weeks, and every few weeks after that until we figure out why over 900 people committed suicide in a South American jungle in 1978.<br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!<br />
+<br />
+<a href="https://itunes.apple.com/us/podcast/the-martyrmade-podcast/id978322714?mt=2" target="_blank" rel="noopener noreferrer">Listen on iTunes!</a>]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>1:32:26</itunes:duration>
+	</item>
+	<item>
+		<title>#10 - Anything That Moves - The My Lai Massacre (w/History on Fire)</title>
+		<link>https://martyrmade.com/10-anything-that-moves-pt-2-the-my-lai-massacre/</link>
+		<pubDate>Thu, 08 Mar 2018 17:09:29 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=337</guid>
+		<comments>https://martyrmade.com/10-anything-that-moves-pt-2-the-my-lai-massacre/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/10-anything-that-moves-pt-2-the-my-lai-massacre/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[History]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[hugh thompson]]></category>
+		<category><![CDATA[my lai massacre]]></category>
+		<category><![CDATA[my lai podcast]]></category>
+		<category><![CDATA[vietnam war]]></category>
+		<category><![CDATA[william calley]]></category>
+		<description>This is part 2 of a series I&#039;ve been working on with Daniele Bolelli. In part 1, he covered the 1864 Sand Creek Massacre carried out by the US Army. I was working on my next major series when Daniele asked me to do a companion episode on My Lai, and I couldn&#039;t pass up the opportunity. From his description:
+
+&quot;Because I felt like I was ordered to do it, and it seemed like that, at the time I felt like I was doing the right thing.&quot; —Private First Class Paul Meadlo explaining his role in the My Lai Massacre.
+&quot;How do you shoot babies?&quot; Meadlo was then asked. His reply... &quot;I don&#039;t know. It&#039;s just one of them things.&quot;
+
+&quot;I felt then and I still do that I acted as I was directed, and I carried out the order that I was given and I do not feel wrong in doing so.&quot; — Lieutenant William Calley Jr. addressing his own leadership during the action.
+
+&quot;Every Day/ On our fellow man we prey/ Dog eat Dog/ To Get by/ Hope you like my genocide” — The Offspring
+
+“Hello darkness, my old friend…” — Simon and Garfunkel
+
+“I believe now it is but the commencement of war with this tribe, which must result in their extermination.” — Major Jacob Downing
+“Damn any man who sympathizes with Indians! ... I have come to kill Indians, and believe it is right and honorable to use any means under God&#039;s heaven to kill Indians. ... Kill and scalp all, big and little; nits make lice.” — Quote attributed to Colonel John Chivington
+“They were so honorable and so strong, but I felt like they were alone and sometimes when you want to do the right thing, the people that want to do the right thing suffer… even today.” —Lorraine Waters about Silas Soule and Joseph Cramer
+
+“It was hard to see little children on their knees… having their brains beat out by men professing to be civilized.” — Silas Soule
+I’m not going to lie. This is one of the darkest episodes of History on Fire. But there are reasons for this journey into the heart of darkness. The stories of Sand Creek and My Lai offer an opportunity to explore human agency, the choices separating good and evil, and how some individuals can choose to become sources of light even in the most horrible circumstances. In part B, I hand the microphone to my friend and master podcaster Darryl Cooper (from The Martyrmade Podcast.) Darryl explores the context of the Cold War in order to come to terms with what happened at My Lai, in Vietnam, in 1968. Horror abounds, but if you are looking for heroes in the midst of the horror, you can do a lot worse than hear about the story of Hugh Thompson.
+
+Listen on iTunes!
+
+Support the show by subscribing to the MartyrMade Substack!</description>
+		<content:encoded><![CDATA[<p>This is part 2 of a series I&#8217;ve been working on with Daniele Bolelli. In part 1, he covered the 1864 Sand Creek Massacre carried out by the US Army. I was working on my next major series when Daniele asked me to do a companion episode on My Lai, and I couldn&#8217;t pass up the opportunity. From his description:</p>
+<blockquote>
+<p id="yui_3_17_2_1_1520528476100_916"><em>&#8220;Because I felt like I was ordered to do it, and it seemed like that, at the time I felt like I was doing the right thing.&#8221; </em><em>—</em>Private First Class Paul Meadlo explaining his role in the My Lai Massacre.</p>
+<p><em>&#8220;How do you shoot babies?&#8221;</em> Meadlo was then asked. His reply&#8230; <em>&#8220;I don&#8217;t know. It&#8217;s just one of them things.&#8221;</em></p>
+<p><em>&#8220;I felt then and I still do that I acted as I was directed, and I carried out the order that I was given and I do not feel wrong in doing so.&#8221; —</em> Lieutenant William Calley Jr. addressing his own leadership during the action.</p>
+<p><em>&#8220;Every Day/ On our fellow man we prey/ Dog eat Dog/ To Get by/ Hope you like my genocide” —</em> The Offspring</p>
+<p><em>“Hello darkness, my old friend…” —</em> Simon and Garfunkel</p>
+<p><em>“I believe now it is but the commencement of war with this tribe, which must result in their extermination.” —</em> Major Jacob Downing</p>
+<p id="yui_3_17_2_1_1520528476100_960"><em>“Damn any man who sympathizes with Indians! &#8230; I have come to kill Indians, and believe it is right and honorable to use any means under God&#8217;s heaven to kill Indians. &#8230; Kill and scalp all, big and little; nits make lice.” —</em> Quote attributed to Colonel John Chivington</p>
+<p><em>“They were so honorable and so strong, but I felt like they were alone and sometimes when you want to do the right thing, the people that want to do the right thing suffer… even today.” —</em>Lorraine Waters about Silas Soule and Joseph Cramer</p>
+<p><em>“It was hard to see little children on their knees… having their brains beat out by men professing to be civilized.” —</em> Silas Soule</p>
+<p id="yui_3_17_2_1_1520528476100_959">I’m not going to lie. This is one of the darkest episodes of History on Fire. But there are reasons for this journey into the heart of darkness. The stories of Sand Creek and My Lai offer an opportunity to explore human agency, the choices separating good and evil, and how some individuals can choose to become sources of light even in the most horrible circumstances. In part B, I hand the microphone to my friend and master podcaster Darryl Cooper (from The Martyrmade Podcast.) Darryl explores the context of the Cold War in order to come to terms with what happened at My Lai, in Vietnam, in 1968. Horror abounds, but if you are looking for heroes in the midst of the horror, you can do a lot worse than hear about the story of Hugh Thompson.</p>
+</blockquote>
+<p><a href="https://itunes.apple.com/us/podcast/the-martyrmade-podcast/id978322714?mt=2" target="_blank" rel="noopener noreferrer">Listen on iTunes!</a></p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Anything_That_Moves.mp3" length="194091781" type="audio/mpeg" />
+		<itunes:subtitle>This is part 2 of a series I&#039;ve been working on with Daniele Bolelli. In part 1, he covered the 1864 Sand Creek Massacre carried out by the US Army. I was working on my next major series when Daniele asked me to do a companion episode on My Lai,</itunes:subtitle>
+		<itunes:summary><![CDATA[This is part 2 of a series I've been working on with Daniele Bolelli. In part 1, he covered the 1864 Sand Creek Massacre carried out by the US Army. I was working on my next major series when Daniele asked me to do a companion episode on My Lai, and I couldn't pass up the opportunity. From his description:<br />
+<br />
+"Because I felt like I was ordered to do it, and it seemed like that, at the time I felt like I was doing the right thing." —Private First Class Paul Meadlo explaining his role in the My Lai Massacre.<br />
+"How do you shoot babies?" Meadlo was then asked. His reply... "I don't know. It's just one of them things."<br />
+<br />
+"I felt then and I still do that I acted as I was directed, and I carried out the order that I was given and I do not feel wrong in doing so." — Lieutenant William Calley Jr. addressing his own leadership during the action.<br />
+<br />
+"Every Day/ On our fellow man we prey/ Dog eat Dog/ To Get by/ Hope you like my genocide” — The Offspring<br />
+<br />
+“Hello darkness, my old friend…” — Simon and Garfunkel<br />
+<br />
+“I believe now it is but the commencement of war with this tribe, which must result in their extermination.” — Major Jacob Downing<br />
+“Damn any man who sympathizes with Indians! ... I have come to kill Indians, and believe it is right and honorable to use any means under God's heaven to kill Indians. ... Kill and scalp all, big and little; nits make lice.” — Quote attributed to Colonel John Chivington<br />
+“They were so honorable and so strong, but I felt like they were alone and sometimes when you want to do the right thing, the people that want to do the right thing suffer… even today.” —Lorraine Waters about Silas Soule and Joseph Cramer<br />
+<br />
+“It was hard to see little children on their knees… having their brains beat out by men professing to be civilized.” — Silas Soule<br />
+I’m not going to lie. This is one of the darkest episodes of History on Fire. But there are reasons for this journey into the heart of darkness. The stories of Sand Creek and My Lai offer an opportunity to explore human agency, the choices separating good and evil, and how some individuals can choose to become sources of light even in the most horrible circumstances. In part B, I hand the microphone to my friend and master podcaster Darryl Cooper (from The Martyrmade Podcast.) Darryl explores the context of the Cold War in order to come to terms with what happened at My Lai, in Vietnam, in 1968. Horror abounds, but if you are looking for heroes in the midst of the horror, you can do a lot worse than hear about the story of Hugh Thompson.<br />
+<br />
+<a href="https://itunes.apple.com/us/podcast/the-martyrmade-podcast/id978322714?mt=2" target="_blank" rel="noopener noreferrer">Listen on iTunes!</a><br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>2:22:27</itunes:duration>
+	</item>
+	<item>
+		<title>#9 – Sacrifice &amp; Oppression at the Dawn of Tyranny</title>
+		<link>https://martyrmade.com/martyrmade-podcast-9-sacrifice-oppression-at-the-dawn-of-tyranny-sacrifice-cannibalism-pt-2/</link>
+		<pubDate>Thu, 31 Aug 2017 02:06:26 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=329</guid>
+		<comments>https://martyrmade.com/martyrmade-podcast-9-sacrifice-oppression-at-the-dawn-of-tyranny-sacrifice-cannibalism-pt-2/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/martyrmade-podcast-9-sacrifice-oppression-at-the-dawn-of-tyranny-sacrifice-cannibalism-pt-2/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[Anthropology]]></category>
+		<category><![CDATA[Aztec]]></category>
+		<category><![CDATA[History]]></category>
+		<category><![CDATA[Human Sacrifice]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Mythology]]></category>
+		<category><![CDATA[New World]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Religion]]></category>
+		<category><![CDATA[blood meridian]]></category>
+		<category><![CDATA[buganda]]></category>
+		<category><![CDATA[eli sagan]]></category>
+		<category><![CDATA[inga clenninden]]></category>
+		<category><![CDATA[morris berman]]></category>
+		<category><![CDATA[the things they carried]]></category>
+		<description>&quot;Mexica &#039;beliefs&#039; have been discussed confidently enough, but academics being natural theologians, usually at an unnaturally abstract pitch. My interest is not in belief at this formal level, but in sensibility: the emotional, moral, and aesthetic nexus through which thought comes to be expressed in action, and so made public, visible, and accessible to our observation.&quot;
+
+-Inga Clenninden | Aztecs: An Interpretation
+
+Human sacrifice is not a human universal. The institution emerges at a specific stage of human sociopolitical development, and recedes when the transition is complete. Rarely found among nomadic hunter-gatherers, ritual homicide is also nearly absent in archaic civilizations (except for a few residual instances such as royal burials). But human beings didn&#039;t make the leap from nomadic foragers to pyramid builders overnight. Nestled between was a transitional stage, when newly-settled people faced the monumental task of ditching the ancient kinship system, sacrificing their freedom to kings, and reorganizing themselves into the first states. This fraught transition was imposed by violence, as primitive egalitarianism was replaced by class oppression, and human sacrifice was employed to define social boundaries and to stave off panic with brutal acts of self-assertion. Kings gloried in their total freedom, the less fortunate were terrorized into submission, and the gods looked on with dripping fangs and growling stomachs.
+
+Support the show by subscribing to the MartyrMade Substack!
+
+Check out History on Fire!
+
+Listen to this episode on iTunes!
+
+Listen to this episode on Stitcher!</description>
+		<content:encoded><![CDATA[<p>&#8220;Mexica &#8216;beliefs&#8217; have been discussed confidently enough, but academics being natural theologians, usually at an unnaturally abstract pitch. My interest is not in belief at this formal level, but in sensibility: the emotional, moral, and aesthetic nexus through which thought comes to be expressed in action, and so made public, visible, and accessible to our observation.&#8221;</p>
+<p>-Inga Clenninden | Aztecs: An Interpretation</p>
+<p>Human sacrifice is not a human universal. The institution emerges at a specific stage of human sociopolitical development, and recedes when the transition is complete. Rarely found among nomadic hunter-gatherers, ritual homicide is also nearly absent in archaic civilizations (except for a few residual instances such as royal burials). But human beings didn&#8217;t make the leap from nomadic foragers to pyramid builders overnight. Nestled between was a transitional stage, when newly-settled people faced the monumental task of ditching the ancient kinship system, sacrificing their freedom to kings, and reorganizing themselves into the first states. This fraught transition was imposed by violence, as primitive egalitarianism was replaced by class oppression, and human sacrifice was employed to define social boundaries and to stave off panic with brutal acts of self-assertion. Kings gloried in their total freedom, the less fortunate were terrorized into submission, and the gods looked on with dripping fangs and growling stomachs.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!</p>
+<p><a href="http://historyonfirepodcast.com/" target="_blank" rel="noopener noreferrer">Check out History on Fire!</a></p>
+<p><a href="https://itunes.apple.com/us/podcast/the-martyrmade-podcast/id978322714?mt=2" target="_blank" rel="noopener noreferrer">Listen to this episode on iTunes!</a></p>
+<p><a href="https://www.stitcher.com/podcast/martyrmade-podcast/martyrmade" target="_blank" rel="noopener noreferrer">Listen to this episode on Stitcher!</a></p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Sacrifice3.mp3" length="240402066" type="audio/mpeg" />
+		<itunes:subtitle>This fraught transition was imposed by violence, as primitive egalitarianism was replaced by class oppression, and human sacrifice was employed to define social boundaries and to stave off panic with brutal acts of self-assertion.</itunes:subtitle>
+		<itunes:summary><![CDATA["Mexica 'beliefs' have been discussed confidently enough, but academics being natural theologians, usually at an unnaturally abstract pitch. My interest is not in belief at this formal level, but in sensibility: the emotional, moral, and aesthetic nexus through which thought comes to be expressed in action, and so made public, visible, and accessible to our observation."<br />
+<br />
+-Inga Clenninden | Aztecs: An Interpretation<br />
+<br />
+Human sacrifice is not a human universal. The institution emerges at a specific stage of human sociopolitical development, and recedes when the transition is complete. Rarely found among nomadic hunter-gatherers, ritual homicide is also nearly absent in archaic civilizations (except for a few residual instances such as royal burials). But human beings didn't make the leap from nomadic foragers to pyramid builders overnight. Nestled between was a transitional stage, when newly-settled people faced the monumental task of ditching the ancient kinship system, sacrificing their freedom to kings, and reorganizing themselves into the first states. This fraught transition was imposed by violence, as primitive egalitarianism was replaced by class oppression, and human sacrifice was employed to define social boundaries and to stave off panic with brutal acts of self-assertion. Kings gloried in their total freedom, the less fortunate were terrorized into submission, and the gods looked on with dripping fangs and growling stomachs.<br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!<br />
+<br />
+<a href="http://historyonfirepodcast.com/" target="_blank" rel="noopener noreferrer">Check out History on Fire!</a><br />
+<br />
+<a href="https://itunes.apple.com/us/podcast/the-martyrmade-podcast/id978322714?mt=2" target="_blank" rel="noopener noreferrer">Listen to this episode on iTunes!</a><br />
+<br />
+<a href="https://www.stitcher.com/podcast/martyrmade-podcast/martyrmade" target="_blank" rel="noopener noreferrer">Listen to this episode on Stitcher!</a>]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>2:53:55</itunes:duration>
+	</item>
+	<item>
+		<title>#8 - How to Serve Man - Sacrifice &amp; Cannibalism, pt. 1</title>
+		<link>https://martyrmade.com/8-how-to-serve-man-sacrifice-cannibalism-pt-1/</link>
+		<pubDate>Tue, 27 Jun 2017 17:59:33 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=309</guid>
+		<comments>https://martyrmade.com/8-how-to-serve-man-sacrifice-cannibalism-pt-1/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/8-how-to-serve-man-sacrifice-cannibalism-pt-1/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[Anthropology]]></category>
+		<category><![CDATA[Aztec]]></category>
+		<category><![CDATA[Cannibalism]]></category>
+		<category><![CDATA[History]]></category>
+		<category><![CDATA[Human Sacrifice]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Mythology]]></category>
+		<category><![CDATA[New World]]></category>
+		<category><![CDATA[Religion]]></category>
+		<category><![CDATA[aztec sacrifice]]></category>
+		<category><![CDATA[cannibalism]]></category>
+		<category><![CDATA[psychosexual development]]></category>
+		<category><![CDATA[ritual cannibalism]]></category>
+		<description>Who&#039;s hungry?
+
+Support the show by subscribing to the MartyrMade Substack!
+
+Listen on iTunes!
+
+Listen on Stitcher! (seems to be some issue here... will try to fix)
+
+Visit MartyrMade Facebook page!</description>
+		<content:encoded><![CDATA[<p>Who&#8217;s hungry?</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!</p>
+<p><a href="https://itunes.apple.com/us/podcast/the-martyrmade-podcast/id978322714?mt=2" target="_blank" rel="noopener noreferrer">Listen on iTunes!</a></p>
+<p><a href="http://www.stitcher.com/podcast/martyrmade-podcast/martyrmade" target="_blank" rel="noopener noreferrer">Listen on Stitcher!</a> (seems to be some issue here&#8230; will try to fix)</p>
+<p><a href="https://www.facebook.com/martyrmade/" target="_blank" rel="noopener noreferrer">Visit MartyrMade Facebook page!</a></p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Sacrifice2.mp3" length="227998515" type="audio/mpeg" />
+		<itunes:subtitle>Who&#039;s hungry? - Support the show by subscribing to the MartyrMade Substack! - Listen on iTunes! - Listen on Stitcher! (seems to be some issue here... will try to fix) - Visit MartyrMade Facebook page!</itunes:subtitle>
+		<itunes:summary><![CDATA[Who's hungry?<br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!<br />
+<br />
+<a href="https://itunes.apple.com/us/podcast/the-martyrmade-podcast/id978322714?mt=2" target="_blank" rel="noopener noreferrer">Listen on iTunes!</a><br />
+<br />
+<a href="http://www.stitcher.com/podcast/martyrmade-podcast/martyrmade" target="_blank" rel="noopener noreferrer">Listen on Stitcher!</a> (seems to be some issue here... will try to fix)<br />
+<br />
+<a href="https://www.facebook.com/martyrmade/" target="_blank" rel="noopener noreferrer">Visit MartyrMade Facebook page!</a>]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>2:43:02</itunes:duration>
+	</item>
+	<item>
+		<title>#7 - Approaching the Aztecs - A Drunken Introduction</title>
+		<link>https://martyrmade.com/7-approaching-the-aztecs-a-drunken-introduction/</link>
+		<pubDate>Mon, 05 Jun 2017 03:03:13 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=304</guid>
+		<comments>https://martyrmade.com/7-approaching-the-aztecs-a-drunken-introduction/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/7-approaching-the-aztecs-a-drunken-introduction/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[Anthropology]]></category>
+		<category><![CDATA[Aztec]]></category>
+		<category><![CDATA[History]]></category>
+		<category><![CDATA[Human Sacrifice]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Mythology]]></category>
+		<category><![CDATA[New World]]></category>
+		<category><![CDATA[Religion]]></category>
+		<category><![CDATA[aztec]]></category>
+		<category><![CDATA[Demeter]]></category>
+		<category><![CDATA[Hainuwele]]></category>
+		<category><![CDATA[Hekate]]></category>
+		<category><![CDATA[Joseph Campbell]]></category>
+		<category><![CDATA[Mircea Eliade]]></category>
+		<category><![CDATA[Persephone]]></category>
+		<category><![CDATA[Rabia]]></category>
+		<category><![CDATA[Satene]]></category>
+		<category><![CDATA[spanish]]></category>
+		<description>In which I take a break from banging out my human sacrifice episode to check in with my patient listeners.
+
+I&#039;m working on a series of companion episodes to go along with Daniele Bolelli&#039;s History on Fire series on the Spanish conquest of Mexico. If you haven&#039;t heard the first episode of his series (available on iTunes and everything else) and the bonus episode he put out (available on his website), you really need to listen to them before you get into what I&#039;m doing here. Cheers, everyone.
+
+Support the show by subscribing to the MartyrMade Substack!</description>
+		<content:encoded><![CDATA[<p>In which I take a break from banging out my human sacrifice episode to check in with my patient listeners.</p>
+<p>I&#8217;m working on a series of companion episodes to go along with Daniele Bolelli&#8217;s History on Fire series on the Spanish conquest of Mexico. If you haven&#8217;t heard the <a href="http://historyonfirepodcast.com/" target="_blank" rel="noopener noreferrer">first episode</a> of his series (available on iTunes and everything else) and the bonus episode he put out (<a href="http://historyonfirepodcast.com/store/the-mesoamerican-godfather" target="_blank" rel="noopener noreferrer">available on his website</a>), you really need to listen to them before you get into what I&#8217;m doing here. Cheers, everyone.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Sacrifice1.mp3" length="148962255" type="audio/mpeg" />
+		<itunes:subtitle>In which I take a break from banging out my human sacrifice episode to drunkenly check in with my patient, long-suffering listeners.</itunes:subtitle>
+		<itunes:summary><![CDATA[In which I take a break from banging out my human sacrifice episode to check in with my patient listeners.<br />
+<br />
+I'm working on a series of companion episodes to go along with Daniele Bolelli's History on Fire series on the Spanish conquest of Mexico. If you haven't heard the <a href="http://historyonfirepodcast.com/" target="_blank" rel="noopener noreferrer">first episode</a> of his series (available on iTunes and everything else) and the bonus episode he put out (<a href="http://historyonfirepodcast.com/store/the-mesoamerican-godfather" target="_blank" rel="noopener noreferrer">available on his website</a>), you really need to listen to them before you get into what I'm doing here. Cheers, everyone.<br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>1:45:42</itunes:duration>
+	</item>
+	<item>
+		<title>#6 - Fear &amp; Loathing in the New Jerusalem - Never Again</title>
+		<link>https://martyrmade.com/martyrmade-podcast-6-never/</link>
+		<pubDate>Tue, 20 Dec 2016 05:45:39 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=296</guid>
+		<comments>https://martyrmade.com/martyrmade-podcast-6-never/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/martyrmade-podcast-6-never/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[Anti-Semitism]]></category>
+		<category><![CDATA[History]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Middle East]]></category>
+		<category><![CDATA[Palestine]]></category>
+		<category><![CDATA[Zionism]]></category>
+		<category><![CDATA[arab-israeli conflict]]></category>
+		<category><![CDATA[david ben gurion]]></category>
+		<category><![CDATA[haganah]]></category>
+		<category><![CDATA[irgun]]></category>
+		<category><![CDATA[israeli-palestinian conflict]]></category>
+		<category><![CDATA[menachem begin]]></category>
+		<category><![CDATA[palestine podcast]]></category>
+		<category><![CDATA[stern gang]]></category>
+		<category><![CDATA[zionist podcast]]></category>
+		<description>Modern Zionism began in the late 19th century with idealistic calls for spiritual renewal; by 1939, it had transformed into a desperate play for bare survival. Young revolutionaries do combat with Zionist elder statesmen for the soul of the movement. Hitler&#039;s German Reich and Stalin&#039;s Soviet Union do battle for Europe while everything between them is ground into the mud. Victims become victimizers, and the wider world gets an introduction to the dispute that has been confounding the British Empire for 20 years. Our episode begins with desperate Jews in Nazi Europe, it ends with the realization of the Zionist dream, for the first time in 2,000 years, a sovereign state of Israel.
+
+Support the show by subscribing to the MartyrMade Substack!
+
+Listen on iTunes!
+
+Listen on Stitchr!
+
+ </description>
+		<content:encoded><![CDATA[<p>Modern Zionism began in the late 19th century with idealistic calls for spiritual renewal; by 1939, it had transformed into a desperate play for bare survival. Young revolutionaries do combat with Zionist elder statesmen for the soul of the movement. Hitler&#8217;s German Reich and Stalin&#8217;s Soviet Union do battle for Europe while everything between them is ground into the mud. Victims become victimizers, and the wider world gets an introduction to the dispute that has been confounding the British Empire for 20 years. Our episode begins with desperate Jews in Nazi Europe, it ends with the realization of the Zionist dream, for the first time in 2,000 years, a sovereign state of Israel.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!</p>
+<p><a href="https://itunes.apple.com/us/podcast/the-martyrmade-podcast/id978322714?mt=2" target="_blank" rel="noopener noreferrer">Listen on iTunes!</a></p>
+<p><a href="http://www.stitcher.com/podcast/martyrmade-podcast/martyrmade" target="_blank" rel="noopener noreferrer">Listen on Stitchr!</a></p>
+<p>&nbsp;</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Fear_and_Loathing_ep_6.mp3" length="456556704" type="audio/mpeg" />
+		<itunes:subtitle>Never Again</itunes:subtitle>
+		<itunes:summary><![CDATA[Modern Zionism began in the late 19th century with idealistic calls for spiritual renewal; by 1939, it had transformed into a desperate play for bare survival. Young revolutionaries do combat with Zionist elder statesmen for the soul of the movement. Hitler's German Reich and Stalin's Soviet Union do battle for Europe while everything between them is ground into the mud. Victims become victimizers, and the wider world gets an introduction to the dispute that has been confounding the British Empire for 20 years. Our episode begins with desperate Jews in Nazi Europe, it ends with the realization of the Zionist dream, for the first time in 2,000 years, a sovereign state of Israel.<br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!<br />
+<br />
+<a href="https://itunes.apple.com/us/podcast/the-martyrmade-podcast/id978322714?mt=2" target="_blank" rel="noopener noreferrer">Listen on iTunes!</a><br />
+<br />
+<a href="http://www.stitcher.com/podcast/martyrmade-podcast/martyrmade" target="_blank" rel="noopener noreferrer">Listen on Stitchr!</a><br />
+<br />
+&nbsp;]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>5:30:07</itunes:duration>
+	</item>
+	<item>
+		<title>#5 - Fear &amp; Loathing in the New Jerusalem - Things Fall Apart...</title>
+		<link>https://martyrmade.com/martyrmade-podcast-5-things-fall-apart/</link>
+		<pubDate>Sat, 16 Apr 2016 01:42:45 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=255</guid>
+		<comments>https://martyrmade.com/martyrmade-podcast-5-things-fall-apart/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/martyrmade-podcast-5-things-fall-apart/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[Anti-Semitism]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Middle East]]></category>
+		<category><![CDATA[Palestine]]></category>
+		<category><![CDATA[Zionism]]></category>
+		<category><![CDATA[hitler and zionism]]></category>
+		<category><![CDATA[palestine]]></category>
+		<category><![CDATA[qassam]]></category>
+		<category><![CDATA[zionism]]></category>
+		<description> 
+
+My laptop literally died a horrible death as I was uploading this episode, and I&#039;m at a Kinkos finishing this post. Once I have a computer, I&#039;ll get the stuff up. The things I do for y&#039;all...
+
+Riots. Massacres. The end of the world and everything in it. Palestinian Arabs finally find a voice in the wake of the 1929 massacres. Unable and unwilling to find a place for the Jews, Europe&#039;s autoimmune disorder begins to tear the host apart. Desperate European Jews seek escape from Nazi persecution just as Palestinian resistance stiffens and the British become skeptical of the Zionist project.
+
+Support the show by subscribing to the MartyrMade Substack!
+
+Listen on iTunes
+
+Listen on Stitchr
+
+ </description>
+		<content:encoded><![CDATA[<p>&nbsp;</p>
+<p>My laptop literally died a horrible death as I was uploading this episode, and I&#8217;m at a Kinkos finishing this post. Once I have a computer, I&#8217;ll get the stuff up. The things I do for y&#8217;all&#8230;</p>
+<p>Riots. Massacres. The end of the world and everything in it. Palestinian Arabs finally find a voice in the wake of the 1929 massacres. Unable and unwilling to find a place for the Jews, Europe&#8217;s autoimmune disorder begins to tear the host apart. Desperate European Jews seek escape from Nazi persecution just as Palestinian resistance stiffens and the British become skeptical of the Zionist project.</p>
+<p>Support the show by subscribing to the <a href="http://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!</p>
+<p><a href="https://itunes.apple.com/us/podcast/the-martyrmade-podcast/id978322714?mt=2" target="_blank" rel="noopener noreferrer">Listen on iTunes</a></p>
+<p><a href="http://www.stitcher.com/podcast/martyrmade" target="_blank" rel="noopener noreferrer">Listen on Stitchr</a></p>
+<p>&nbsp;</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Episode_5.mp3" length="465536097" type="audio/mpeg" />
+		<itunes:subtitle>Things Fall Apart...</itunes:subtitle>
+		<itunes:summary><![CDATA[&nbsp;<br />
+<br />
+My laptop literally died a horrible death as I was uploading this episode, and I'm at a Kinkos finishing this post. Once I have a computer, I'll get the stuff up. The things I do for y'all...<br />
+<br />
+Riots. Massacres. The end of the world and everything in it. Palestinian Arabs finally find a voice in the wake of the 1929 massacres. Unable and unwilling to find a place for the Jews, Europe's autoimmune disorder begins to tear the host apart. Desperate European Jews seek escape from Nazi persecution just as Palestinian resistance stiffens and the British become skeptical of the Zionist project.<br />
+<br />
+Support the show by subscribing to the <a href="http://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!<br />
+<br />
+<a href="https://itunes.apple.com/us/podcast/the-martyrmade-podcast/id978322714?mt=2" target="_blank" rel="noopener noreferrer">Listen on iTunes</a><br />
+<br />
+<a href="http://www.stitcher.com/podcast/martyrmade" target="_blank" rel="noopener noreferrer">Listen on Stitchr</a><br />
+<br />
+&nbsp;]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>5:35:44</itunes:duration>
+	</item>
+	<item>
+		<title>#4 - Fear &amp; Loathing in the New Jerusalem, pt. 3</title>
+		<link>https://martyrmade.com/fear-loathing-in-the-new-jerusalem-ep-4-the-hill/</link>
+		<pubDate>Mon, 23 Nov 2015 06:46:53 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=216</guid>
+		<comments>https://martyrmade.com/fear-loathing-in-the-new-jerusalem-ep-4-the-hill/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/fear-loathing-in-the-new-jerusalem-ep-4-the-hill/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[History]]></category>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Middle East]]></category>
+		<category><![CDATA[Zionism]]></category>
+		<category><![CDATA[palestine podcast]]></category>
+		<category><![CDATA[zionism]]></category>
+		<description> 
+
+Hi everyone. Been a long time. My day job has been downright abusive the last 2-3 months, but we&#039;re back with Episode 4 of Fear &amp; Loathing in the New Jerusalem. As the Middle Eastern regional order is hammered into place by the Entente powers, Zionism goes underground. Prosperity abroad and security in Palestine make the 1920s a relatively quiet period in this story. It&#039;s been chaos behind us and nothing but chaos in front, but we&#039;re in the eye of the storm. The British try a more inclusive approach toward the Arabs, but as the real effects of the Zionist project begin to be felt, tensions rise until the decade ends as it began... in violence.
+
+Download or listen below, or get this episode via iTunes or Stitchr.
+
+Support the show by subscribing to the MartyrMade Substack!</description>
+		<content:encoded><![CDATA[<p>&nbsp;</p>
+<p>Hi everyone. Been a long time. My day job has been downright abusive the last 2-3 months, but we&#8217;re back with Episode 4 of Fear &amp; Loathing in the New Jerusalem. As the Middle Eastern regional order is hammered into place by the Entente powers, Zionism goes underground. Prosperity abroad and security in Palestine make the 1920s a relatively quiet period in this story. It&#8217;s been chaos behind us and nothing but chaos in front, but we&#8217;re in the eye of the storm. The British try a more inclusive approach toward the Arabs, but as the real effects of the Zionist project begin to be felt, tensions rise until the decade ends as it began&#8230; in violence.</p>
+<p>Download or listen below, or get this episode via <a href="https://itunes.apple.com/us/podcast/martyrmade-podcast/id978322714" target="_blank" rel="noopener noreferrer">iTunes</a> or <a href="http://www.stitcher.com/podcast/martyrmade-podcast/martyrmade?refid=stpr" target="_blank" rel="noopener noreferrer">Stitchr</a>.</p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Fear_and_Loathing_ep_4.mp3" length="383725673" type="audio/mpeg" />
+		<itunes:subtitle>The Roarin&#039; 20s in British Mandatory Palestine</itunes:subtitle>
+		<itunes:summary><![CDATA[&nbsp;<br />
+<br />
+Hi everyone. Been a long time. My day job has been downright abusive the last 2-3 months, but we're back with Episode 4 of Fear &amp; Loathing in the New Jerusalem. As the Middle Eastern regional order is hammered into place by the Entente powers, Zionism goes underground. Prosperity abroad and security in Palestine make the 1920s a relatively quiet period in this story. It's been chaos behind us and nothing but chaos in front, but we're in the eye of the storm. The British try a more inclusive approach toward the Arabs, but as the real effects of the Zionist project begin to be felt, tensions rise until the decade ends as it began... in violence.<br />
+<br />
+Download or listen below, or get this episode via <a href="https://itunes.apple.com/us/podcast/martyrmade-podcast/id978322714" target="_blank" rel="noopener noreferrer">iTunes</a> or <a href="http://www.stitcher.com/podcast/martyrmade-podcast/martyrmade?refid=stpr" target="_blank" rel="noopener noreferrer">Stitchr</a>.<br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>4:25:59</itunes:duration>
+	</item>
+	<item>
+		<title>#3 - Fear &amp; Loathing in the New Jerusalem - Nostalgia and Naivety in Honor Culture</title>
+		<link>https://martyrmade.com/martyrmade-podcast-3-shoptalk-edition/</link>
+		<pubDate>Sat, 18 Jul 2015 05:47:20 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=145</guid>
+		<comments>https://martyrmade.com/martyrmade-podcast-3-shoptalk-edition/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/martyrmade-podcast-3-shoptalk-edition/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Middle East]]></category>
+		<category><![CDATA[Religion]]></category>
+		<category><![CDATA[culture vs religion]]></category>
+		<category><![CDATA[honor culture]]></category>
+		<category><![CDATA[tribal culture]]></category>
+		<description>We&#039;re halfway through Fear &amp; Loathing in the New Jerusalem, the history of Zionism and the Israeli-Palestinian conflict. (If you haven&#039;t listened to the first two episodes, you might want to do that for background, but this episode is an exploratory aside that can stand on its own as well.) I decided to throw something together to answer a few questions and get down in the weeds to talk about Arab tribal dynamics, honor culture, religion, and the mutual incomprehension that helped construct the Middle Eastern mousetrap a century ago, and remains an obstacle to progress in the region today.
+
+Support the podcast by subscribing to the MartyrMade Substack!
+
+Check it out on iTunes!
+
+Check it out on Stitcher!</description>
+		<content:encoded><![CDATA[<p>We&#8217;re halfway through Fear &amp; Loathing in the New Jerusalem, the history of Zionism and the Israeli-Palestinian conflict. (If you haven&#8217;t listened to <a href="https://martyrmade.comfear-loathing-in-the-new-jerusalem/">the first two episodes</a>, you might want to do that for background, but this episode is an exploratory aside that can stand on its own as well.) I decided to throw something together to answer a few questions and get down in the weeds to talk about Arab tribal dynamics, honor culture, religion, and the mutual incomprehension that helped construct the Middle Eastern mousetrap a century ago, and remains an obstacle to progress in the region today.</p>
+<p>Support the podcast by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!</p>
+<p><a href="https://itunes.apple.com/us/podcast/martyrmade-podcast/id978322714" target="_blank" rel="noopener noreferrer">Check it out on iTunes!</a></p>
+<p><a href="http://www.stitcher.com/podcast/martyrmade-podcast/martyrmade?refid=stpr" target="_blank" rel="noopener noreferrer">Check it out on Stitcher!</a></p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Fear_and_Loathing_ep_3.mp3" length="146108145" type="audio/mpeg" />
+		<itunes:subtitle>Traditional conceptions of honor and tribal dynamic hinder the Arabs in their dealings with the British and the Zionists</itunes:subtitle>
+		<itunes:summary><![CDATA[We're halfway through Fear &amp; Loathing in the New Jerusalem, the history of Zionism and the Israeli-Palestinian conflict. (If you haven't listened to <a href="https://martyrmade.comfear-loathing-in-the-new-jerusalem/">the first two episodes</a>, you might want to do that for background, but this episode is an exploratory aside that can stand on its own as well.) I decided to throw something together to answer a few questions and get down in the weeds to talk about Arab tribal dynamics, honor culture, religion, and the mutual incomprehension that helped construct the Middle Eastern mousetrap a century ago, and remains an obstacle to progress in the region today.<br />
+<br />
+Support the podcast by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a>!<br />
+<br />
+<a href="https://itunes.apple.com/us/podcast/martyrmade-podcast/id978322714" target="_blank" rel="noopener noreferrer">Check it out on iTunes!</a><br />
+<br />
+<a href="http://www.stitcher.com/podcast/martyrmade-podcast/martyrmade?refid=stpr" target="_blank" rel="noopener noreferrer">Check it out on Stitcher!</a>]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>1:44:04</itunes:duration>
+	</item>
+	<item>
+		<title>#2 - Fear and Loathing in the New Jerusalem, pt. 2</title>
+		<link>https://martyrmade.com/fear-loathing-in-the-new-jerusalem-pt-2/</link>
+		<pubDate>Fri, 19 Jun 2015 00:16:40 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=134</guid>
+		<comments>https://martyrmade.com/fear-loathing-in-the-new-jerusalem-pt-2/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/fear-loathing-in-the-new-jerusalem-pt-2/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[Zionism]]></category>
+		<category><![CDATA[jaffa riots]]></category>
+		<category><![CDATA[lebanon famine]]></category>
+		<category><![CDATA[martyrmade podcast]]></category>
+		<category><![CDATA[nebi musa riots]]></category>
+		<description> 
+
+The Arabs and the Zionists in Palestine struggle to get their bearings in a ruined world. The smell of gunsmoke still lays thick over the landscape, and the ink is still wet on the Balfour Declaration and the several new international agreements. The First World War is over, and people around the world are demanding their independence in the new world order. But building a national identity takes more than just drawing lines on a map or running a rag up a flagpole. (Catch up on Episode #1 here.)
+
+Click here to listen on iTunes!
+
+Click here to listen on Stitcher!
+
+Support the show by subscribing to the MartyrMade Substack!</description>
+		<content:encoded><![CDATA[<p>&nbsp;</p>
+<p>The Arabs and the Zionists in Palestine struggle to get their bearings in a ruined world. The smell of gunsmoke still lays thick over the landscape, and the ink is still wet on the Balfour Declaration and the several new international agreements. The First World War is over, and people around the world are demanding their independence in the new world order. But building a national identity takes more than just drawing lines on a map or running a rag up a flagpole. (Catch up on Episode #1 <a href="https://martyrmade.comfear-and-loathing-in-the-new-jerusalem-pt-1/" target="_blank" rel="noopener noreferrer">here</a>.)</p>
+<p><a href="https://itunes.apple.com/us/podcast/martyrmade-podcast/id978322714" target="_blank" rel="noopener noreferrer">Click here to listen on iTunes!</a></p>
+<p><a href="http://www.stitcher.com/podcast/martyrmade-podcast/martyrmade?refid=stpr" target="_blank" rel="noopener noreferrer">Click here to listen on Stitcher!</a></p>
+<p>Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack!</a></p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Fear_and_Loathing_ep_2.mp3" length="289425805" type="audio/mpeg" />
+		<itunes:subtitle>Jews and Arabs come to blows in the aftermath of the First World War.</itunes:subtitle>
+		<itunes:summary><![CDATA[&nbsp;<br />
+<br />
+The Arabs and the Zionists in Palestine struggle to get their bearings in a ruined world. The smell of gunsmoke still lays thick over the landscape, and the ink is still wet on the Balfour Declaration and the several new international agreements. The First World War is over, and people around the world are demanding their independence in the new world order. But building a national identity takes more than just drawing lines on a map or running a rag up a flagpole. (Catch up on Episode #1 <a href="https://martyrmade.comfear-and-loathing-in-the-new-jerusalem-pt-1/" target="_blank" rel="noopener noreferrer">here</a>.)<br />
+<br />
+<a href="https://itunes.apple.com/us/podcast/martyrmade-podcast/id978322714" target="_blank" rel="noopener noreferrer">Click here to listen on iTunes!</a><br />
+<br />
+<a href="http://www.stitcher.com/podcast/martyrmade-podcast/martyrmade?refid=stpr" target="_blank" rel="noopener noreferrer">Click here to listen on Stitcher!</a><br />
+<br />
+Support the show by subscribing to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack!</a>]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>3:18:52</itunes:duration>
+	</item>
+	<item>
+		<title>#1 - Fear &amp; Loathing in the New Jerusalem, pt. 1</title>
+		<link>https://martyrmade.com/fear-and-loathing-in-the-new-jerusalem-pt-1/</link>
+		<pubDate>Thu, 19 Mar 2015 05:22:55 +0000</pubDate>
+		<guid isPermaLink="false">http://www.martyrmade.com/?p=42</guid>
+		<comments>https://martyrmade.com/fear-and-loathing-in-the-new-jerusalem-pt-1/#respond</comments>
+		<wfw:commentRss>https://martyrmade.com/fear-and-loathing-in-the-new-jerusalem-pt-1/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<category><![CDATA[Martyrmade Podcast]]></category>
+		<category><![CDATA[history podcast]]></category>
+		<category><![CDATA[israel]]></category>
+		<category><![CDATA[nationalism]]></category>
+		<category><![CDATA[palestine podcast]]></category>
+		<category><![CDATA[zionism]]></category>
+		<description> 
+
+The conflict between Israel and Palestine can often seem like a permanent feature of the global order. The wars, intifadas, refugees camps, suicide vests, UN resolutions, and peace talks have been painfully burned into our collective consciousness. But how could this have happened? Was it always this way? That&#039;s what we&#039;ll seek to find out in this three-part series on the history of the Israeli-Palestinian conflict.
+
+In Episode #1, nations are rallying to throw off the yoke of the Great Powers, and demanding the sovereign right to rule their homelands. A group calling themselves Zionists puts out a call to awaken the oppressed Jews of Europe from their thousand-year slumber. The time had come, after two thousand years of homeless wandering, to return to Palestine, the land longed for in so many psalms and lamentations. But there was a problem. While the Jews were in exile, another people had moved into the land, and they had been living there for 1300 years.
+
+Click here to listen on iTunes
+
+Or here for Stitcher!
+
+Oh, and a review would be appreciated!
+
+Subscribe to the MartyrMade Substack for exclusive content!
+
+Thanks for listening. I&#039;d love to hear your thoughts in the comments section or via e-mail. Part Two of this series will be along shortly, and I encourage you to subscribe so you&#039;ll be the first to know. Enjoy!</description>
+		<content:encoded><![CDATA[<p>&nbsp;</p>
+<p>The conflict between Israel and Palestine can often seem like a permanent feature of the global order. The wars, intifadas, refugees camps, suicide vests, UN resolutions, and peace talks have been painfully burned into our collective consciousness. But how could this have happened? Was it always this way? That&#8217;s what we&#8217;ll seek to find out in this three-part series on the history of the Israeli-Palestinian conflict.</p>
+<p>In Episode #1, nations are rallying to throw off the yoke of the Great Powers, and demanding the sovereign right to rule their homelands. A group calling themselves Zionists puts out a call to awaken the oppressed Jews of Europe from their thousand-year slumber. The time had come, after two thousand years of homeless wandering, to return to Palestine, the land longed for in so many psalms and lamentations. But there was a problem. While the Jews were in exile, another people had moved into the land, and they had been living there for 1300 years.</p>
+<p><a href="https://itunes.apple.com/us/podcast/martyrmade-podcast/id978322714" target="_blank" rel="noopener noreferrer">Click here to listen on iTunes</a></p>
+<p><a href="http://www.stitcher.com/s?fid=63086&amp;refid=stpr" target="_blank" rel="noopener noreferrer">Or here for Stitcher!</a></p>
+<p>Oh, and a review would be appreciated!</p>
+<p>Subscribe to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a> for exclusive content!</p>
+<p>Thanks for listening. I&#8217;d love to hear your thoughts in the comments section or via e-mail. Part Two of this series will be along shortly, and I encourage you to subscribe so you&#8217;ll be the first to know. Enjoy!</p>
+]]></content:encoded>
+		<enclosure url="https://media.blubrry.com/martyrmade_podcast/www.martyrmade.com/wp-content/uploads/Podcast_Episodes/Fear_and_Loathing_ep_1.mp3" length="215304195" type="audio/mpeg" />
+		<itunes:subtitle>Origins of Zionism and the history of the conflict between Israel and Palestine</itunes:subtitle>
+		<itunes:summary><![CDATA[&nbsp;<br />
+<br />
+The conflict between Israel and Palestine can often seem like a permanent feature of the global order. The wars, intifadas, refugees camps, suicide vests, UN resolutions, and peace talks have been painfully burned into our collective consciousness. But how could this have happened? Was it always this way? That's what we'll seek to find out in this three-part series on the history of the Israeli-Palestinian conflict.<br />
+<br />
+In Episode #1, nations are rallying to throw off the yoke of the Great Powers, and demanding the sovereign right to rule their homelands. A group calling themselves Zionists puts out a call to awaken the oppressed Jews of Europe from their thousand-year slumber. The time had come, after two thousand years of homeless wandering, to return to Palestine, the land longed for in so many psalms and lamentations. But there was a problem. While the Jews were in exile, another people had moved into the land, and they had been living there for 1300 years.<br />
+<br />
+<a href="https://itunes.apple.com/us/podcast/martyrmade-podcast/id978322714" target="_blank" rel="noopener noreferrer">Click here to listen on iTunes</a><br />
+<br />
+<a href="http://www.stitcher.com/s?fid=63086&amp;refid=stpr" target="_blank" rel="noopener noreferrer">Or here for Stitcher!</a><br />
+<br />
+Oh, and a review would be appreciated!<br />
+<br />
+Subscribe to the <a href="https://martyrmade.substack.com" target="_blank" rel="noopener">MartyrMade Substack</a> for exclusive content!<br />
+<br />
+Thanks for listening. I'd love to hear your thoughts in the comments section or via e-mail. Part Two of this series will be along shortly, and I encourage you to subscribe so you'll be the first to know. Enjoy!]]></itunes:summary>
+		<itunes:author>Darryl Cooper</itunes:author>
+		<itunes:episodeType>full</itunes:episodeType>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:duration>2:21:06</itunes:duration>
+	</item>
+</channel>
+</rss>
