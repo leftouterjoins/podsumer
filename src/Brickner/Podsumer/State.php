@@ -6,99 +6,121 @@ use \Exception;
 use \JSON_THROW_ON_ERROR;
 use \JSON_INVALID_UTF8_IGNORE;
 use \JSON_OBJECT_AS_ARRAY;
+use \PDO;
+use \SimpleXMLElement;
 
 class State
 {
     private Main $main;
-    private array $state;
     private $state_file_path;
+    private $sql_dir_path;
+    private $pdo;
 
     function __construct(Main $main)
     {
         $this->main = $main;
-        $state_dir = $this->main->getInstallPath() . $this->main->getConf('podsumer', 'state_dir');
-        $state_file = $this->main->getConf('podsumer', 'state_file');
+        $state_file_path = $main->getInstallPath()
+            . $this->main->getConf('podsumer', 'state_file');
 
+        $state_dir = dirname($state_file_path);
         if (!is_dir($state_dir) && !mkdir($state_dir, 0755, true)) {
             throw new Exception("Cannot find or create the state directory: $state_dir");
         }
 
-        $this->state_file_path = $state_dir . DIRECTORY_SEPARATOR . $state_file;
+        $this->state_file_path = $state_file_path;
+        $this->sql_dir_path = $this->main->getInstallPath()
+            . $this->main->getConf('podsumer', 'sql_dir');
 
-        touch($this->state_file_path);
+        $this->pdo = new PDO('sqlite:' . $this->state_file_path);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $this->loadState();
+        $this->checkDBInstall();
     }
 
-    function __destruct()
+    protected function installTableS()
     {
-        $this->writeState();
+        $table_sql = file_get_contents($this->sql_dir_path . '/tables.sql');
+        $this->pdo->exec($table_sql);
     }
 
-    private function loadState()
+    protected function checkDBInstall()
     {
-        $file_contents = file_get_contents($this->state_file_path);
-        if (false === $file_contents) {
-            throw new Exception('Cannot read the state file.');
+        // Does the db file exist?
+        if (!file_exists($this->state_file_path)) {
+            throw new Exception('No DB file found at path: ' . $this->state_file_path);
         }
 
-        if (empty($file_contents)) {
-            $file_contents = '[]';
-        }
-
-        $this->state = json_decode($file_contents, true, 12, JSON_THROW_ON_ERROR | JSON_INVALID_UTF8_IGNORE | JSON_OBJECT_AS_ARRAY);
+        // Do the tables expected exists?
+        $this->installTableS();
     }
 
-    private function writeState()
+    protected function query(string $sql, array $params = []): array
     {
-        $file_contents = json_encode($this->state);
-        $written = file_put_contents($this->state_file_path, $file_contents);
-
-        if (false === $written) {
-            throw new Exception('Cannot write the state file.');
-        }
-    }
-
-    public function getState(bool $read = true)
-    {
-        if ($read) {
-            $this->loadState();
-        }
-
-        return $this->state();
-    }
-
-    public function setState(array $state, bool $write = true)
-    {
-        $this->state = $state;
-
-        if ($write) {
-            $this->writeState();
-        }
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll();
     }
 
     public function addFeed(Feed $feed)
     {
-        $feeds = $this->state['feeds'] ?? [];
-        $key = $feed->getUrlHash();
+        if (!$feed->feedLoaded()) {
+            return;
+        }
 
-        if (!empty($feeds[$key])) {
+        $feed_url_hash = $feed->getUrlHash();
+        $feed_lookup = $this->getFeedByHash($feed_url_hash);
+
+        if (!empty($feed_lookup)) {
            return;
         } else {
             $feed_rec = [];
-            $feed_rec['id'] = $feed->getUrlHash();
-            $feed_rec['title'] = $feed->getTitle();
-            $feed_rec['updated'] = $feed->getPubDate();
+            $feed_rec['url_hash'] = $feed_url_hash;
+            $feed_rec['url'] = $feed->getUrl();
+            $feed_rec['name'] = $feed->getTitle();
+            $feed_rec['last_update'] = $feed->getPubDate();
             $feed_rec['description'] = $feed->getDescription();
-            $feed_rec['channel_art'] = $feed->getChannelArt();
-            $feed_rec['items'] = $feed->getItems();
+            $feed_rec['image'] = $this->encodeImage($feed->getChannelArt());
         }
 
-        $feeds[$key] = $feed_rec;
+        $sql = 'INSERT INTO feeds (url_hash, name, last_update, url, description, image) VALUES (:url_hash, :name, :last_update, :url, :description, :image)';
+        $this->query($sql, $feed_rec);
+        $feed_id = $this->pdo->lastInsertId();
+        $feed->setFeedId(intval($feed_id));
 
-        $this->state['feeds'] = $feeds;
+        $items = $feed->getFeedItems();
+        $this->addFeedItems($items, $feed);
+    }
 
-        $this->writeState();
+    protected function addFeedItems(\SimpleXMLElement $items, Feed $feed)
+    {
+        foreach ($items as $item) {
+            $new_item = new Item($this->main, $item, $feed);
+            $item_rec = [
+                'feed_id' => $feed->getFeedId(),
+                'name' => $new_item->getName(),
+                'published' => $new_item->getPublished(),
+                'description' => $new_item->getDescription(),
+                'size' => $new_item->getSize(),
+                'audio_url' => $new_item->getAudioFileUrl(),
+                'image' => $this->encodeImage($new_item->getImage() ?: '')
+            ];
+
+            $sql = 'INSERT INTO items (feed_id, name, published, description, size, audio_url, image) VALUES (:feed_id, :name, :published, :description, :size, :audio_url, :image)';
+            $this->query($sql, $item_rec);
+        }
+    }
+
+    public function encodeImage(string $art): string
+    {
+        if (!empty($art)) {
+            $image_bin = file_get_contents($art);
+            $image = base64_encode($image_bin);
+            $finfo = new \finfo(FILEINFO_MIME);
+            $mime = $finfo->buffer($image_bin);
+            return "data:$mime;base64,$image";
+        }
+
+        return '';
     }
 
     public function getStateDirPath(): string
@@ -108,11 +130,32 @@ class State
 
     public function getFeeds(): array|false
     {
-        return $this->state['feeds'] ?? false;
+        $sql = 'SELECT id, name, last_update, url, description, image FROM feeds';
+        return $this->query($sql);
+     }
+
+    public function getFeed(int $id): array
+    {
+        $sql = 'SELECT id, name, description, url, image, last_update FROM feeds WHERE id = :id';
+        return $this->query($sql, ['id' => $id])[0];
     }
 
-    public function getFeed(string $id): array
+    public function getFeedItem(string $item_id): array
     {
-        return $this->state['feeds'][$id];
+        $sql = 'SELECT name, feed_id, id, audio_url, image, size, published, description FROM items WHERE id = :id';
+        return $this->query($sql, ['id' => $item_id])[0];
+    }
+
+    public function getFeedItems(string $feed_id): array
+    {
+        $sql = 'SELECT name, feed_id, id, audio_url, image, size, published, description FROM items WHERE feed_id = :id';
+        return $this->query($sql, ['id' => $feed_id]);
+    }
+
+    public function getFeedByHash(string $hash): array
+    {
+        $sql = 'SELECT id, name, last_update, url, description FROM feeds WHERE url_hash = :hash';
+        return $this->query($sql, ['hash' => $hash]);
     }
 }
+

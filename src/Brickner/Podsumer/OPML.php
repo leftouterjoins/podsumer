@@ -26,8 +26,14 @@ class OPML
     protected function getFeeds(): array
     {
         $opml = simplexml_load_file($this->file['tmp_name']);
+        $body = $opml->body->outline;
+
+        if (count($body) < 2) {
+            $body = $body->outline;
+        }
+
         $feeds = [];
-        foreach ($opml->body->outline as $feed) {
+        foreach ($body as $feed) {
             $feeds[] = strval($feed->attributes()->xmlUrl);
         }
 

@@ -21,16 +21,16 @@
     </div>
 
     <? else: ?>
-    <? foreach ($feeds as $id => $feed): ?>
+    <? foreach ($feeds as $feed): ?>
     <div class="container py-10 clear">
-        <img src="<?= $feed['channel_art'] ?>" class="float-left w-32 pr-5">
+        <img src="<?= $feed['image'] ?>" class="float-left w-32 pr-5">
         <h1 class="text-2xl">
-            <a href="/feed?id=<?= $id ?>">
-            <?= $feed['title'] ?>
+            <a href="/feed?id=<?= $feed['id'] ?>">
+            <?= $feed['name'] ?>
             </a>
         </h1>
         <p class="text-neutral-400 text-xs">
-            <?= date('m/d/Y H:i', $feed['updated']) ?>
+            <?= date('m/d/Y H:i', $feed['last_update']) ?>
         </p>
         <p>
             <?= $feed['description'] ?>

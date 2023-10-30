@@ -13,47 +13,50 @@ class Feed
     private Main $main;
     private string $url;
     private string $hash;
-    private string $feed_path;
-    private SimpleXMLElement $feed;
+    private int $feed_id;
+    private ?SimpleXMLElement $feed;
 
     public function __construct(Main $main, string $url)
     {
         $this->main = $main;
 
         $valid_url = $this->validateUrl($url);
+
         if (false === $valid_url) {
             throw new Exception("Invalid feed URL: $url");
         }
 
         $this->url = $url;
 
-        $this->feed_path = $this->main->getState()->getStateDirPath()
-            . DIRECTORY_SEPARATOR
-            . $this->getUrlHash()
-            . '.xml';
-
         $this->fetchFeed();
+    }
+
+    protected function downloadFeed($url, $user = null, $pass = null): string
+    {
+        $curl = curl_init();
+        curl_setopt($curl,\CURLOPT_URL, $url);
+        curl_setopt($curl, \CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, \CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, \CURLOPT_MAXREDIRS, 3);
+
+        if (!empty($user) && !empty($pass)) {
+            curl_setopt($curl,\CURLOPT_USERPWD, "$user:$pass");
+            curl_setopt($curl, \CURLOPT_HTTPAUTH, \CURLAUTH_ANY);
+        }
+
+        $feed_contents = curl_exec($curl);
+        if (false === $feed_contents) {
+            throw new Execption('Cannot download feed' . $url);
+        }
+
+        return $feed_contents;
     }
 
     private function fetchFeed()
     {
-        $feed_contents = file_get_contents($this->url);
-        if (false === $feed_contents) {
-            throw new Exception("Cannot fetch feed URL: $url");
-        }
-
+        $feed_contents = $this->downloadFeed($this->url);
         $this->hash = md5($feed_contents);
-
-        if (!file_exists($this->feed_path)) {
-            $written = file_put_contents($this->feed_path, $feed_contents);
-            if (false === $written) {
-                throw new Exception("Cannot write feed to path: $this->feed_path");
-            }
-        } else {
-            $this->main->log('Feed already downloaded.');
-        }
-
-        $this->parseFeed();
+        $this->parseFeed($feed_contents);
      }
 
     private function validateUrl(string $url)
@@ -66,10 +69,25 @@ class Feed
         return true;
     }
 
-    private function parseFeed(): SimpleXMLElement|false
+    private function parseFeed(string $feed_contents): void
     {
-        $this->feed = simplexml_load_file($this->feed_path, 'SimpleXMLElement', LIBXML_NOCDATA);
-        return $this->feed;
+         $parse_result = simplexml_load_string(
+            $feed_contents,
+            SimpleXMLElement::class,
+            LIBXML_NOCDATA | LIBXML_NOERROR | LIBXML_NOWARNING | LIBXML_NONET
+        );
+
+        if (false === $parse_result) {
+            $this->feed = null;
+            return;
+        }
+
+        $this->feed = $parse_result;
+    }
+
+    public function feedLoaded(): bool
+    {
+        return !empty($this->feed);
     }
 
     public function getTitle(): string
@@ -77,12 +95,10 @@ class Feed
         return strval($this->feed->channel->title);
     }
 
-    public function getPubDate  (): int
+    public function getPubDate(): int
     {
-        $lastUpdated = $this->feed->channel->lastBuildDate
-            ?? $this->getItems()[0]['pubDate'];
-
-        return strtotime(strval($lastUpdated));
+        $lastUpdated = $this->feed->channel->lastBuildDate;
+        return strtotime(strval($lastUpdated)) ?: 0;
     }
 
     public function getDescription(): string
@@ -105,40 +121,19 @@ class Feed
         return md5($this->url);
     }
 
-    public function getId(): string
+    public function getFeedItems(): SimpleXMLElement
     {
-        return $this->hash;
+        return $this->feed->channel->item;
     }
 
-    public function getItems(): array
+    public function setFeedId(int $feed_id)
     {
-        $items = [];
+        $this->feed_id = $feed_id;
+    }
 
-        foreach ($this->feed->channel->item as $item) {
-
-            $image = $item->children('itunes', true)->image;
-            if (!empty($image)) {
-                $image = strval($image->attributes()->href);
-            }
-
-            $media_url = null;
-            $enclosure_attrs = $item->enclosure->attributes();
-            if (!empty($enclosure_attrs)) {
-                $media_url = strval($enclosure_attrs->url);
-                $length = strval($enclosure_attrs->length);
-            }
-
-            $item_data = [
-                'title' => strval($item->title),
-                'pubDate' => strval($item->pubDate),
-                'audio_url' => $media_url,
-                'length' => $length,
-                'description' => strval($item->description),
-                'art_url' => $image,
-            ];
-            $items[] = $item_data;
-        }
-
-        return $items;
+    public function getFeedId(): int
+    {
+        return $this->feed_id;
     }
 }
+

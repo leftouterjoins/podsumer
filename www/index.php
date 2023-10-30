@@ -6,6 +6,7 @@ ini_set('display_errors', 1);
 ini_set('error_reporting', E_ALL);
 ini_set('variables_order', 'E');
 ini_set('request_order', 'CGP');
+ini_set('memory_limit', -1);
 
 const PODSUMER_PATH = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
 
@@ -57,7 +58,8 @@ function feed(array $args): void
     global $main;
 
     $vars = [
-        'feed' => $main->getState()->getFeed($args['id'])
+        'feed' => $main->getState()->getFeed(intval($args['id'])),
+        'items' => $main->getState()->getFeedItems($args['id'])
     ];
 
     Template::render($main, 'feed', $vars);
@@ -68,13 +70,14 @@ function item(array $args): void
 {
     global $main;
 
-    $feed = $main->getState()->getFeed($args['feed_id']);
+    $item = $main->getState()->getFeedItem($args['item_id']);
+    $feed = $main->getState()->getFeed($item['feed_id']);
 
     $vars = [
-        'feed_id' => $args['feed_id'],
-        'item' => array_filter($feed['items'][$args['item_id']]),
-        'feed_art_url' => $feed['channel_art']
+        'item' => $item,
+        'feed_image' => $feed['image']
     ];
 
     Template::render($main, 'item', $vars);
 }
+
