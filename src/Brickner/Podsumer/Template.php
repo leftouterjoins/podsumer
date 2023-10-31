@@ -18,18 +18,28 @@ class Template
     static public function render(Main $main, string $template_name, array $vars = [])
     {
         $t = new self($main);
-        $t->renderTemplate($template_name, $vars);
+        $base_template = $main->getConf('podsumer', 'base_template');
+        $t->renderTemplate($template_name, $vars, $base_template . '.html.php');
     }
 
-    private function renderTemplate(string $template_name, array $vars)
+    static public function renderXml(Main $main, string $template_name, array $vars = [])
+    {
+        $t = new self($main);
+        $t->renderTemplate('', $vars, $template_name . '.xml.php');
+    }
+
+    private function renderTemplate(string $template_name, array $vars, string $base_template)
     {
         $PAGE_TITLE = $this->main->getConf('podsumer', 'default_page_title');
         $LANGUAGE = $this->main->getConf('podsumer', 'language');
 
-        $BODY = $this->getTemplatePath($template_name);
+        $BODY = '';
+        if (!empty($template_name)) {
+            $BODY = $this->getTemplatePath($template_name . '.html.php');
+        }
 
         extract($vars);
-        include($this->getTemplatePath($this->base_template));
+        include($this->getTemplatePath($base_template));
     }
 
     private function getTemplatePath(string $template_name)
@@ -37,7 +47,7 @@ class Template
         return $this->main->getInstallPath() .
             $this->template_dir .
             \DIRECTORY_SEPARATOR .
-            $template_name .
-            '.html.php';
+            $template_name;
     }
 }
+

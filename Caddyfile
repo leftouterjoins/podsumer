@@ -4,7 +4,7 @@
   auto_https off
 }
 
-127.0.0.1:8433/* {
+127.0.0.1:8433/*, brickner.cloud:8433/* {
     root * /opt/podsumer/www
     encode gzip
     php_fastcgi php:9000 {

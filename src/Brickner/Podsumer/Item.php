@@ -28,9 +28,13 @@ class Item
         return strval($this->item->title);
     }
 
-    public function getPublished(): string
+    public function getPublished(): DateTime
     {
-        return strval($this->item->pubDate);
+        $published = strval($this->item->pubDate);
+        $published = $published ?: date('r');
+
+        return new DateTime($published);
+
     }
 
     public function getDescription(): string

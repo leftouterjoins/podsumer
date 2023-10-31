@@ -50,7 +50,7 @@ class State
             throw new Exception('No DB file found at path: ' . $this->state_file_path);
         }
 
-        // Do the tables expected exists?
+        // Do the tables expected exist?
         $this->installTableS();
     }
 
@@ -77,9 +77,9 @@ class State
             $feed_rec['url_hash'] = $feed_url_hash;
             $feed_rec['url'] = $feed->getUrl();
             $feed_rec['name'] = $feed->getTitle();
-            $feed_rec['last_update'] = $feed->getPubDate();
+            $feed_rec['last_update'] = $feed->getLastUpdated()->format('r');
             $feed_rec['description'] = $feed->getDescription();
-            $feed_rec['image'] = $this->encodeImage($feed->getChannelArt());
+            $feed_rec['image'] = $this->cacheFile($feed->getChannelArt());
         }
 
         $sql = 'INSERT INTO feeds (url_hash, name, last_update, url, description, image) VALUES (:url_hash, :name, :last_update, :url, :description, :image)';
@@ -98,11 +98,11 @@ class State
             $item_rec = [
                 'feed_id' => $feed->getFeedId(),
                 'name' => $new_item->getName(),
-                'published' => $new_item->getPublished(),
+                'published' => $new_item->getPublished()->format('r'),
                 'description' => $new_item->getDescription(),
                 'size' => $new_item->getSize(),
                 'audio_url' => $new_item->getAudioFileUrl(),
-                'image' => $this->encodeImage($new_item->getImage() ?: '')
+                'image' => $this->cacheFile($new_item->getImage() ?: '')
             ];
 
             $sql = 'INSERT INTO items (feed_id, name, published, description, size, audio_url, image) VALUES (:feed_id, :name, :published, :description, :size, :audio_url, :image)';
@@ -110,14 +110,11 @@ class State
         }
     }
 
-    public function encodeImage(string $art): string
+    public function cacheFile(string $url): string
     {
-        if (!empty($art)) {
-            $image_bin = file_get_contents($art);
-            $image = base64_encode($image_bin);
-            $finfo = new \finfo(FILEINFO_MIME);
-            $mime = $finfo->buffer($image_bin);
-            return "data:$mime;base64,$image";
+        if (!empty($url)) {
+            $file = new File($this->main);
+            return $file->cacheUrl($url);
         }
 
         return '';
@@ -130,14 +127,14 @@ class State
 
     public function getFeeds(): array|false
     {
-        $sql = 'SELECT id, name, last_update, url, description, image FROM feeds';
+        $sql = 'SELECT id, name, last_update, url, description, image FROM feeds ORDER BY last_update DESC';
         return $this->query($sql);
      }
 
     public function getFeed(int $id): array
     {
         $sql = 'SELECT id, name, description, url, image, last_update FROM feeds WHERE id = :id';
-        return $this->query($sql, ['id' => $id])[0];
+        return $this->query($sql, ['id' => $id])[0] ?? [];
     }
 
     public function getFeedItem(string $item_id): array
@@ -146,9 +143,9 @@ class State
         return $this->query($sql, ['id' => $item_id])[0];
     }
 
-    public function getFeedItems(string $feed_id): array
+    public function getFeedItems(int $feed_id): array
     {
-        $sql = 'SELECT name, feed_id, id, audio_url, image, size, published, description FROM items WHERE feed_id = :id';
+        $sql = 'SELECT name, feed_id, id, audio_url, image, size, published, description FROM items WHERE feed_id = :id ORDER BY published DESC';
         return $this->query($sql, ['id' => $feed_id]);
     }
 
@@ -157,5 +154,32 @@ class State
         $sql = 'SELECT id, name, last_update, url, description FROM feeds WHERE url_hash = :hash';
         return $this->query($sql, ['hash' => $hash]);
     }
+
+    public function getFileByUrlHash(string $url_hash): array
+    {
+        $sql = 'SELECT id, url, url_hash, mimetype, filename, size, cached, content_hash, data FROM files WHERE url_hash = :url_hash';
+        return $this->query($sql, ['url_hash' => $url_hash])[0] ?? [];
+    }
+
+    public function cacheNewFile(string $url, string $contents)
+    {
+        $finfo = new \finfo(\FILEINFO_MIME);
+        $mimetype = $finfo->buffer($contents);
+        $file = [
+            'url' => $url,
+            'url_hash' => md5($url),
+            'filename' => basename($url),
+            'mimetype' => $mimetype,
+            'size' => strlen($contents),
+            'cached' => time(),
+            'content_hash' => md5($contents),
+            'data' => $contents
+        ];
+
+        $sql = 'INSERT INTO files (url, url_hash, filename, size, cached, content_hash, mimetype, data) VALUES (:url, :url_hash, :filename, :size, :cached, :content_hash, :mimetype, :data)';
+
+        return $this->query($sql, $file);
+    }
+
 }
 

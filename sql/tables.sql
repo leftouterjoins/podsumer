@@ -19,3 +19,16 @@ CREATE TABLE IF NOT EXISTS `items` (
     image BLOB
 );
 
+CREATE TABLE IF NOT EXISTS `files` (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    url TEXT NOT NULL,
+    url_hash TEXT NOT NULL,
+    filename TEXT NOT NULL,
+    cached DATETIME NOT NULL,
+    size INTEGER NOT NULL,
+    mimetype TEXT NOT NULL,
+    content_hash TEXT NOT NULL,
+    data BLOB
+);
+
+

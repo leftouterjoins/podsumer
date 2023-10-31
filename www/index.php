@@ -14,6 +14,7 @@ use Brickner\Podsumer\Main;
 use Brickner\Podsumer\Template;
 use Brickner\Podsumer\Feed;
 use Brickner\Podsumer\OPML;
+use Brickner\Podsumer\File;
 
 $main = new Main(PODSUMER_PATH);
 $main->run();
@@ -59,7 +60,7 @@ function feed(array $args): void
 
     $vars = [
         'feed' => $main->getState()->getFeed(intval($args['id'])),
-        'items' => $main->getState()->getFeedItems($args['id'])
+        'items' => $main->getState()->getFeedItems(intval($args['id']))
     ];
 
     Template::render($main, 'feed', $vars);
@@ -79,5 +80,46 @@ function item(array $args): void
     ];
 
     Template::render($main, 'item', $vars);
+}
+
+#[Route('/rss', 'GET')]
+function rss(array $args)
+{
+    global $main;
+
+    $feed_id = intval($args['feed_id']);
+
+    $items = $main->getState()->getFeedItems($feed_id);
+    $feed = $main->getState()->getFeed($feed_id);
+
+    $vars = [
+        'items' => $items,
+        'feed' => $feed
+    ];
+    Template::renderXml($main, 'rss', $vars);
+}
+
+#[Route('/file', 'GET')]
+function file_cache(array $args)
+{
+    global $main;
+
+    $file = new File($main);
+    if (!empty($args['hash'])) {
+        $file_data = $file->cacheForHash($args['hash']);
+    } elseif (!empty($args['url'])) {
+        $hash = $file->cacheUrl($args['url']);
+        $file_data = $file->cacheForHash($hash);
+    }
+
+    if (empty($file_data)) {
+        http_response_code(404);
+        die();
+    }
+
+    header('Content-Type: ' . $file_data['mimetype']);
+    header('Content-Length: ' . $file_data['size']);
+    echo $file_data['data'];
+    die();
 }
 

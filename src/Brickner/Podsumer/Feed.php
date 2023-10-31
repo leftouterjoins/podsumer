@@ -3,6 +3,7 @@
 namespace Brickner\Podsumer;
 
 use \Exception;
+use \DateTime;
 use \PHP_URL_SCHEME;
 use \LIBXML_NOCDATA;
 use \simplexml_load_file;
@@ -31,30 +32,9 @@ class Feed
         $this->fetchFeed();
     }
 
-    protected function downloadFeed($url, $user = null, $pass = null): string
-    {
-        $curl = curl_init();
-        curl_setopt($curl,\CURLOPT_URL, $url);
-        curl_setopt($curl, \CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, \CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($curl, \CURLOPT_MAXREDIRS, 3);
-
-        if (!empty($user) && !empty($pass)) {
-            curl_setopt($curl,\CURLOPT_USERPWD, "$user:$pass");
-            curl_setopt($curl, \CURLOPT_HTTPAUTH, \CURLAUTH_ANY);
-        }
-
-        $feed_contents = curl_exec($curl);
-        if (false === $feed_contents) {
-            throw new Execption('Cannot download feed' . $url);
-        }
-
-        return $feed_contents;
-    }
-
     private function fetchFeed()
     {
-        $feed_contents = $this->downloadFeed($this->url);
+        $feed_contents = File::downloadUrl($this->url);
         $this->hash = md5($feed_contents);
         $this->parseFeed($feed_contents);
      }
@@ -95,10 +75,12 @@ class Feed
         return strval($this->feed->channel->title);
     }
 
-    public function getPubDate(): int
+    public function getLastUpdated(): DateTime
     {
-        $lastUpdated = $this->feed->channel->lastBuildDate;
-        return strtotime(strval($lastUpdated)) ?: 0;
+        $lastUpdated = strval($this->feed->channel->lastBuildDate);
+        $lastUpdated = $lastUpdated ?: date('r');
+
+        return new DateTime($lastUpdated);
     }
 
     public function getDescription(): string

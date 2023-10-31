@@ -7,11 +7,11 @@
         </label>
         <br>
         <label>
-            Import OPML file:
-            <input type="file" name="opml">
+            OPML:
+            <input type="file" name="opml" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         </label>
         <br>
-        <input type="submit">
+        <input type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
 
     </form>
 
@@ -23,18 +23,20 @@
     <? else: ?>
     <? foreach ($feeds as $feed): ?>
     <div class="container py-10 clear">
-        <img src="<?= $feed['image'] ?>" class="float-left w-32 pr-5">
+        <img src="/file?hash=<?= $feed['image'] ?>" class="float-left w-32 pr-5">
         <h1 class="text-2xl">
             <a href="/feed?id=<?= $feed['id'] ?>">
             <?= $feed['name'] ?>
             </a>
         </h1>
         <p class="text-neutral-400 text-xs">
-            <?= date('m/d/Y H:i', $feed['last_update']) ?>
+            <?= $feed['last_update'] ?>
         </p>
         <p>
             <?= $feed['description'] ?>
         </p>
+
+        <p><a href="/rss?feed_id=<?= $feed['id'] ?>">RSS</a></p>
     </div>
     <? endforeach ?>
     <? endif ?>
