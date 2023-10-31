@@ -77,10 +77,10 @@ class Feed
 
     public function getLastUpdated(): DateTime
     {
-        $lastUpdated = strval($this->feed->channel->lastBuildDate);
-        $lastUpdated = $lastUpdated ?: date('r');
+        $lastUpdated = strval($this->feed->channel->pubDate);
+        $lastUpdated = $lastUpdated ?: strval($this->feed->channel->lastBuildDate);
 
-        return new DateTime($lastUpdated);
+        return new DateTime(trim($lastUpdated));
     }
 
     public function getDescription(): string
@@ -88,8 +88,15 @@ class Feed
         return strval($this->feed->channel->description);
     }
 
-    public function getChannelArt(): string
+    public function getImage(): string
     {
+        $image = $this->feed->channel->children('itunes', true)->image;
+        $href = '';
+        if (!empty($image)) {
+            $href = strval($image->attributes()->href);
+            return $href;
+        }
+
         return strval($this->feed->channel->image->url);
     }
 

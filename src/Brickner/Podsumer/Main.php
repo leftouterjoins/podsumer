@@ -7,6 +7,7 @@ use function call_user_func;
 class Main
 {
     private $env;
+    private $server;
     private $args;
     private $uploads;
     private Logs $logs;
@@ -17,6 +18,7 @@ class Main
     public function __construct($path)
     {
         $this->env = $_ENV;
+        $this->server = $_SERVER;
         $this->args = $_REQUEST;
         $this->uploads = $_FILES;
 
@@ -60,6 +62,11 @@ class Main
 
             echo $e->getMessage();
         }
+    }
+
+    public function getPhpSelf(): string
+    {
+        return $this->server['REQUEST_URI'];
     }
 
     public function getUrl(): string

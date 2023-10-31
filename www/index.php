@@ -40,7 +40,7 @@ function add(array $args): void
     }
 
     $uploads = $main->getUploads();
-    if (!empty($uploads['opml'])) {
+    if (count(array_filter($uploads['opml'])) > 2) {
         $feed_urls = OPML::parse($main, $uploads['opml']);
         foreach ($feed_urls as $url) {
             $feed = new Feed($main, $url);
@@ -50,7 +50,6 @@ function add(array $args): void
 
     header("Location: /");
     die();
-
 }
 
 #[Route('/feed', 'GET')]
@@ -62,6 +61,7 @@ function feed(array $args): void
         'feed' => $main->getState()->getFeed(intval($args['id'])),
         'items' => $main->getState()->getFeedItems(intval($args['id']))
     ];
+
 
     Template::render($main, 'feed', $vars);
 }
@@ -87,6 +87,13 @@ function rss(array $args)
 {
     global $main;
 
+    if (!empty($args['feed_id'])) {
+        $feed = $main->getState()->getFeed(intval($args['feed_id']));
+        $refresh_feed = new Feed($main, $feed['url']);
+        $refresh_feed->setFeedId(intval($args['feed_id']));
+        $main->getState()->addFeed($refresh_feed);
+    }
+
     $feed_id = intval($args['feed_id']);
 
     $items = $main->getState()->getFeedItems($feed_id);
@@ -96,7 +103,25 @@ function rss(array $args)
         'items' => $items,
         'feed' => $feed
     ];
+
     Template::renderXml($main, 'rss', $vars);
+}
+#
+#[Route('/opml', 'GET')]
+function opml(array $args)
+{
+    global $main;
+
+    $feeds = $main->getState()->getFeeds();
+
+    $vars = [
+        'feeds' => $feeds
+    ];
+
+    header("Content-disposition: attachment; filename=\"podsumer.opml\"");
+    header("Content-Type: text/x-opml");
+
+    Template::renderXml($main, 'opml', $vars);
 }
 
 #[Route('/file', 'GET')]
@@ -120,6 +145,22 @@ function file_cache(array $args)
     header('Content-Type: ' . $file_data['mimetype']);
     header('Content-Length: ' . $file_data['size']);
     echo $file_data['data'];
+    die();
+}
+
+#[Route('/refresh', 'GET')]
+function refresh(array $args)
+{
+    global $main;
+
+    if (!empty($args['feed_id'])) {
+        $feed = $main->getState()->getFeed(intval($args['feed_id']));
+        $refresh_feed = new Feed($main, $feed['url']);
+        $refresh_feed->setFeedId(intval($args['feed_id']));
+        $main->getState()->addFeed($refresh_feed);
+    }
+
+    header("Location: /feed?id=" . intval($args['feed_id']));
     die();
 }
 

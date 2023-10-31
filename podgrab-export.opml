@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+    <head>
+        <title>Podgrab Feed Export</title>
+        <dateCreated>2023-10-11T03:00:47.689557794Z</dateCreated>
+    </head>
+    <body>
+        <outline title="No Agenda" xmlUrl="http://feed.nashownotes.com/rss.xml" text="A show about politics with No Agenda, by Adam Curry and John C. Dvorak" type="rss"></outline>
+        <outline title="Scott Horton Show - Just the Interviews" xmlUrl="https://feeds2.feedburner.com/Scotthortonshow" text="This podcast is for individual interviews on the Scott Horton Show. See the Q &amp; A show feed to hear Scott answer listener questions and for the full show archives. Scott Horton is the author of Fool&#39;s Errand: Time to End the War in Afghanistan, and is the host of the Scott Horton Show podcast. He has conducted over 5,500 interviews with authors, journalists, activists, and whistleblowers on the most important foreign policy issues since 2003." type="rss"></outline>
+        <outline title="&#34;YOUR WELCOME&#34; with Michael Malice" xmlUrl="https://www.podcastone.com/podcast?categoryID2=2232" text="Michael Malice brings his unique perspective – and plenty of sick burns – as he discusses everything from north Korea to American politics and culture with a bevy of guests." type="rss"></outline>
+        <outline title="Racket To Go  (private feed for josh@macinjo.sh)" xmlUrl="https://api.substack.com/feed/podcast/1042/private/8cab57d7-6ae8-4ba4-8bd8-e24ae8f3b994.rss" text="" type="rss"></outline>
+        <outline title="Conan O’Brien Needs A Friend" xmlUrl="https://feeds.simplecast.com/dHoohVNH" text="After 25 years at the Late Night desk, Conan realized that the only people at his holiday party are the men and women who work for him. Over the years and despite thousands of interviews, Conan has never made a real and lasting friendship with any of his celebrity guests. So, he started a podcast to do just that. Deeper, unboundedly playful, and free from FCC regulations, Conan O’Brien Needs a Friend is a weekly opportunity for Conan to hang out with the people he enjoys most and perhaps find some real friendship along the way." type="rss"></outline>
+        <outline title="No Such Thing As A Fish - Patreon Subscription FEED" xmlUrl="https://www.patreon.com/rss/nosuchthingasafish?auth=CAYvaAUojNdJKKRDLU5kuRP6OZ0rWrcD" text="" type="rss"></outline>
+    </body>
+</opml>

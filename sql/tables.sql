@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `feeds` (
 
 CREATE TABLE IF NOT EXISTS `items` (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    guid TEXT UNIQUE,
     feed_id INTEGER NOT NULL,
     name TEXT NOT NULL,
     published DATETIME NOT NULL,
@@ -22,13 +23,17 @@ CREATE TABLE IF NOT EXISTS `items` (
 CREATE TABLE IF NOT EXISTS `files` (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     url TEXT NOT NULL,
-    url_hash TEXT NOT NULL,
+    url_hash TEXT NOT NULL UNIQUE,
     filename TEXT NOT NULL,
     cached DATETIME NOT NULL,
     size INTEGER NOT NULL,
     mimetype TEXT NOT NULL,
-    content_hash TEXT NOT NULL,
-    data BLOB
+    content_hash TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS `file_contents` (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content_hash TEXT NOT NULL UNIQUE,
+    data BLOB
+);
 

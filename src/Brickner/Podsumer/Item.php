@@ -23,6 +23,11 @@ class Item
         return $this->feed->getFeedId();
     }
 
+    public function getGuid(): string
+    {
+        return strval($this->item->guid);
+    }
+
     public function getName(): string
     {
         return strval($this->item->title);
@@ -31,10 +36,9 @@ class Item
     public function getPublished(): DateTime
     {
         $published = strval($this->item->pubDate);
-        $published = $published ?: date('r');
+        $published = $published ?: date('c');
 
         return new DateTime($published);
-
     }
 
     public function getDescription(): string
