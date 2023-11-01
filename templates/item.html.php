@@ -1,11 +1,14 @@
-<div class="container p-10 content-center">
-    <p class="py-5">
-        <a href="/feed?id=<?= $item['feed_id'] ?>">Back to Feed</a>
-    </p>
+<div class="container py-10 content-center">
 
-    <h1 class="text-3xl pb-5"><?= $item['name'] ?></h1>
-    <img src="/file?hash=<?= $item['image'] ?: $feed_image ?>" class="mx-auto w-2/5 border-solid border-neutral-800 border">
-    <audio controls src="/file?url=<?= urlencode($item['audio_url']) ?>" class="w-full p-4 h-13"></audio>
+    <h1 class="py-5 text-3xl">
+    <a href="/feed?id=<?= $item['feed_id'] ?>"><?= $feed['name'] ?></a>
+    </h1>
+
+    <h1 class="text-2xl pb-5"><?= $item['name'] ?></h1>
+    <img src="/file?hash=<?= $item['image'] ?: $feed['image'] ?>" class="mx-auto w-3/5 border-solid border-neutral-800 border">
+    <audio autoplay controls src="/media?item_id=<?= $item['id'] ?>" class="w-full p-4 h-13"></audio>
     <div class="w-full p-10">
-    <?= $item['description'] ?>
+        <?= nl2br($item['description']) ?>
+    </div>
+
 </div>

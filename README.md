@@ -6,7 +6,7 @@
  X Dedupe files in DB
  X Feed refresh
  - Add support for streaming audio
- - escape content output in templates
+ x escape content output in templates
  - Error states
  - logging
  - Pagination on feed page.

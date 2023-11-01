@@ -4,19 +4,19 @@ namespace Brickner\Podsumer;
 
 class Route
 {
-    private array $routes = [];
+    protected array $routes = [];
     public array $matchedRoute = [];
 
     public function __construct(
-        private string $route,
-        private string $method
+        protected string $route,
+        protected string $method
     ) {
         $this->collectDefinedRoutes();
 
         $this->matchedRoute = $this->matchRoute($route, $method);
     }
 
-    private function collectDefinedRoutes()
+    protected function collectDefinedRoutes()
     {
         foreach (get_defined_functions()['user'] as $fnName) {
             $ref = new \ReflectionFunction($fnName);
@@ -33,7 +33,7 @@ class Route
         }
     }
 
-    private function matchRoute(string $route, string $method): array
+    protected function matchRoute(string $route, string $method): array
     {
         foreach ($this->routes as $definedRoute => $fn) {
 

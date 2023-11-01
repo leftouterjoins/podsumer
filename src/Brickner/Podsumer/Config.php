@@ -7,8 +7,8 @@ use function parse_ini_file;
 class Config
 {
 
-    private string $path;
-    private array $config = [];
+    protected string $path;
+    protected array $config = [];
 
     public function __construct(Main $main)
     {
@@ -46,7 +46,7 @@ class Config
         }
     }
 
-    private function parseConfig($path): mixed
+    protected function parseConfig($path): mixed
     {
         return parse_ini_file(
             $path,

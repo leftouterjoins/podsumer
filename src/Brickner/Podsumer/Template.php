@@ -2,11 +2,13 @@
 
 namespace Brickner\Podsumer;
 
+use function \htmlspecialchars;
+
 class Template
 {
-    private Main $main;
-    private string $base_template;
-    private string $template_dir;
+    protected Main $main;
+    protected string $base_template;
+    protected string $template_dir;
 
     public function __construct(Main $main)
     {
@@ -28,7 +30,7 @@ class Template
         $t->renderTemplate('', $vars, $template_name . '.xml.php');
     }
 
-    private function renderTemplate(string $template_name, array $vars, string $base_template)
+    protected function renderTemplate(string $template_name, array $vars, string $base_template)
     {
         $PAGE_TITLE = $this->main->getConf('podsumer', 'default_page_title');
         $LANGUAGE = $this->main->getConf('podsumer', 'language');
@@ -38,16 +40,26 @@ class Template
             $BODY = $this->getTemplatePath($template_name . '.html.php');
         }
 
-        extract($vars);
+        $cleaned_vars = $this->encodeVars($vars);
+        extract($cleaned_vars);
         include($this->getTemplatePath($base_template));
     }
 
-    private function getTemplatePath(string $template_name)
+    protected function getTemplatePath(string $template_name)
     {
         return $this->main->getInstallPath() .
             $this->template_dir .
             \DIRECTORY_SEPARATOR .
             $template_name;
+    }
+
+    protected function encodeVars(array $vars): array
+    {
+        array_walk_recursive($vars, function (&$var) {
+            $var = htmlentities(strip_tags(strval($var)), ENT_QUOTES | ENT_SUBSTITUTE | ENT_XML1, '', false);
+        });
+
+        return $vars;
     }
 }
 

@@ -8,14 +8,14 @@ use \PDO;
 class File
 {
 
-    private Main $main;
+    protected Main $main;
 
     function __construct(Main $main)
     {
         $this->main = $main;
     }
 
-    public function cacheUrl(string $url)
+    public function cacheUrl(string $url): string
     {
         $url_hash = $this->hashUrl($url);
         $cached = $this->cacheForHash($url_hash);

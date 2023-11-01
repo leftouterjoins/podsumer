@@ -11,11 +11,11 @@ use \SimpleXMLElement;
 
 class Feed
 {
-    private Main $main;
-    private string $url;
-    private string $hash;
-    private int $feed_id;
-    private ?SimpleXMLElement $feed;
+    protected Main $main;
+    protected string $url;
+    protected string $hash;
+    protected int $feed_id;
+    protected ?SimpleXMLElement $feed;
 
     public function __construct(Main $main, string $url)
     {
@@ -32,14 +32,14 @@ class Feed
         $this->fetchFeed();
     }
 
-    private function fetchFeed()
+    protected function fetchFeed()
     {
         $feed_contents = File::downloadUrl($this->url);
         $this->hash = md5($feed_contents);
         $this->parseFeed($feed_contents);
      }
 
-    private function validateUrl(string $url)
+    protected function validateUrl(string $url)
     {
         $scheme = parse_url($url, PHP_URL_SCHEME);
         if (false === $scheme || is_null($scheme) || !str_contains($scheme, 'http')) {
@@ -49,7 +49,7 @@ class Feed
         return true;
     }
 
-    private function parseFeed(string $feed_contents): void
+    protected function parseFeed(string $feed_contents): void
     {
          $parse_result = simplexml_load_string(
             $feed_contents,

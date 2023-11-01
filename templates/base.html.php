@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-black text-neutral-100 font-mono">
+<body class="bg-neutral-900 text-neutral-100 font-sans">
     <div class="container mx-auto p-10">
-        <h1 class="text-3xl font-black">
-            <a href="/">Podsumer</a>
+        <h1 class="text-xl font-black text-center">
+            <a href="/">Home</a>
+            &nbsp;|&nbsp;
+            <a href="/opml">Download OPML</a>
         </h1>
-
         <? include($BODY) ?>
-</div>
+    </div>
 </body>
 </html>
 

@@ -1,6 +1,5 @@
 <?php declare(strict_types = 1);
 
-require_once __DIR__ . '/../vendor/autoload.php';
 
 ini_set('display_errors', 1);
 ini_set('error_reporting', E_ALL);
@@ -9,6 +8,8 @@ ini_set('request_order', 'CGP');
 ini_set('memory_limit', -1);
 
 const PODSUMER_PATH = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
+
+require_once PODSUMER_PATH . 'vendor/autoload.php';
 
 use Brickner\Podsumer\Main;
 use Brickner\Podsumer\Template;
@@ -76,7 +77,7 @@ function item(array $args): void
 
     $vars = [
         'item' => $item,
-        'feed_image' => $feed['image']
+        'feed' => $feed
     ];
 
     Template::render($main, 'item', $vars);
@@ -87,12 +88,7 @@ function rss(array $args)
 {
     global $main;
 
-    if (!empty($args['feed_id'])) {
-        $feed = $main->getState()->getFeed(intval($args['feed_id']));
-        $refresh_feed = new Feed($main, $feed['url']);
-        $refresh_feed->setFeedId(intval($args['feed_id']));
-        $main->getState()->addFeed($refresh_feed);
-    }
+    triggerRefresh(intval($args['feed_id']));
 
     $feed_id = intval($args['feed_id']);
 
@@ -132,13 +128,10 @@ function file_cache(array $args)
     $file = new File($main);
     if (!empty($args['hash'])) {
         $file_data = $file->cacheForHash($args['hash']);
-    } elseif (!empty($args['url'])) {
-        $hash = $file->cacheUrl($args['url']);
-        $file_data = $file->cacheForHash($hash);
     }
 
     if (empty($file_data)) {
-        http_response_code(404);
+        $main->setResponseCode(404);
         die();
     }
 
@@ -148,19 +141,39 @@ function file_cache(array $args)
     die();
 }
 
+#[Route('/media', 'GET')]
+function media_cache(array $args)
+{
+    global $main;
+
+    $item_id = strval($args['item_id']);
+    $item = $main->getState()->getFeedItem($item_id);
+    $file = new File($main);
+    $hash = $file->cacheUrl($item['audio_url']);
+
+    file_cache(['hash' => $hash]);
+
+}
+
 #[Route('/refresh', 'GET')]
 function refresh(array $args)
 {
     global $main;
 
-    if (!empty($args['feed_id'])) {
-        $feed = $main->getState()->getFeed(intval($args['feed_id']));
-        $refresh_feed = new Feed($main, $feed['url']);
-        $refresh_feed->setFeedId(intval($args['feed_id']));
-        $main->getState()->addFeed($refresh_feed);
-    }
+    triggerRefresh(intval($args['feed_id']));
 
     header("Location: /feed?id=" . intval($args['feed_id']));
     die();
 }
 
+function triggerRefresh(int $feed_id) {
+
+    global $main;
+
+    if (!empty($feed_id)) {
+        $feed = $main->getState()->getFeed(intval($feed_id));
+        $refresh_feed = new Feed($main, $feed['url']);
+        $refresh_feed->setFeedId(intval($feed_id));
+        $main->getState()->addFeed($refresh_feed);
+    }
+}

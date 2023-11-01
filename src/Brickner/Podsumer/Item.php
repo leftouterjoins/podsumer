@@ -7,9 +7,9 @@ use \SimpleXMLElement;
 
 class Item
 {
-    private Main $main;
-    private SimpleXMLElement $item;
-    private Feed $feed;
+    protected Main $main;
+    protected SimpleXMLElement $item;
+    protected Feed $feed;
 
     public function __construct(Main $main, SimpleXMLElement $item, Feed $feed)
     {

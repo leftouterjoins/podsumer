@@ -3,16 +3,17 @@
 namespace Brickner\Podsumer;
 
 use function call_user_func;
+use function parse_url;
 
 class Main
 {
-    private $env;
-    private $args;
-    private $uploads;
-    private Logs $logs;
-    private State $state;
-    private Config $config;
-    private $path;
+    protected $env;
+    protected $args;
+    protected $uploads;
+    protected Logs $logs;
+    protected State $state;
+    protected Config $config;
+    protected $path;
 
     public function __construct($path)
     {
@@ -49,7 +50,13 @@ class Main
         }
 
         try {
-            call_user_func($route[0], $this->getArgs(), $this);
+            $args = $this->getArgs();
+
+            // Sanitize inputs to sidestep XSS. QPs in this app are only alpha-numeric anyway.
+            $args = filter_var_array($args,  \FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            call_user_func($route[0], $args, $this);
+
             $this->logs->accessLog();
         } catch (\Exception $e) {
 

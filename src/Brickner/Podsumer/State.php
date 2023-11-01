@@ -11,10 +11,10 @@ use \SimpleXMLElement;
 
 class State
 {
-    private Main $main;
-    private $state_file_path;
-    private $sql_dir_path;
-    private $pdo;
+    protected Main $main;
+    protected $state_file_path;
+    protected $sql_dir_path;
+    protected $pdo;
 
     function __construct(Main $main)
     {
@@ -123,7 +123,7 @@ class State
         return dirname($this->state_file_path);
     }
 
-    public function getFeeds(): array|false
+    public function getFeeds(): array
     {
         $sql = 'SELECT id, name, last_update, url, description, image FROM feeds ORDER BY last_update DESC';
         return $this->query($sql);

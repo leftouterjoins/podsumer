@@ -7,8 +7,8 @@ use \SimpleXMLElement;
 
 class OPML
 {
-    private Main $main;
-    private array $file;
+    protected Main $main;
+    protected array $file;
 
     public function __construct(Main $main, array $file)
     {

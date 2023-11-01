@@ -7,9 +7,9 @@ use function fputcsv;
 class Logs
 {
 
-    private $main;
-    private $stdout;
-    private $stderr;
+    protected $main;
+    protected $stdout;
+    protected $stderr;
 
     public function __construct(Main $main)
     {
@@ -78,17 +78,17 @@ class Logs
         $this->writeError($log);
     }
 
-    private function writeLog(array $message): void
+    protected function writeLog(array $message): void
     {
         $this->write($this->stdout, $message);
     }
 
-    private function writeError(array $message): void
+    protected function writeError(array $message): void
     {
         $this->write($this->stdout, $message);
     }
 
-    private function write($f, array $message): void
+    protected function write($f, array $message): void
     {
         if (!fputcsv($f, $message)) {
             throw new \Exception('Failed to write to log.');
