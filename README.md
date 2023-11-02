@@ -12,23 +12,12 @@
 
 # @TODO
 
- x caching/downloading of audio files
- X generate RSS feeds
- X fix timestamp and sorting
- X Dedupe files in DB
- X Feed refresh
- X Add support for streaming audio
- X escape content output in templates
- X Error states
- X logging
- X CRUD operations on feeds
- - CRUD operations on item downloads
  - Add UI for feed auth
  - remember play position
  - remember if podcast finished
- - pagination on feed page
  - search
  - improve player UI
  - index search and add
+ - pagination on feed page
  - offline support?
 
