@@ -2,12 +2,12 @@
 
 namespace Brickner\Podsumer;
 
-use \Exception;
 use \DateTime;
-use \PHP_URL_SCHEME;
+use \Exception;
 use \LIBXML_NOCDATA;
-use \simplexml_load_file;
+use \PHP_URL_SCHEME;
 use \SimpleXMLElement;
+use \simplexml_load_file;
 
 class Feed
 {
@@ -123,7 +123,6 @@ class Feed
     public function getFeedId(): int|null
     {
         return isset($this->feed_id) ? $this->feed_id : null;
-
     }
 }
 

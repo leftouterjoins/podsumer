@@ -12,11 +12,11 @@
 
 # @TODO
 
- - Add UI for feed auth
  - remember play position
  - remember if podcast finished
- - search
  - improve player UI
+ - Add UI for feed auth
+ - search
  - index search and add
  - pagination on feed page
  - offline support?

@@ -60,6 +60,7 @@ class Main
             call_user_func($route[0], $args, $this);
 
             $this->logs->accessLog();
+
         } catch (\Exception $e) {
 
             $this->setResponseCode(500);
@@ -181,6 +182,11 @@ class Main
     public function getDbSize(): int
     {
         return filesize($this->getState()->getStateFilePath());
+    }
+
+    public function redirect(string $path)
+    {
+        header("Location: $path");
     }
 }
 

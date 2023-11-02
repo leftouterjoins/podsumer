@@ -4,21 +4,31 @@ ini_set('display_errors', true);
 ini_set('error_reporting', E_ALL);
 ini_set('variables_order', 'E');
 ini_set('request_order', 'CGP');
-ini_set('memory_limit', "1024M"); # @TODO Implement media streaming so we can lower this. Currently limits longest episode possible.
+ini_set('memory_limit', '-1');
 
+# Detect install directory.
 const PODSUMER_PATH = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
 
+# Load composer auto-loader.
 require_once PODSUMER_PATH . 'vendor/autoload.php';
 
-use Brickner\Podsumer\Main;
-use Brickner\Podsumer\Template;
 use Brickner\Podsumer\Feed;
-use Brickner\Podsumer\OPML;
 use Brickner\Podsumer\File;
+use Brickner\Podsumer\Main;
+use Brickner\Podsumer\OPML;
+use Brickner\Podsumer\Template;
 
+# Create the application.
 $main = new Main(PODSUMER_PATH);
 $main->run();
 
+/**
+ * Home
+ * Path: /
+ * HTTP Method: GET
+ *
+ * Renders the default page.
+ */
 #[Route('/', 'GET')]
 function home(array $args): void
 {
@@ -29,15 +39,26 @@ function home(array $args): void
     Template::render($main, 'home', $vars);
 }
 
+/**
+ * Add new feed(s)
+ * Path: /add
+ * HTTP Method: POST
+ *
+ * Adds new feed(s) based on entered URL or URLs from an uploaded OPML file.
+ */
 #[Route('/add', 'POST')]
 function add(array $args): void
 {
     global $main;
 
+    # Add a single feed via a URL. URL is validated automatically.
+
     if (!empty($args['url'])) {
         $feed = new Feed($main, $args['url']);
         $main->getState()->addFeed($feed);
     }
+
+    # Add an array of feeds via uploaded OPML file.
 
     $uploads = $main->getUploads();
 
@@ -51,8 +72,9 @@ function add(array $args): void
         }
     }
 
-    header("Location: /");
-    return;
+    # Send user to home to see newly added feed(s).
+
+    $main->redirect('/');
 }
 
 #[Route('/feed', 'GET')]
@@ -168,7 +190,7 @@ function opml(array $args)
 }
 
 #[Route('/file', 'GET')]
-function file_cache(array $args)
+function file_cache(array $args): ?string
 {
     global $main;
 
@@ -181,7 +203,7 @@ function file_cache(array $args)
 
     if (empty($file_data)) {
         $main->setResponseCode(404);
-        return;
+        return null;
     }
 
     $data = $file_data['data'];
@@ -201,33 +223,61 @@ function file_cache(array $args)
         $start = $range[0];
 
         if ($range[1] == 0) {
-            $end = null;
-            $end_out = '';
+            $end = $size-1;
+            $end_out = $size-1;
         } else {
             $end = $range[1];
             $end_out = $end;
         }
 
         $data = substr($data, $start, !empty($end) ? $end-$start : $end );
+        $main->log("$start, $end, $end_out");
 
         if (strlen($data) < $size) {
             $main->setResponseCode(206);
         }
+
         header("Content-Range: bytes $start-$end_out/$size");
     }
 
     header('Content-Length: ' . strlen($data));
 
+    if (array_key_exists('return', $args) && $args['return'] === true) {
+        return $data;
+    }
+
     if (array_key_exists('is_head', $args) && $args['is_head'] === true) {
-        return;
+        return null;
     }
 
     echo $data;
-    return;
+
+    return null;
 }
 
 #[Route('/media', 'GET')]
 function media_cache(array $args)
+{
+    global $main;
+
+    if (empty($args['item_id'])) {
+        $main->setResponseCode(404);
+        return;
+    }
+
+    $item_id = intval($args['item_id']);
+    $item = $main->getState()->getFeedItem($item_id);
+
+    $file = new File($main);
+    $file_id = $file->cacheUrl($item['audio_url']);
+
+    $main->getState()->setItemAudioFile($item_id, $file_id);
+
+    file_cache(['file_id' => $file_id]);
+}
+
+#[Route('/stream', 'GET')]
+function stream_cache(array $args)
 {
     global $main;
 
@@ -243,8 +293,23 @@ function media_cache(array $args)
 
     $main->getState()->setItemAudioFile($item_id, $file_id);
 
-    file_cache(['file_id' => $file_id]);
+    $data = file_cache(['file_id' => $file_id, 'return' => true]);
+
+    #header('Transfer-Encoding: chunked');
+
+    $chunks = str_split($data, 1024*32);
+    foreach ($chunks as $k => $chunk) {
+        $chunk_len = dechex(strlen($chunk));
+        echo "\r\n";
+        echo $chunk;
+        echo "\r\n";
+        $main->log("$k");
+        usleep(1000000);
+    }
+
+    echo "0\r\n\r\n";
 }
+
 
 #[Route('/refresh', 'GET')]
 function refresh(array $args)

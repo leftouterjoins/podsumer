@@ -12,14 +12,14 @@
             <img src="/file?file_id=<?= $feed['image'] ?>" class="float-left w-48 pr-5">
         </a>
 
-        <h1 class="text-3xl pb-2">
+        <h1 class="text-2xl pb-2">
             <a href="/feed?id=<?= $feed['id'] ?>">
             <?= $feed['name'] ?>
             </a>
         </h1>
         <p>
             <span class="text-neutral-400 text-s pb-4 font-bold">
-                <?= \date('m/d/Y H:i:s T', strtotime($feed['last_update'])) ?>
+                <?= \date('m/d/Y', strtotime($feed['last_update'])) ?>
                 &nbsp;|&nbsp;
                 <a href="/rss?feed_id=<?= $feed['id'] ?>">RSS</a>
                 &nbsp;|&nbsp;
