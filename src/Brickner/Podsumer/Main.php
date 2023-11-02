@@ -4,6 +4,8 @@ namespace Brickner\Podsumer;
 
 use function call_user_func;
 use function parse_url;
+use function getallheaders;
+use function filesize;
 
 class Main
 {
@@ -80,6 +82,11 @@ class Main
     public function getArg(string $key): mixed
     {
         return $this->args[$key];
+    }
+
+    public function getHeaders(): array
+    {
+        return getallheaders();
     }
 
     public function getUploads(): array
@@ -169,6 +176,11 @@ class Main
     public function getInstallPath(): string
     {
         return $this->path;
+    }
+
+    public function getDbSize(): int
+    {
+        return filesize($this->getState()->getStateFilePath());
     }
 }
 

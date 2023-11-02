@@ -9,7 +9,7 @@
     <? foreach ($feeds as $feed): ?>
     <div class="container py-10 clear-left">
         <a href="/feed?id=<?= $feed['id'] ?>">
-            <img src="/file?hash=<?= $feed['image'] ?>" class="float-left w-48 pr-5">
+            <img src="/file?file_id=<?= $feed['image'] ?>" class="float-left w-48 pr-5">
         </a>
 
         <h1 class="text-3xl pb-2">
@@ -24,6 +24,8 @@
                 <a href="/rss?feed_id=<?= $feed['id'] ?>">RSS</a>
                 &nbsp;|&nbsp;
                 <a href="/refresh?feed_id=<?= $feed['id'] ?>">Refresh</a>
+                &nbsp;|&nbsp;
+                <a href="/delete_feed?feed_id=<?= $feed['id'] ?>">Delete</a>
             </span>
             <br>
             <?= $feed['description'] ?>

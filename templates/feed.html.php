@@ -12,7 +12,7 @@
     <? foreach ($items as $id => $item): ?>
     <div class="w-full clear-left text-xl py-8">
         <a href="/item?item_id=<?= $item['id'] ?>">
-            <img src="/file?hash=<?= $item['image'] ?: $feed['image'] ?>" class="w-32 border-solid border-neutral-800 border inline float-left mr-4">
+            <img src="/file?file_id=<?= $item['image'] ?: $feed['image'] ?>" class="w-32 border-solid border-neutral-800 border inline float-left mr-4">
         </a>
         <a href="/item?item_id=<?= $item['id'] ?>" class="text-2xl">
             <?= $item['name'] ?>
@@ -22,6 +22,10 @@
         <?= round($item['size'] / 1024 / 1024, 1) ?>MB
         &nbsp;|&nbsp;
         <?= date('m/d/Y', strtotime($item['published'])); ?>
+        <? if (!empty($item['audio_file'])) { ?>
+        &nbsp;|&nbsp;
+        <a href="/delete_audio?item_id=<?= $item['id'] ?>">Delete Audio</a>
+        <? } ?>
         </span>
         <br>
         <?= substr($item['description'], 0, 360); ?>

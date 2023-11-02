@@ -120,9 +120,10 @@ class Feed
         $this->feed_id = $feed_id;
     }
 
-    public function getFeedId(): int
+    public function getFeedId(): int|null
     {
-        return $this->feed_id;
+        return isset($this->feed_id) ? $this->feed_id : null;
+
     }
 }
 
