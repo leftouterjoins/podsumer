@@ -1,5 +1,5 @@
 <div class="container py-10">
-    <h1 class="text-3xl py-4"><?= $feed['name'] ?></h1>
+    <h1 class="text-2xl py-4"><?= $feed['name'] ?></h1>
 
     <p class="py-4"><?= $feed['description'] ?></p>
 
@@ -10,11 +10,11 @@
     </p>
 
     <? foreach ($items as $id => $item): ?>
-    <div class="w-full clear-left text-xl py-8">
+    <div class="w-full clear-left py-8">
         <a href="/item?item_id=<?= $item['id'] ?>">
             <img src="/file?file_id=<?= $item['image'] ?: $feed['image'] ?>" class="w-32 border-solid border-neutral-800 border inline float-left mr-4">
         </a>
-        <a href="/item?item_id=<?= $item['id'] ?>" class="text-2xl">
+        <a href="/item?item_id=<?= $item['id'] ?>" class="text-xl">
             <?= $item['name'] ?>
         </a>
         <br>
