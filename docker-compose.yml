@@ -1,11 +1,13 @@
 version: "3.8"
 services:
   php:
-    image: php:8.2.10-fpm-bookworm
+    image: podsumer
     container_name: php
     volumes:
       - ./php-fpm.conf:/usr/local/etc/php-fpm.d/zzz-podsumer.conf
       - ./:/opt/podsumer
+    build:
+      context: .
     networks:
       - backplane
   web:
