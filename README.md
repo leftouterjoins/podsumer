@@ -2,6 +2,7 @@
 
 # Features
  - Self hostable
+    - single user
     - Docker Image
     - Docker Compose
  - Privacy oriented
