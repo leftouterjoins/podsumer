@@ -1663,7 +1663,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "phpunit/phpunit": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
