@@ -92,6 +92,14 @@ class Main
         return $this->args;
     }
 
+    public function parseUrl(string $key): mixed
+    {
+        $url = $this->getUrl();
+        $parse = parse_url($url);
+
+        return $parse[$key] ?? null;
+    }
+
     public function getQueryParams(): array
     {
         $q = [];
@@ -100,14 +108,6 @@ class Main
         parse_str($query, $q);
 
         return $q;
-    }
-
-    public function parseUrl(string $key): mixed
-    {
-        $url = $this->getUrl();
-        $parse = parse_url($url);
-
-        return $parse[$key] ?? null;
     }
 
     public function getRoute(): string

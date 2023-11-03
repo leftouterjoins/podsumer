@@ -7,8 +7,8 @@
     - Docker Compose
  - Privacy oriented
     - No data or usage collection
-    - Proxy and cache podcast feeds to reduce traffic to data collecting origin servers
- - Supports streaming audio
+    - Proxy and cache podcast feeds to reduce traffic to data collecting feed and media servers
+ - Support for streaming audio
  - Export OPML of proxied podcast feed
  - Single file library
     - sqlite DB
