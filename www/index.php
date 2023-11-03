@@ -19,7 +19,7 @@ use Brickner\Podsumer\OPML;
 use Brickner\Podsumer\Template;
 
 # Create the application.
-$main = new Main(PODSUMER_PATH);
+$main = new Main(PODSUMER_PATH, $_ENV, $_REQUEST, $_FILES);
 $main->run();
 
 /**
@@ -275,41 +275,6 @@ function media_cache(array $args)
 
     file_cache(['file_id' => $file_id]);
 }
-
-#[Route('/stream', 'GET')]
-function stream_cache(array $args)
-{
-    global $main;
-
-    if (empty($args['item_id'])) {
-        $main->setResponseCode(404);
-        return;
-    }
-
-    $item_id = intval($args['item_id']);
-    $item = $main->getState()->getFeedItem($item_id);
-    $file = new File($main);
-    $file_id = $file->cacheUrl($item['audio_url']);
-
-    $main->getState()->setItemAudioFile($item_id, $file_id);
-
-    $data = file_cache(['file_id' => $file_id, 'return' => true]);
-
-    #header('Transfer-Encoding: chunked');
-
-    $chunks = str_split($data, 1024*32);
-    foreach ($chunks as $k => $chunk) {
-        $chunk_len = dechex(strlen($chunk));
-        echo "\r\n";
-        echo $chunk;
-        echo "\r\n";
-        $main->log("$k");
-        usleep(1000000);
-    }
-
-    echo "0\r\n\r\n";
-}
-
 
 #[Route('/refresh', 'GET')]
 function refresh(array $args)

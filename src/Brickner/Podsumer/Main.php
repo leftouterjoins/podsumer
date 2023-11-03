@@ -9,32 +9,24 @@ use function filesize;
 
 class Main
 {
-    protected $env;
-    protected $args;
-    protected $uploads;
+    protected array $env;
+    protected array $args;
+    protected array $uploads;
     protected Logs $logs;
     protected State $state;
     protected Config $config;
-    protected $path;
+    protected string $path;
 
-    public function __construct($path)
+    public function __construct($path, array $env, array $request, array $files)
     {
-        $this->env = $_ENV;
-        $this->args = $_REQUEST;
-        $this->uploads = $_FILES;
+        $this->env = $env;
+        $this->args = $request;
+        $this->uploads = $files;
 
         $this->path = $path;
         $this->config = new Config($this);
         $this->logs = new Logs($this);
         $this->state = new State($this);
-
-        unset($_GET);
-        unset($_FILES);
-        unset($_POST);
-        unset($_COOKIE);
-        unset($_REQUEST);
-        unset($_ENV);
-        unset($_SERVER);
     }
 
     public function run(): void
