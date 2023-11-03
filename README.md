@@ -1,3 +1,5 @@
+[![PHP Composer](https://github.com/joshwbrick/podsumer/actions/workflows/php.yml/badge.svg)](https://github.com/joshwbrick/podsumer/actions/workflows/php.yml)
+
 # Features
  - Self hostable
     - Docker Image
