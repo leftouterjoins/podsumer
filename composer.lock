@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0842ea5fccd916c57f33cd2932cfcbe3",
+    "content-hash": "6e15439659a2072cf8e4c73857a083bd",
     "packages": [],
     "packages-dev": [
         {
@@ -572,16 +572,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "dev-main",
+            "version": "10.5.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a92653b00dda0e284fb9df2fd6686cc8b8c08d90"
+                "reference": "d9b2a63fcb5d3e8b420575ca55f29441511b25be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a92653b00dda0e284fb9df2fd6686cc8b8c08d90",
-                "reference": "a92653b00dda0e284fb9df2fd6686cc8b8c08d90",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d9b2a63fcb5d3e8b420575ca55f29441511b25be",
+                "reference": "d9b2a63fcb5d3e8b420575ca55f29441511b25be",
                 "shasum": ""
             },
             "require": {
@@ -594,7 +594,7 @@
                 "myclabs/deep-copy": "^1.10.1",
                 "phar-io/manifest": "^2.0.3",
                 "phar-io/version": "^3.0.2",
-                "php": ">=8.2",
+                "php": ">=8.1",
                 "phpunit/php-code-coverage": "^10.1.5",
                 "phpunit/php-file-iterator": "^4.0",
                 "phpunit/php-invoker": "^4.0",
@@ -615,14 +615,13 @@
             "suggest": {
                 "ext-soap": "To be able to generate mocks based on WSDL files"
             },
-            "default-branch": true,
             "bin": [
                 "phpunit"
             ],
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "11.0-dev"
+                    "dev-main": "10.5-dev"
                 }
             },
             "autoload": {
@@ -654,7 +653,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/main"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5"
             },
             "funding": [
                 {
@@ -670,7 +669,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-02T13:07:20+00:00"
+            "time": "2023-11-02T13:07:11+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -1663,9 +1662,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "phpunit/phpunit": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
