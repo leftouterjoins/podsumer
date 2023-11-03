@@ -1,14 +1,16 @@
 # Features
- - Self hosted
- - privacy focused podcast proxy
- - Streaming audio support
- - downloader
- - web client/player
- - Proxy podcast feeds
- - Export OPML
+ - Self hostable
+    - Docker Image
+    - Docker Compose
+ - Privacy oriented
+    - No data or usage collection
+    - Proxy and cache podcast feeds to reduce traffic to data collecting origin servers
+ - Supports streaming audio
+ - Export OPML of proxied podcast feed
  - Single file library
- - Episode/Feed caching
+    - sqlite DB
  - Automatic feed refresh
+    - Original feeds checked for updates when proxied feeds are queried.
 
 # @TODO
 
