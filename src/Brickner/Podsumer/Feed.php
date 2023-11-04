@@ -11,16 +11,13 @@ use \simplexml_load_file;
 
 class Feed
 {
-    protected Main $main;
     protected string $url;
     protected string $hash;
     protected int $feed_id;
     protected ?SimpleXMLElement $feed;
 
-    public function __construct(Main $main, string $url)
+    public function __construct(string $url)
     {
-        $this->main = $main;
-
         $valid_url = $this->validateUrl($url);
 
         if (false === $valid_url) {

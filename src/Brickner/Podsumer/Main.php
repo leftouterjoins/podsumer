@@ -24,7 +24,7 @@ class Main
         $this->uploads = $files;
 
         $this->path = $path;
-        $this->config = new Config($this);
+        $this->config = new Config($this->getConfigPath());
         $this->logs = new Logs($this);
         $this->state = new State($this);
     }
@@ -44,6 +44,7 @@ class Main
         }
 
         try {
+
             $args = $this->getArgs();
 
             // Sanitize inputs to sidestep XSS. QPs in this app are only alpha-numeric anyway.
