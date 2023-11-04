@@ -1,2 +1,4 @@
 vendor
 state
+coverage.txt
+coverage.html

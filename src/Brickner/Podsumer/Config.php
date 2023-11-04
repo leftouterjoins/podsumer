@@ -10,18 +10,20 @@ class Config
     protected string $path;
     protected array $config = [];
 
-    public function __construct(Main $main)
+    public function __construct(string $config_path)
     {
-        $this->path = $main->getConfigPath();
+        $this->path = $config_path;
 
         if (!file_exists($this->path)) {
             throw new \Exception('Config file not found at ' . $this->path . '.');
         }
 
-        $this->config = $this->parseConfig($this->path);
-        if (false === $this->config) {
+        $parsed = $this->parseConfig($this->path);
+        if (false === $parsed) {
             throw new \Exception('Config file at ' . $this->path . ' is not valid.');
         }
+
+        $this->config = $parsed;
 
         if (empty($this->config)) {
             throw new \Exception('Config file at ' . $this->path . ' is empty.');
@@ -34,15 +36,6 @@ class Config
             return $this->config[$key1][$key2] ?? null;
         } else {
             return $this->config[$key1] ?? null;
-        }
-    }
-
-    public function set(mixed $value, string $key1, ?string $key2 = null): void
-    {
-        if (null !== $key2) {
-            $this->config[$key1][$key2] = $value;
-        } else {
-            $this->config[$key1] = $value;
         }
     }
 
