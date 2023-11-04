@@ -7,18 +7,16 @@ use \SimpleXMLElement;
 
 class OPML
 {
-    protected Main $main;
     protected array $file;
 
-    public function __construct(Main $main, array $file)
+    public function __construct(array $file)
     {
-        $this->main = $main;
         $this->file = $file;
     }
 
-    public static function parse(Main $main, array $file)
+    public static function parse(array $file): array
     {
-        $opml = new self($main, $file);
+        $opml = new self($file);
 
         return $opml->getFeeds();
     }
