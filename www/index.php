@@ -217,27 +217,20 @@ function file_cache(array $args): ?string
     $range = $headers['Range'] ?? null;
     $data = $file_data['data'];
     if (!empty($range)) {
-        $range = str_replace('bytes=', '', $range);
-        $range = explode ('-', $range);
-        $range = array_map('intval', $range);
+        $range = str_replace('bytes=', '', $range); # 'bytes=0-10'
+        $range = explode ('-', $range); # '0-10' => ['0', '10']
+        $range = array_map('intval', $range); # ['0', '10'] => [0, 10]
         $start = $range[0];
+        $end = $range[1] ?: $size-1;
 
-        if ($range[1] == 0) {
-            $end = $size-1;
-            $end_out = $size-1;
-        } else {
-            $end = $range[1];
-            $end_out = $end;
-        }
+        $data = substr($data, $start, $end-$start+1 );
+        $main->log("$start, $end");
 
-        $data = substr($data, $start, !empty($end) ? $end-$start : $end );
-        $main->log("$start, $end, $end_out");
-
-        if (strlen($data) < $size) {
+        if (strlen($data) <= $size) {
             $main->setResponseCode(206);
         }
 
-        header("Content-Range: bytes $start-$end_out/$size");
+        header("Content-Range: bytes $start-$end/$size");
     }
 
     header('Content-Length: ' . strlen($data));
