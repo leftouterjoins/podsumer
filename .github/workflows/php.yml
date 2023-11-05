@@ -36,4 +36,19 @@ jobs:
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run test suite
-      run: composer run-script test
+      run: composer run-script coverage
+
+    - name: Make code coverage badge
+      uses: timkrase/phpunit-coverage-badge@v1.2.1
+      with:
+        coverage_badge_path: output/coverage.svg
+        push_badge: false
+
+    - name: Git push to image-data branches
+      uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: ./test-output
+          publish_branch: image-data
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
