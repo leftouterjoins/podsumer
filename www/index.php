@@ -298,7 +298,7 @@ function doRefresh(int $feed_id) {
 
     if (!empty($feed_id)) {
         $feed = $main->getState()->getFeed(intval($feed_id));
-        $refresh_feed = new Feed($main, $feed['url']);
+        $refresh_feed = new Feed($feed['url']);
         $refresh_feed->setFeedId(intval($feed_id));
         $main->getState()->addFeed($refresh_feed);
     }
