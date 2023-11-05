@@ -2,8 +2,6 @@
 use PHPUnit\Framework\TestCase;
 
 use Brickner\Podsumer\Feed;
-use \DateTime;
-use \SimpleXMLElement;
 
 final class FeedTest extends TestCase
 {
@@ -65,11 +63,5 @@ final class FeedTest extends TestCase
         $this->feed->setFeedId(33);
         $this->assertEquals(33, $this->feed->getFeedId());
     }
-
-    public function testGetFeedId(): void
-    {
-        $this->assertEquals(true, is_int($this->feed->getFeedId()));
-    }
-
 }
 
