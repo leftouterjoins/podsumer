@@ -26,4 +26,4 @@
  - index search and add
  - pagination on feed page
  - offline support?
-
+ - STanadalone apps?
