@@ -19,6 +19,6 @@
     },
     "scripts": {
         "test": "phpunit tests",
-        "coverage": "phpunit --coverage-filter src --coverage-html=coverage.html tests"
+        "coverage": "phpunit --coverage-filter src --coverage-text=coverage.txt tests"
     }
 }
