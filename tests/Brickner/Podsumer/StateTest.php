@@ -94,6 +94,14 @@ final class StateTest extends TestCase
         $this->state->deleteFeed(1);
     }
 
+    public function testDeleteItemMedia()
+    {
+        $this->expectNotToPerformAssertions();
+        $this->feed = new Feed(self::TEST_FEED_URL);
+        $this->state->addFeed($this->feed);
+        $item = $this->state->getFeedItem(1);
+        $this->state->deleteItemMedia($item['id']);
+     }
 
 }
 
