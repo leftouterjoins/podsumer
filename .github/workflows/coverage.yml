@@ -30,7 +30,7 @@ jobs:
         uses: php-actions/phpunit@v3
         with:
           version: 10.5-dev
-          php_extensions: pcov
+          php_extensions: xdebug
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml
           args: --coverage-html
