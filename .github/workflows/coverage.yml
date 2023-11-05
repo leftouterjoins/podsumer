@@ -33,6 +33,6 @@ jobs:
           php_extensions: xdebug
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml
-          args: --coverage-html
+          args: --coverage-text
         env:
           XDEBUG_MODE: coverage
