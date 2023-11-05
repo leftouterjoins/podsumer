@@ -33,6 +33,6 @@ jobs:
           php_extensions: pcov
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml
-          args: --coverage-text
+          args: --coverage-html
         env:
           XDEBUG_MODE: coverage
