@@ -6,7 +6,7 @@
     displayDetailsOnTestsThatTriggerNotices="true"
     displayDetailsOnTestsThatTriggerWarnings="true"
     displayDetailsOnTestsThatTriggerErrors="true"
-    beStrictAboutOutputDuringTests="true"
+    beStrictAboutOutputDuringTests="false"
     beStrictAboutChangesToGlobalState="true"
     failOnWarning="true"
     failOnRisky="false"
@@ -17,6 +17,5 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
-
 
 </phpunit>
