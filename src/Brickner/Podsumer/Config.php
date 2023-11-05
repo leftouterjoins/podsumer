@@ -3,6 +3,7 @@
 namespace Brickner\Podsumer;
 
 use function parse_ini_file;
+use \Exception;
 
 class Config
 {
@@ -41,11 +42,22 @@ class Config
 
     protected function parseConfig($path): mixed
     {
-        return parse_ini_file(
+        error_clear_last();
+
+        # '@' is used to suppress warnings about parse issues.
+        # We will throw an exception if the file is not valid.
+        $result = @parse_ini_file(
             $path,
             true,
             INI_SCANNER_TYPED
         );
+
+        if (false === $result) {
+           $error = error_get_last();
+           throw new Exception('Config file at ' . $path . ' is not valid: ' . ($error['message'] ?? '') . '.');
+        }
+
+        return $result;
     }
 }
 

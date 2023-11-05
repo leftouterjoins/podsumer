@@ -10,6 +10,8 @@ final class TemplateTest extends TestCase
 
     public string $root = __DIR__ . DIRECTORY_SEPARATOR . '../../..' . DIRECTORY_SEPARATOR;
 
+    protected Main $main;
+
     public function testTemplate(): void
     {
         ob_start();
