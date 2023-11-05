@@ -1,1 +1,1 @@
-<? include($BODY) ?>
+<?php include($BODY) ?>
