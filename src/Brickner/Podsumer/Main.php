@@ -17,14 +17,14 @@ class Main
     protected Config $config;
     protected string $path;
 
-    public function __construct($path, array $env, array $request, array $files)
+    public function __construct(string $path, array $env, array $request, array $files, bool $test_mode = false)
     {
         $this->env = $env;
         $this->args = $request;
         $this->uploads = $files;
 
         $this->path = $path;
-        $this->config = new Config($this->getConfigPath());
+        $this->config = new Config($this->getConfigPath($test_mode));
         $this->logs = new Logs($this);
         $this->state = new State($this);
     }
@@ -78,6 +78,9 @@ class Main
         return $this->args[$key];
     }
 
+    /**
+    * @codeCoverageIgnore
+    */
     public function getHeaders(): array
     {
         return getallheaders();
@@ -141,20 +144,17 @@ class Main
         return $this->env['REMOTE_ADDR'];
     }
 
-    public function getConfigPath(): string
+    public function getConfigPath($test_mode = false): string
     {
-        return $this->path . 'conf/podsumer.conf';
+        return $test_mode
+            ? $this->path . 'conf/test.conf'
+            : $this->path . 'conf/podsumer.conf';
     }
 
     public function getConf(string $key1, ?string $key2 = null): mixed
     {
         $f = $this->config->get($key1, $key2);
         return $f;
-    }
-
-    public function setConf(mixed $value, string $key1, ?string $key2 = null): void
-    {
-        $this->config->set($value, $key1, $key2);
     }
 
     public function log(string $message): void
@@ -167,16 +167,28 @@ class Main
         return $this->state;
     }
 
+    public function getStateFilePath(): string
+    {
+        return $this->getInstallPath()
+            . $this->getConf('podsumer', 'state_file');
+    }
+
     public function getInstallPath(): string
     {
         return $this->path;
     }
 
+    /**
+    * @codeCoverageIgnore
+    */
     public function getDbSize(): int
     {
-        return filesize($this->getState()->getStateFilePath());
+        return filesize($this->getStateFilePath());
     }
 
+    /**
+    * @codeCoverageIgnore
+    */
     public function redirect(string $path)
     {
         header("Location: $path");

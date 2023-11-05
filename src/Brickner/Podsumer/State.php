@@ -19,7 +19,7 @@ class State
     function __construct(Main $main)
     {
         $this->main = $main;
-        $state_file_path = $this->getStateFilePath();
+        $state_file_path = $this->main->getStateFilePath();
 
         $state_dir = dirname($state_file_path);
         if (!is_dir($state_dir) && !mkdir($state_dir, 0755, true)) {
@@ -36,13 +36,7 @@ class State
         $this->checkDBInstall();
     }
 
-    public function getStateFilePath(): string
-    {
-        return $this->main->getInstallPath()
-            . $this->main->getConf('podsumer', 'state_file');
-    }
-
-    protected function installTableS()
+    protected function installTables()
     {
         $table_sql = file_get_contents($this->sql_dir_path . '/tables.sql');
         $this->pdo->exec('PRAGMA foreign_keys = ON');
@@ -57,7 +51,7 @@ class State
         }
 
         // Do the tables expected exist?
-        $this->installTableS();
+        $this->installTables();
     }
 
     protected function query(string $sql, array $params = []): array
@@ -137,7 +131,7 @@ class State
 
     public function getFeed(int $id): array
     {
-        $sql = 'SELECT id, name, description, url, image, last_update FROM feeds WHERE id = :id';
+        $sql = 'SELECT id, name, description, url, image, last_update, url_hash FROM feeds WHERE id = :id';
         return $this->query($sql, ['id' => $id])[0] ?? [];
     }
 

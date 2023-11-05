@@ -17,6 +17,7 @@
 
 # @TODO
 
+ - complete remaining unit tests
  - remember play position
  - remember if podcast finished
  - improve player UI

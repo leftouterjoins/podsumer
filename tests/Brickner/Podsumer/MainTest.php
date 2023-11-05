@@ -2,6 +2,7 @@
 use PHPUnit\Framework\TestCase;
 
 use Brickner\Podsumer\Main;
+use Brickner\Podsumer\State;
 
 final class MainTest extends TestCase
 {
@@ -162,6 +163,21 @@ final class MainTest extends TestCase
         $conf_path = $main->getConfigPath();
 
         $this->assertEquals($this->root . 'conf/podsumer.conf', $conf_path);
+    }
+
+    public function testGetState(): void
+    {
+        $main = $this->dummyMain();
+        $state = $main->getState();
+
+        $this->assertEquals(State::class, $state::class);
+    }
+
+    public function testGetStateFilePath()
+    {
+        $main = $this->dummyMain();
+        $path = $main->getStateFilePath();
+        $this->assertEquals(true, is_String($path));
     }
 
     protected function dummyMain(array $env = [], array $request = [], array $files = [])
