@@ -1,4 +1,4 @@
-[![Unit Tests](https://github.com/joshwbrick/podsumer/actions/workflows/php.yml/badge.svg)](https://github.com/joshwbrick/podsumer/actions/workflows/php.yml)
+cd [![Unit Tests](https://github.com/joshwbrick/podsumer/actions/workflows/php.yml/badge.svg)](https://github.com/joshwbrick/podsumer/actions/workflows/php.yml)
 [![Unit Test Coverage](https://raw.githubusercontent.com/joshwbrick/podsumer/image-data/coverage.svg)](https://github.com/joshwbrick/podsumer/actions/workflows/php.yml)
 
 # Features
@@ -24,7 +24,7 @@ The docker image is based on the official PHP Debian Bookworm with Apache image.
 
 ```
   podsumer:
-    image: podsumer:latest
+    image: ghcr.io/joshwbrick/podsumer:latest
     container_name: podsumer
     volumes:
         /path/to/dir/for/db:/opt/podsumer/store
