@@ -1,4 +1,4 @@
-cd [![Unit Tests](https://github.com/joshwbrick/podsumer/actions/workflows/php.yml/badge.svg)](https://github.com/joshwbrick/podsumer/actions/workflows/php.yml)
+[![Unit Tests](https://github.com/joshwbrick/podsumer/actions/workflows/php.yml/badge.svg)](https://github.com/joshwbrick/podsumer/actions/workflows/php.yml)
 [![Unit Test Coverage](https://raw.githubusercontent.com/joshwbrick/podsumer/image-data/coverage.svg)](https://github.com/joshwbrick/podsumer/actions/workflows/php.yml)
 
 # Features
@@ -8,15 +8,19 @@ cd [![Unit Tests](https://github.com/joshwbrick/podsumer/actions/workflows/php.y
     - Docker Compose
  - Privacy oriented
     - No data or usage collection
-    - Proxy and cache podcast feeds to reduce traffic to data collecting feed and media servers
- - Support for streaming audio
- - Export OPML of proxied podcast feed
+    - Proxy and cache podcast feeds to reduce your traffic to data collecting feed and media servers.
+ - Supports streaming audio files (e.g. seek to any part of a podcast)
+ - OPML Import & Export
+   - Import your current subscriptions from another app
+   - Export subscriptions to podsumer feeds for use in your mobile or other podcast app.
  - Single file library
     - sqlite DB
  - Automatic feed refresh
     - Original feeds checked for updates when proxied feeds are queried.
 
 # Usage
+
+This project is useful for self-hosters who listen to podcasts. It allows you to listen to your podcasts via the web on your own infrastructure. You can also use the OPML export to subscribe to Podsumer's mirror of the original feeds. This improves privacy as download and listening metrics will not be tied to your phone or personal computer. Using something like gluetun you can have all the traffic to podcast servers go through a VPN as well, further shrinking your digital footprint.
 
 ## Installing with Docker Compose
 
