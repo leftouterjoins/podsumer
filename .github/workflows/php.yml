@@ -43,6 +43,7 @@ jobs:
       with:
         coverage_badge_path: output/coverage.svg
         push_badge: true
+        github_token: ${{ secrets.API_TOKEN }}
 
     - name: Git push to image-data branches
       uses: peaceiris/actions-gh-pages@v3
