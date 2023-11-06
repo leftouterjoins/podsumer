@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-ini_set('display_errors', false);
+ini_set('display_errors', true);
 ini_set('error_reporting', E_ALL);
 ini_set('variables_order', 'E');
 ini_set('request_order', 'CGP');
@@ -19,7 +19,7 @@ use Brickner\Podsumer\OPML;
 use Brickner\Podsumer\Template;
 
 # Create the application.
-$main = new Main(PODSUMER_PATH, $_ENV, $_REQUEST, $_FILES);
+$main = new Main(PODSUMER_PATH, array_merge($_SERVER, $_ENV), $_REQUEST, $_FILES);
 $main->run();
 
 /**
@@ -64,10 +64,10 @@ function add(array $args): void
 
     if (count(array_filter($uploads['opml'])) > 2) {
 
-        $feed_urls = OPML::parse($main, $uploads['opml']);
+        $feed_urls = OPML::parse($uploads['opml']);
 
         foreach ($feed_urls as $url) {
-            $feed = new Feed($main, $url);
+            $feed = new Feed($url);
             $main->getState()->addFeed($feed);
         }
     }
