@@ -3,7 +3,7 @@
   <channel>
     <title><?= $feed['name'] ?></title>
     <description><?= $feed['description'] ?></description>
-    <itunes:image href="http://brickner.cloud:8433/file?hash=<?= $feed['image'] ?>" />
+    <itunes:image href="http://brickner.cloud:8433/file?file_id=<?= $feed['image'] ?>" />
     <language>en-us</language>
     <generator>podsumer</generator>
     <lastBuildDate><?= $feed['last_update'] ?></lastBuildDate>
@@ -18,7 +18,7 @@
       <enclosure url="http://brickner.cloud:8433/media?item_id=<?= $item['id'] ?>" type="audio/mp3" length="<?= $item['size'] ?>"/>
       <link>http://brickner.cloud:8433/item?item_id=<?= $item['id'] ?></link>
       <guid>http://brickner.cloud:8433/item?item_id=<?= $item['id'] ?></guid>
-      <itunes:image href="http://brickner.cloud:8433/file?hash=<?= $item['image'] ?>" />
+      <itunes:image href="http://brickner.cloud:8433/file?file_id=<?= $item['image'] ?>" />
     </item>
     <? endforeach ?>
   </channel>
