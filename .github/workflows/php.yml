@@ -42,7 +42,7 @@ jobs:
       uses: timkrase/phpunit-coverage-badge@v1.2.1
       with:
         coverage_badge_path: output/coverage.svg
-        push_badge: false
+        push_badge: true
 
     - name: Git push to image-data branches
       uses: peaceiris/actions-gh-pages@v3
