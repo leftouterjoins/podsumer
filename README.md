@@ -50,11 +50,11 @@ The docker image is based on the official PHP Debian Bookworm with Apache image.
 # Screenshots
 
 ### Home Page / Feed List
-[![Feed](https://github.com/joshwbrick/podsumer/development/screenshots/feeds.png)](https://github.com/joshwbrick/podsumer/development/screenshots/feeds.png)
+[![Feed](https://raw.githubusercontent.com/joshwbrick/podsumer/development/screenshots/feeds.png)](https://github.com/joshwbrick/podsumer/development/screenshots/feeds.png)
 
 ### Episode List
-[![Episodes](https://github.com/joshwbrick/podsumer/development/screenshots/feed.png)](https://github.com/joshwbrick/podsumer/development/screenshots/feed.png)
+[![Episodes](https://raw.githubusercontent.com/joshwbrick/podsumer/development/screenshots/feed.png)](https://github.com/joshwbrick/podsumer/development/screenshots/feed.png)
 
 ### Player Page
-[![Player](https://github.com/joshwbrick/podsumer/development/screenshots/episode.png)](https://github.com/joshwbrick/podsumer/development/screenshots/episode.png)
+[![Player](https://raw.githubusercontent.com/joshwbrick/podsumer/development/screenshots/episode.png)](https://github.com/joshwbrick/podsumer/development/screenshots/episode.png)
 
