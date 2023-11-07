@@ -3,9 +3,8 @@
 
 # Features
  - Self hostable
-    - single user
+    - Single Tenant SQLite backend.
     - Docker Image
-    - Docker Compose
  - Privacy oriented
     - No data or usage collection
     - Proxy and cache podcast feeds to reduce your traffic to data collecting feed and media servers.
@@ -47,18 +46,4 @@ The docker image is based on the official PHP Debian Bookworm with Apache image.
  - Composer
  - SQLite 3.6.19+
      - Foreign key support is required.
- - PHP-FPM & Web server
-
-# @TODO
-
- - complete remaining unit tests
- - remember play position
- - remember if podcast finished
- - improve player UI
- - Add UI for feed auth
- - search
- - index search and add
- - pagination on feed page
- - offline support?
- - Stanadalone apps?
 
