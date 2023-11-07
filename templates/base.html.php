@@ -22,7 +22,7 @@
     </div>
     <div class="text-center py-8 text-m">
         <p>
-            Thank you for listening with <a href="https://github.com/joshwbrick/podsumer">Podsumer</a> an open source app made by Josh Brickner
+            Thank you for listening with <a href="https://github.com/joshwbrick/podsumer">Podsumer</a>.
         </p>
     </div>
 </body>
