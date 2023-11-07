@@ -1,10 +1,12 @@
 version: "3.8"
 services:
-  prod:
+  podsumer:
     image: podsumer
     container_name: podsumer
     build:
       context: .
+    volumes:
+      - ./:/opt/podsumer
     networks:
       - default
     ports:
