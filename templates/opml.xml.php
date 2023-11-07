@@ -6,7 +6,7 @@
     </head>
     <body>
         <? foreach ($feeds as $feed): ?>
-        <outline title="<?= htmlspecialchars($feed['name']) ?>" xmlUrl="http://casts.brickner.cloud/rss?feed_id=<?= $feed['id'];?>" text="<?= htmlspecialchars($feed['description']); ?>" type="rss"></outline>
+        <outline title="<?= htmlspecialchars($feed['name']) ?>" xmlUrl="<?= $host ?>/rss?feed_id=<?= $feed['id'];?>" text="<?= htmlspecialchars($feed['description']); ?>" type="rss"></outline>
         <? endforeach ?>
     </body>
 </opml>

@@ -1,26 +1,5 @@
 version: "3.8"
 services:
-  php-dev:
-    image: podsumer-dev
-    container_name: podsumer-dev
-    volumes:
-      - ./php-fpm.conf:/usr/local/etc/php-fpm.d/zzz-podsumer.conf
-      - ./:/opt/podsumer
-    build:
-      context: ./Dockerfile-dev
-    networks:
-      - backplane
-  web-dev:
-    image: caddy:2.7.4-alpine
-    container_name: web
-    ports:
-      - 8433:8433
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - ./:/opt/podsumer
-    networks:
-      - backplane
-      - default
   prod:
     image: podsumer
     container_name: podsumer
@@ -29,7 +8,7 @@ services:
     networks:
       - default
     ports:
-      - 3094:3094
+      - 3095:3094
 networks:
   backplane:
     driver: bridge

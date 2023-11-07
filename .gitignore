@@ -3,3 +3,4 @@ state
 coverage.txt
 coverage.html
 .phpunit*
+clover.xml

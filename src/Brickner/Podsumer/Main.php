@@ -73,6 +73,13 @@ class Main
             . $this->env['REQUEST_URI'];
     }
 
+    public function getBaseUrl(): string
+    {
+        return $this->env['REQUEST_SCHEME']
+            . '://'
+            . $this->env['HTTP_HOST'];
+    }
+
     public function getArg(string $key): mixed
     {
         return $this->args[$key];

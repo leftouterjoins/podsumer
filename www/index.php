@@ -161,7 +161,8 @@ function rss(array $args)
 
     $vars = [
         'items' => $items,
-        'feed' => $feed
+        'feed' => $feed,
+        'host' => $main->getBaseUrl()
     ];
 
     if (empty($vars['feed']) || empty($vars['items'])) {
@@ -180,7 +181,8 @@ function opml(array $args)
     $feeds = $main->getState()->getFeeds();
 
     $vars = [
-        'feeds' => $feeds
+        'feeds' => $feeds,
+        'host' => $main->getBaseUrl()
     ];
 
     header("Content-disposition: attachment; filename=\"podsumer.opml\"");
