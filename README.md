@@ -47,3 +47,14 @@ The docker image is based on the official PHP Debian Bookworm with Apache image.
  - SQLite 3.6.19+
      - Foreign key support is required.
 
+# Screenshots
+
+### Home Page / Feed List
+[![Feed](https://github.com/joshwbrick/podsumer/development/screenshots/feeds.png)](https://github.com/joshwbrick/podsumer/development/screenshots/feeds.png)
+
+### Episode List
+[![Episodes](https://github.com/joshwbrick/podsumer/development/screenshots/feed.png)](https://github.com/joshwbrick/podsumer/development/screenshots/feed.png)
+
+### Player Page
+[![Player](https://github.com/joshwbrick/podsumer/development/screenshots/episode.png)](https://github.com/joshwbrick/podsumer/development/screenshots/episode.png)
+
