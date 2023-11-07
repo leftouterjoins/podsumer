@@ -1,6 +1,6 @@
-vendor
-state
-coverage.txt
-coverage.html
-.phpunit*
 clover.xml
+coverage.html
+coverage.txt
+.phpunit*
+state
+vendor
