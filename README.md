@@ -13,9 +13,14 @@
    - Import your current subscriptions from another app
    - Export subscriptions to podsumer feeds for use in your mobile or other podcast app.
  - Single file library
-    - sqlite DB
  - Automatic feed refresh
     - Original feeds checked for updates when proxied feeds are queried.
+ - Codebase contains zero 3rd-party dependencies.
+ - Content focused UI
+
+# Roadmap
+
+For a look at upcoming enhancements checkout the enhancement tag under issues tab.
 
 # Usage
 
@@ -53,8 +58,8 @@ The docker image is based on the official PHP Debian Bookworm with Apache image.
 [![Feed](https://raw.githubusercontent.com/joshwbrick/podsumer/development/screenshots/feeds.png)](https://github.com/joshwbrick/podsumer/development/screenshots/feeds.png)
 
 ### Episode List
-[![Episodes](https://raw.githubusercontent.com/joshwbrick/podsumer/development/screenshots/feed.png)](https://github.com/joshwbrick/podsumer/development/screenshots/feed.png)
+[![Episodes](https://raw.githubusercontent.com/joshwbrick/podsumer/development/screenshots/feed.png)](https://raw.githubusercontent.com/joshwbrick/podsumer/development/screenshots/feed.png)
 
 ### Player Page
-[![Player](https://raw.githubusercontent.com/joshwbrick/podsumer/development/screenshots/episode.png)](https://github.com/joshwbrick/podsumer/development/screenshots/episode.png)
+[![Player](https://raw.githubusercontent.com/joshwbrick/podsumer/development/screenshots/episode.png)](https://raw.githubusercontent.com/joshwbrick/podsumer/development/screenshots/episode.png)
 
