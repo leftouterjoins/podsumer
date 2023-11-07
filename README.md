@@ -4,7 +4,7 @@
 # Features
  - Self hostable
     - Single Tenant SQLite backend.
-    - Docker Image
+    - Run from a single docker image
  - Privacy oriented
     - No data or usage collection
     - Proxy and cache podcast feeds to reduce your traffic to data collecting feed and media servers.
