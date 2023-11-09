@@ -54,11 +54,19 @@ class State
         $this->installTables();
     }
 
-    protected function query(string $sql, array $params = []): array
+    protected function query(string $sql, array $params = []): array|bool
     {
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
-        return $stmt->fetchAll();
+        try {
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+
+            return $stmt->fetchAll();
+
+        } catch (Exception $e) {
+            $this->main->log($e->getMessage());
+            return false;
+        }
     }
 
     public function addFeed(Feed $feed)
