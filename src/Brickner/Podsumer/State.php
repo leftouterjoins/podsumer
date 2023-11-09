@@ -90,6 +90,10 @@ class State
 
     protected function addFeedItems(\SimpleXMLElement $items, Feed $feed)
     {
+
+        # Download custom image only for the first 12 episodes.
+        $first_hundred = 100;
+
         foreach ($items as $item) {
             $new_item = new Item($this->main, $item, $feed);
             $item_rec = [
@@ -100,8 +104,12 @@ class State
                 'description' => $new_item->getDescription(),
                 'size' => $new_item->getSize(),
                 'audio_url' => $new_item->getAudioFileUrl(),
-                'image' => $this->cacheFile($new_item->getImage() ?: null)
+                'image' => ($first_hundred > 0)
+                    ? $this->cacheFile($new_item->getImage() ?: null)
+                    : null
             ];
+
+            $first_hundred--;
 
             $sql = 'INSERT INTO items (feed_id, guid, name, published, description, size, audio_url, image) VALUES (:feed_id, :guid, :name, :published, :description, :size, :audio_url, :image) ON CONFLICT(guid) DO UPDATE SET name=:name, published=:published, description=:description, size=:size, audio_url=:audio_url, image=:image';
             $this->query($sql, $item_rec);
@@ -110,6 +118,8 @@ class State
 
     public function cacheFile(string|null $url): int|null
     {
+        $this->main->log("Fetching $url");
+
         if (!empty($url)) {
             $file = new File($this->main);
             return $file->cacheUrl($url);
