@@ -19,6 +19,6 @@
     },
     "scripts": {
         "test": "phpunit tests",
-        "coverage": "phpunit --coverage-filter src --coverage-clover=clover.xml tests"
+        "coverage": "XDEBUG_MODE=coverage phpunit --coverage-filter src --coverage-clover=clover.xml tests"
     }
 }
