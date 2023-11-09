@@ -129,6 +129,7 @@ function delete_feed(array $args)
     $feed_id = intval($args['feed_id']);
     $main->getState()->deleteFeed($feed_id);
     header("Location: /");
+    die();
 }
 
 #[Route('/delete_audio', 'GET')]
@@ -140,6 +141,7 @@ function delete_audio(array $args)
     $main->getState()->deleteItemMedia($item_id);
     $item = $main->getState()->getFeedItem($item_id);
     header("Location: /feed?id=" . $item['feed_id']);
+    die();
 }
 
 #[Route('/rss', 'GET')]
@@ -284,7 +286,7 @@ function refresh(array $args)
     doRefresh(intval($args['feed_id']));
 
     header("Location: /feed?id=" . intval($args['feed_id']));
-    return;
+    die();
 }
 
 function doRefresh(int $feed_id) {
