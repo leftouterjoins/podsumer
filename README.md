@@ -63,3 +63,6 @@ The docker image is based on the official PHP Debian Bookworm with Apache image.
 ### Player Page
 [![Player](https://raw.githubusercontent.com/joshwbrick/podsumer/development/screenshots/episode.png)](https://raw.githubusercontent.com/joshwbrick/podsumer/development/screenshots/episode.png)
 
+# Get in Touch
+
+[![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white)](https://x.com/macinjosh)
