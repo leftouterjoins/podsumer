@@ -99,8 +99,9 @@ class State
     protected function addFeedItems(\SimpleXMLElement $items, Feed $feed)
     {
 
-        # Download custom image only for the first 12 episodes.
-        $first_hundred = 100;
+        # Download custom image only for the first n episodes.
+
+        $first_hundred = $this->main->getConf('podsumer', 'per_item_art_download') ?? 50;
 
         foreach ($items as $item) {
             $new_item = new Item($this->main, $item, $feed);
