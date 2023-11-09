@@ -18,7 +18,16 @@ final class StateTest extends TestCase
     {
         $tmp_main = new Main($this->root, [], [], [], true);
         unlink($tmp_main->getStateFilePath());
-        $this->main = new Main($this->root, [], [], [], true);
+
+        $env = [
+            'REQUEST_SCHEME' => 'http',
+            'HTTP_HOST' => 'example.com',
+            'REQUEST_URI' => '/',
+            'REQUEST_METHOD' => 'GET',
+            'REMOTE_ADDR' => '127.0.0.1',
+        ];
+
+        $this->main = new Main($this->root, $env, [], [], true);
         $this->state = new State($this->main);
     }
 
@@ -102,6 +111,5 @@ final class StateTest extends TestCase
         $item = $this->state->getFeedItem(1);
         $this->state->deleteItemMedia($item['id']);
      }
-
 }
 

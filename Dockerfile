@@ -6,9 +6,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php -r "unlink('composer-setup.php');" && \
     mv composer.phar /usr/local/bin/composer
 RUN a2enmod rewrite
+RUN pecl install pcov && docker-php-ext-enable pcov
 RUN mkdir -p /opt/podsumer/
 RUN mkdir -p /opt/podsumer/conf
-# COPY ./php-fpm.conf /usr/local/etc/php-fpm.d/zzz-podsumer.conf
 COPY ./apache.conf /etc/apache2/sites-available/000-default.conf
 COPY ./apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY ./conf/podsumer.conf /opt/podsumer/conf/podsumer.conf
