@@ -19,7 +19,7 @@ use Brickner\Podsumer\OPML;
 use Brickner\Podsumer\Template;
 
 # Create the application.
-$main = new Main(PODSUMER_PATH, array_merge($_SERVER, $_ENV), $_REQUEST, $_FILES);
+$main = new Main(PODSUMER_PATH, array_merge($_SERVER, $_ENV), array_merge($_GET, $_POST), $_FILES);
 $main->run();
 
 /**
