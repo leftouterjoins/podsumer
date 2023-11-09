@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-ini_set('display_errors', true);
+ini_set('display_errors', false);
 ini_set('error_reporting', E_ALL);
 ini_set('variables_order', 'E');
 ini_set('request_order', 'CGP');
@@ -128,8 +128,8 @@ function delete_feed(array $args)
 
     $feed_id = intval($args['feed_id']);
     $main->getState()->deleteFeed($feed_id);
-    header("Location: /");
-    die();
+
+    $main->redirect('/');
 }
 
 #[Route('/delete_audio', 'GET')]
@@ -140,8 +140,8 @@ function delete_audio(array $args)
     $item_id = intval($args['item_id']);
     $main->getState()->deleteItemMedia($item_id);
     $item = $main->getState()->getFeedItem($item_id);
-    header("Location: /feed?id=" . $item['feed_id']);
-    die();
+
+    $main->redirect('/feed?id=' . $item['feed_id']);
 }
 
 #[Route('/rss', 'GET')]
@@ -285,8 +285,7 @@ function refresh(array $args)
 
     doRefresh(intval($args['feed_id']));
 
-    header("Location: /feed?id=" . intval($args['feed_id']));
-    die();
+    $main->redirect('/feed?id=' . intval($args['feed_id']));
 }
 
 function doRefresh(int $feed_id) {
