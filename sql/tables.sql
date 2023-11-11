@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `files` (
     mimetype TEXT NOT NULL,
     content_hash TEXT NOT NULL,
     content_id INTEGER NOT NULL,
+    storage_mode TEXT CHECK(storage_mode IN ('DB','DISK')) NOT NULL DEFAULT 'DB',
     CONSTRAINT one FOREIGN KEY (content_id) REFERENCES file_contents(id) ON DELETE CASCADE
 );
 
@@ -24,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `feeds` (
     last_update DATETIME NOT NULL,
     url TEXT NOT NULL,
     description TEXT,
+    image_url TEXT,
     image INTEGER
 );
 
@@ -37,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `items` (
     size INTEGER NOT NULL,
     audio_url TEXT NOT NULL,
     audio_file INTEGER NULL,
+    image_url TEXT NULL,
     image INTEGER NULL
 );
 

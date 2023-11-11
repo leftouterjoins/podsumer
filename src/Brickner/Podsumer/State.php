@@ -83,9 +83,10 @@ class State
         $feed_rec['name'] = $feed->getTitle();
         $feed_rec['last_update'] = $feed->getLastUpdated()->format('c');
         $feed_rec['description'] = $feed->getDescription();
-        $feed_rec['image'] = $this->cacheFile($feed->getImage());
+        $feed_rec['image'] = $this->cacheFile($feed->getImage(), $feed_rec);
+        $feed_rec['image_url'] = $feed->getImage();
 
-        $sql = 'INSERT INTO feeds (url_hash, name, last_update, url, description, image) VALUES (:url_hash, :name, :last_update, :url, :description, :image) ON CONFLICT(url_hash) DO UPDATE SET name=:name, last_update=:last_update, description=:description, image=:image';
+        $sql = 'INSERT INTO feeds (url_hash, name, last_update, url, description, image, image_url) VALUES (:url_hash, :name, :last_update, :url, :description, :image, :image_url) ON CONFLICT(url_hash) DO UPDATE SET name=:name, last_update=:last_update, description=:description, image=:image, image_url=:image_url';
         $this->query($sql, $feed_rec);
         $feed_id = $this->pdo->lastInsertId();
         if ('0' !== $feed_id) {
@@ -103,6 +104,8 @@ class State
 
         $first_hundred = $this->main->getConf('podsumer', 'per_item_art_download') ?? 50;
 
+        $feed_lookup = $this->getFeed($feed->getFeedId());
+
         foreach ($items as $item) {
             $new_item = new Item($this->main, $item, $feed);
             $item_rec = [
@@ -113,25 +116,26 @@ class State
                 'description' => $new_item->getDescription(),
                 'size' => $new_item->getSize(),
                 'audio_url' => $new_item->getAudioFileUrl(),
+                'image_url' => $new_item->getImage() ?: null,
                 'image' => ($first_hundred > 0)
-                    ? $this->cacheFile($new_item->getImage() ?: null)
+                    ? $this->cacheFile($new_item->getImage() ?: null, $feed_lookup)
                     : null
             ];
 
             $first_hundred--;
 
-            $sql = 'INSERT INTO items (feed_id, guid, name, published, description, size, audio_url, image) VALUES (:feed_id, :guid, :name, :published, :description, :size, :audio_url, :image) ON CONFLICT(guid) DO UPDATE SET name=:name, published=:published, description=:description, size=:size, audio_url=:audio_url, image=:image';
+            $sql = 'INSERT INTO items (feed_id, guid, name, published, description, size, audio_url, image, image_url) VALUES (:feed_id, :guid, :name, :published, :description, :size, :audio_url, :image, :image_url) ON CONFLICT(guid) DO UPDATE SET name=:name, published=:published, description=:description, size=:size, audio_url=:audio_url, image=:image, image_url=:image_url';
             $this->query($sql, $item_rec);
         }
     }
 
-    public function cacheFile(string|null $url): int|null
+    public function cacheFile(string|null $url, array $feed): int|null
     {
         $this->main->log("Fetching $url");
 
         if (!empty($url)) {
             $file = new File($this->main);
-            return $file->cacheUrl($url);
+            return $file->cacheUrl($url, $feed);
         }
 
         return null;
@@ -144,25 +148,31 @@ class State
 
     public function getFeeds(): array
     {
-        $sql = 'SELECT id, name, last_update, url, description, image FROM feeds ORDER BY last_update DESC';
+        $sql = 'SELECT id, name, last_update, url, description, image, image_url FROM feeds ORDER BY last_update DESC';
         return $this->query($sql);
      }
 
     public function getFeed(int $id): array
     {
-        $sql = 'SELECT id, name, description, url, image, last_update, url_hash FROM feeds WHERE id = :id';
+        $sql = 'SELECT id, name, description, url, image, image_url, last_update, url_hash FROM feeds WHERE id = :id';
         return $this->query($sql, ['id' => $id])[0] ?? [];
+    }
+
+    public function getFeedForItem(int $item_id): array
+    {
+        $sql = 'SELECT feeds.id, feeds.name, feeds.description, feeds.url, feeds.image, feeds.image_url, feeds.last_update, feeds.url_hash FROM feeds JOIN items ON feeds.id = items.feed_id WHERE items.id = :id';
+        return $this->query($sql, ['id' => $item_id])[0] ?? [];
     }
 
     public function getFeedItem(int $item_id): array
     {
-        $sql = 'SELECT name, feed_id, id, audio_url, audio_file, image, size, published, description FROM items WHERE id = :id';
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.id = :id ORDER BY items.published DESC';
         return $this->query($sql, ['id' => $item_id])[0];
     }
 
     public function getFeedItems(int $feed_id): array
     {
-        $sql = 'SELECT name, feed_id, id, guid, audio_url, audio_file, image, size, published, description FROM items WHERE feed_id = :id ORDER BY published DESC';
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.feed_id = :id ORDER BY items.published DESC';
         return $this->query($sql, ['id' => $feed_id]);
     }
 
@@ -174,32 +184,50 @@ class State
 
     public function getFileById(int $file_id): array
     {
-        $sql = 'SELECT files.id, url, url_hash, mimetype, filename, size, cached, file_contents.content_hash, file_contents.data FROM files JOIN file_contents ON files.content_hash = file_contents.content_hash WHERE files.id = :file_id';
+        $sql = 'SELECT files.id, url, url_hash, mimetype, filename, size, cached, storage_mode, file_contents.content_hash, file_contents.data FROM files JOIN file_contents ON files.content_hash = file_contents.content_hash WHERE files.id = :file_id';
+
         return $this->query($sql, ['file_id' => $file_id])[0] ?? [];
     }
 
     public function getFileByUrlHash(string $url_hash): array
     {
-        $sql = 'SELECT files.id, url, url_hash, mimetype, filename, size, cached, file_contents.content_hash, file_contents.data FROM files JOIN file_contents ON files.content_hash = file_contents.content_hash WHERE url_hash = :url_hash';
+        $sql = 'SELECT files.id, url, url_hash, mimetype, filename, size, cached, storage_mode, file_contents.content_hash, file_contents.data FROM files JOIN file_contents ON files.content_hash = file_contents.content_hash WHERE url_hash = :url_hash';
         return $this->query($sql, ['url_hash' => $url_hash])[0] ?? [];
     }
 
-    public function addFile(string $url, string $contents): int
+    public function addFile(string $url, string $contents, array $feed): int
     {
         $finfo = new \finfo(\FILEINFO_MIME);
         $mimetype = $finfo->buffer($contents);
         $content_hash = md5($contents);
+        $filename = basename($url);
 
         $file = [
             'url' => $url,
             'url_hash' => md5($url),
-            'filename' => basename($url),
+            'filename' => $filename,
             'mimetype' => $mimetype,
             'size' => strlen($contents),
             'cached' => time(),
-            'content_hash' => $content_hash
+            'content_hash' => $content_hash,
+            'storage_mode' => ($this->main->getConf('podsumer', 'store_media_on_disk'))
+                ? 'DISK'
+                : 'DB'
         ];
 
+        $file['content_id'] = $this->addFileContents($content_hash, $contents, $filename, $feed);
+
+        $sql = 'INSERT INTO files (url, url_hash, filename, size, cached, content_hash, mimetype, content_id, storage_mode) VALUES (:url, :url_hash, :filename, :size, :cached, :content_hash, :mimetype, :content_id, :storage_mode) ON CONFLICT(url_hash) DO UPDATE SET size=:size, cached=:cached, content_hash=:content_hash, mimetype=:mimetype, content_id=:content_id, storage_mode=:storage_mode';
+        $this->query($sql, $file);
+
+        $sql = 'SELECT id FROM files WHERE content_hash = :content_hash';
+        $fid = $this->query($sql, ['content_hash' => $content_hash])[0]['id'];
+
+        return intval($fid);
+    }
+
+    protected function addFileContents(string $content_hash, string $contents, ?string $filename = null, ?array $feed = null): int
+    {
         $file_content = [
             'content_hash' => $content_hash,
             'data' => $contents
@@ -210,15 +238,8 @@ class State
 
         $sql = 'SELECT id FROM file_contents WHERE content_hash = :content_hash';
         $fcid = $this->query($sql, ['content_hash' => $content_hash])[0]['id'];
-        $file['content_id'] = $fcid;
 
-        $sql = 'INSERT INTO files (url, url_hash, filename, size, cached, content_hash, mimetype, content_id) VALUES (:url, :url_hash, :filename, :size, :cached, :content_hash, :mimetype, :content_id) ON CONFLICT(url_hash) DO UPDATE SET size=:size, cached=:cached, content_hash=:content_hash, mimetype=:mimetype, content_id=:content_id';
-        $this->query($sql, $file);
-
-        $sql = 'SELECT id FROM files WHERE content_hash = :content_hash';
-        $fid = $this->query($sql, ['content_hash' => $content_hash])[0]['id'];
-
-        return intval($fid);
+        return $fcid;
     }
 
     public function deleteFeed(int $feed_id)
@@ -244,6 +265,18 @@ class State
     {
         $sql = 'UPDATE items SET audio_file = :file_id WHERE id=:id';
         $this->query($sql, ['id' => $item_id, 'file_id' => $file_id]);
+    }
+
+    public function setItemImageFile(int $item_id, int $file_id)
+    {
+        $sql = 'UPDATE items SET image = :file_id WHERE id=:id';
+        $this->query($sql, ['id' => $item_id, 'file_id' => $file_id]);
+    }
+
+    public function setFeedImageFile(int $feed_id, int $file_id)
+    {
+        $sql = 'UPDATE feed SET image = :file_id WHERE id=:id';
+        $this->query($sql, ['id' => $feed_id, 'file_id' => $file_id]);
     }
 
     public function deleteItemMedia(int $item_id)

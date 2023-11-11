@@ -15,14 +15,14 @@ class File
         $this->main = $main;
     }
 
-    public function cacheUrl(string $url): int|null
+    public function cacheUrl(string $url, array $feed): int|null
     {
         $url_hash = $this->hashUrl($url);
         $cached = $this->cacheForHash($url_hash);
 
         if (empty($cached)) {
             $file_contents = self::downloadUrl($url);
-            $file_id = $this->main->getState()->addFile($url, $file_contents);
+            $file_id = $this->main->getState()->addFile($url, $file_contents, $feed);
         } else {
             $file_id = $cached['id'];
         }
