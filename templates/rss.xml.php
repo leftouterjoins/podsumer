@@ -3,7 +3,7 @@
   <channel>
     <title><?= $feed['name'] ?></title>
     <description><?= $feed['description'] ?></description>
-    <itunes:image href="<?= $host ?>/file?file_id=<?= $feed['image'] ?>" />
+    <itunes:image href="<?= $host ?>/image?feed_id=<?= $feed['id'] ?>" />
     <language>en-us</language>
     <generator>podsumer</generator>
     <lastBuildDate><?= $feed['last_update'] ?></lastBuildDate>
@@ -18,7 +18,7 @@
       <enclosure url="<?= $host ?>/media?item_id=<?= $item['id'] ?>" type="audio/mp3" length="<?= $item['size'] ?>"/>
       <link><?= $host ?>/item?item_id=<?= $item['id'] ?></link>
       <guid><?= $host ?>/item?item_id=<?= $item['id'] ?></guid>
-      <itunes:image href="<?= $host ?>/file?file_id=<?= $item['image'] ?>" />
+      <itunes:image href="<?= $host ?>/image?item_id=<?= $item['id'] ?>" />
     </item>
     <? endforeach ?>
   </channel>
