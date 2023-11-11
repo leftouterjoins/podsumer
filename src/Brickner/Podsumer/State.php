@@ -185,15 +185,29 @@ class State
     public function getFileById(int $file_id): array
     {
         $sql = 'SELECT files.id, url, url_hash, mimetype, filename, size, cached, storage_mode, file_contents.content_hash, file_contents.data FROM files JOIN file_contents ON files.content_hash = file_contents.content_hash WHERE files.id = :file_id';
+        $file = $this->query($sql, ['file_id' => $file_id])[0] ?? [];
 
-        return $this->query($sql, ['file_id' => $file_id])[0] ?? [];
+        if (!empty($file) && $file['storage_mode'] === 'DISK') {
+            $filename = $file['data'];
+            $file['data'] = $this->loadFile($filename);
+        }
+
+        return $file;
     }
 
     public function getFileByUrlHash(string $url_hash): array
     {
         $sql = 'SELECT files.id, url, url_hash, mimetype, filename, size, cached, storage_mode, file_contents.content_hash, file_contents.data FROM files JOIN file_contents ON files.content_hash = file_contents.content_hash WHERE url_hash = :url_hash';
-        return $this->query($sql, ['url_hash' => $url_hash])[0] ?? [];
+        $file = $this->query($sql, ['url_hash' => $url_hash])[0] ?? [];
+
+        if (!empty($file) && $file['storage_mode'] === 'DISK') {
+            $filename = $file['data'];
+            $file['data'] = $this->loadFile($filename);
+        }
+
+        return $file;
     }
+
 
     public function addFile(string $url, string $contents, array $feed): int
     {
@@ -292,5 +306,18 @@ class State
         $this->query('VACUUM');
 
     }
+
+    protected function loadFile(string $filename): string
+    {
+        $contents = file_get_contents($filename);
+
+        if (!$contents) {
+            throw new Exception("Could not open: $filename");
+        }
+
+        return $contents;
+    }
+
+
 }
 

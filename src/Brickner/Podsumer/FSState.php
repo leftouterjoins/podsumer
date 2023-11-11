@@ -41,41 +41,6 @@ class FSState extends State
         return parent::addFileContents($content_hash, $file_path, $filename, $feed);
     }
 
-    public function getFileById(int $file_id): array
-    {
-        $file = parent::getFileById($file_id);
-        $filename = $file['data'];
-
-        $file['data'] = $this->loadFile($filename);
-
-        return $file;
-    }
-
-    public function getFileByUrlHash(string $url_hash): array
-    {
-        $file = parent::getFileByUrlHash($url_hash);
-        if (empty($file)) {
-            return $file;
-        }
-
-        $filename = $file['data'];
-
-        $file['data'] = $this->loadFile($filename);
-
-        return $file;
-    }
-
-    protected function loadFile(string $filename): string
-    {
-        $contents = file_get_contents($filename);
-
-        if (!$contents) {
-            throw new Exception("Could not open: $filename");
-        }
-
-        return $contents;
-    }
-
     protected function escapeFilename(string $filename): string
     {
         if ($filename === '.' || $filename === '..') {
