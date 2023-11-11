@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style type="text/css">
         body {font-family: sans !important;}
+        p br {display: block !important; margin-bottom: 25% !important; height: 25% !important;}
     </style>
 </head>
 <body class="bg-neutral-900 text-neutral-100 font-sans">

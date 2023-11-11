@@ -7,8 +7,8 @@
     <h1 class="text-xl pb-5"><?= $item['name'] ?></h1>
     <img src="/image?<?= 'item_id='.$item['id'] ?: 'feed_id'.$feed['id'] ?>" class="mx-auto w-3/5 border-solid border-neutral-800 border">
     <audio autoplay controls src="/audio?item_id=<?= $item['id'] ?>" class="w-full p-4 h-13"></audio>
-    <div class="w-full p-10">
-        <?= htmlspecialchars_decode(nl2br($item['description'])) ?>
+    <div class="w-full p-8">
+        <p class="pb-10"><?= str_replace('<br />', '</p><p class="pb-8">', htmlspecialchars_decode(nl2br($item['description']))) ?></p>
     </div>
 
 </div>
