@@ -11,6 +11,7 @@ use \SimpleXMLElement;
 
 class State
 {
+    CONST VERSION = 1;
     use TStateSchemaMigrations;
 
     protected Main $main;

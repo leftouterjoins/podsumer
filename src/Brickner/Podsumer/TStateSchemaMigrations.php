@@ -6,8 +6,6 @@ use \Exception;
 
 trait TStateSchemaMigrations
 {
-    CONST VERSION = 1;
-
     private int $cur_version;
 
     private array $versions = [ # ORDER IS IMPORTANT
