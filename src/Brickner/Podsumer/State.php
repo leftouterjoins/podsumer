@@ -38,10 +38,7 @@ class State
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $this->checkDBInstall();
-
-        if (false === $this->main->getTestMode()) {
-            $this->checkDBVersion();
-        }
+        $this->checkDBVersion();
     }
 
     protected function installTables()
@@ -73,6 +70,12 @@ class State
 
         } catch (Exception $e) {
             $this->main->log($e->getMessage());
+
+            if ($this->main->getTestMode()) {
+                echo $e->getMessage();
+            }
+
+
             return false;
         }
     }
@@ -97,6 +100,7 @@ class State
         $sql = 'INSERT INTO feeds (url_hash, name, last_update, url, description, image, image_url) VALUES (:url_hash, :name, :last_update, :url, :description, :image, :image_url) ON CONFLICT(url_hash) DO UPDATE SET name=:name, last_update=:last_update, description=:description, image=:image, image_url=:image_url';
         $this->query($sql, $feed_rec);
         $feed_id = $this->pdo->lastInsertId();
+
         if ('0' !== $feed_id) {
             $feed->setFeedId(intval($feed_id));
         }
