@@ -69,26 +69,30 @@ class FSState extends State
         $feed = $this->getFeed($feed_id);
         $file_id = $feed['image'];
         $file = $this->getFileById($file_id);
-        if ($file['storage_mode'] == 'DISK') {
+        if ($file['storage_mode'] == 'DISK' && file_exists($file['filename'])) {
             unlink($file['filename']);
         }
 
         $items = $this->getFeedItems($feed_id);
         foreach ($items as $item) {
             $file_id = $item['image'];
-            $file = $this->getFileById($file_id);
 
             if (!empty($file_id)) {
-                if ($file['storage_mode'] == 'DISK') {
+
+                $file = $this->getFileById($file_id);
+
+                if ($file['storage_mode'] == 'DISK' && file_exists($file['filename'])) {
                     unlink($file['filename']);
                 }
             }
 
             $file_id = $item['audio_file'];
-            if (!empty($file_id)) {
+
+            if (!empty($file_id)) { # The audio for an item may not be downloaded.
+
                 $file = $this->getFileById($file_id);
 
-                if ($file['storage_mode'] == 'DISK') {
+                if ($file['storage_mode'] == 'DISK' && file_exists($file['filename'])) {
                     unlink($file['filename']);
                 }
             }
@@ -96,7 +100,9 @@ class FSState extends State
 
         # Delete feed dir.
         $feed_dir = $this->getFeedDir($feed['name']);
-        rmdir($feed_dir);
+        if (file_exists($feed_dir)) {
+            rmdir($feed_dir);
+        }
 
         parent::deleteFeed($feed_id);
     }
@@ -108,7 +114,7 @@ class FSState extends State
         $file_id = $item['audio_file'];
         $file = $this->getFileById($file_id);
 
-        if ($file['storage_mode'] == 'DISK') {
+        if ($file['storage_mode'] == 'DISK' && file_exists($file['filename'])) {
             unlink($file['filename']);
         }
 

@@ -197,7 +197,13 @@ class State
 
         if (!empty($file) && $file['storage_mode'] === 'DISK') {
             $filename = $file['data'];
-            $file['data'] = $this->loadFile($filename);
+
+            try {
+                $file['data'] = $this->loadFile($filename);
+            } catch (Exception $e) {
+
+            }
+
             $file['filename'] = $filename;
         }
 
@@ -211,7 +217,12 @@ class State
 
         if (!empty($file) && $file['storage_mode'] === 'DISK') {
             $filename = $file['data'];
-            $file['data'] = $this->loadFile($filename);
+
+            try {
+                $file['data'] = $this->loadFile($filename);
+            } catch (Exception $e) {
+            }
+
             $file['filename'] = $filename;
         }
 
@@ -318,7 +329,10 @@ class State
 
     protected function loadFile(string $filename): string
     {
-        $contents = file_get_contents($filename);
+        $contents = false;
+        if (file_exists($filename)) {
+            $contents = file_get_contents($filename);
+        }
 
         if (!$contents) {
             throw new Exception("Could not open: $filename");

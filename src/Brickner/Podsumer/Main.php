@@ -206,6 +206,7 @@ class Main
     public function redirect(string $path)
     {
         header("Location: $path");
+        exit(0);
     }
 
     public function getTestMode(): bool
