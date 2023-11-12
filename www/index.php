@@ -298,11 +298,8 @@ function image_cache(array $args)
     } else {
 
         $main->setResponseCode(404);
-
         return;
-
     }
-
 
     $file_data = $main->getState()->getFileById($file_id);
 

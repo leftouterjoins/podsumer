@@ -16,9 +16,11 @@ class Main
     protected State $state;
     protected Config $config;
     protected string $path;
+    protected bool $test_mode;
 
     public function __construct(string $path, array $env, array $request, array $files, bool $test_mode = false)
     {
+        $this->test_mode = $test_mode;
         $this->env = $env;
         $this->args = $request;
         $this->uploads = $files;
@@ -203,6 +205,11 @@ class Main
     public function redirect(string $path)
     {
         header("Location: $path");
+    }
+
+    public function getTestMode(): bool
+    {
+        return $this->test_mode;
     }
 }
 

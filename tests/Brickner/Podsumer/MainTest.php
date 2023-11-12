@@ -170,7 +170,7 @@ final class MainTest extends TestCase
         $main = $this->dummyMain();
         $state = $main->getState();
 
-        $this->assertTrue(is_subclass_of($state::class, State::class));
+        $this->assertTrue(is_a($state::class, State::class, true));
     }
 
     public function testGetStateFilePath()

@@ -11,8 +11,9 @@ use \SimpleXMLElement;
 
 class State
 {
-    CONST VERSION = 1;
     use TStateSchemaMigrations;
+
+    CONST VERSION = 1;
 
     protected Main $main;
     protected $state_file_path;
@@ -37,7 +38,10 @@ class State
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $this->checkDBInstall();
-        $this->checkDBVersion();
+
+        if (false === $this->main->getTestMode()) {
+            $this->checkDBVersion();
+        }
     }
 
     protected function installTables()

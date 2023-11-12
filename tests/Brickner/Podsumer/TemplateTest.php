@@ -15,7 +15,16 @@ final class TemplateTest extends TestCase
     public function testTemplate(): void
     {
         ob_start();
-        $this->main = new Main($this->root, [], [], [], true);
+
+        $env = [
+            'REQUEST_SCHEME' => 'http',
+            'HTTP_HOST' => 'example.com',
+            'REQUEST_URI' => '/',
+            'REQUEST_METHOD' => 'GET',
+            'REMOTE_ADDR' => '127.0.0.1',
+        ];
+
+        $this->main = new Main($this->root, $env, [], [], true);
         Template::render($this->main, 'test', ['test' => 'test']);
         $out = ob_get_contents();
         ob_end_clean();
@@ -26,7 +35,16 @@ final class TemplateTest extends TestCase
     public function testXmlTemplate(): void
     {
         ob_start();
-        $this->main = new Main($this->root, [], [], [], true);
+
+        $env = [
+            'REQUEST_SCHEME' => 'http',
+            'HTTP_HOST' => 'example.com',
+            'REQUEST_URI' => '/',
+            'REQUEST_METHOD' => 'GET',
+            'REMOTE_ADDR' => '127.0.0.1',
+        ];
+
+        $this->main = new Main($this->root, $env, [], [], true);
         Template::renderXml($this->main, 'feed', ['test' => 'test']);
         $out = ob_get_contents();
         ob_end_clean();

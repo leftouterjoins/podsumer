@@ -16,9 +16,6 @@ final class StateTest extends TestCase
 
     protected function setUp(): void
     {
-        $tmp_main = new Main($this->root, [], [], [], true);
-        unlink($tmp_main->getStateFilePath());
-
         $env = [
             'REQUEST_SCHEME' => 'http',
             'HTTP_HOST' => 'example.com',
@@ -26,6 +23,9 @@ final class StateTest extends TestCase
             'REQUEST_METHOD' => 'GET',
             'REMOTE_ADDR' => '127.0.0.1',
         ];
+
+        $tmp_main = new Main($this->root, $env, [], [], true);
+        unlink($tmp_main->getStateFilePath());
 
         $this->main = new Main($this->root, $env, [], [], true);
         $this->state = new State($this->main);
