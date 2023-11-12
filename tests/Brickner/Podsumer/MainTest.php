@@ -190,7 +190,7 @@ final class MainTest extends TestCase
             'REMOTE_ADDR' => '127.0.0.1',
         ], $env);
 
-        $main = new Main($this->root, $env, $request, $files);
+        $main = new Main($this->root, $env, $request, $files, true);
 
         return $main;
     }
