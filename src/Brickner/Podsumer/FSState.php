@@ -7,11 +7,21 @@ use \Exception;
 
 class FSState extends State
 {
+    protected function getMediaDir(): string
+    {
+        return $this->main->getInstallPath()
+            . $this->main->getConf('podsumer', 'media_dir');
+    }
+
+    protected function getFeedDir($name): string
+    {
+        return $this->getMediaDir() . DIRECTORY_SEPARATOR .  $this->escapeFilename($name);
+    }
+
     protected function addFileContents(string $content_hash, string $contents, ?string $filename = null, ?array $feed = null): int
     {
         # Get configured media directory.
-        $media_dir = $this->main->getInstallPath()
-            . $this->main->getConf('podsumer', 'media_dir');
+        $media_dir = $this->getMediaDir();
 
         # Check permissions of root media directory.
         if (!is_writable($media_dir)) {
@@ -24,13 +34,13 @@ class FSState extends State
         }
 
         # Create dir for feed if needed
-        $feed_dir = $media_dir . DIRECTORY_SEPARATOR .  $this->escapeFilename($feed['name']);
+        $feed_dir = $this->getFeedDir($feed['name']);
         if (!file_exists($feed_dir)) {
             mkdir($feed_dir, 0755, true);
         }
 
         # Write file to disk along with image file
-        $file_path = $feed_dir . DIRECTORY_SEPARATOR . $this->escapeFilename($filename);
+        $file_path = $feed_dir . DIRECTORY_SEPARATOR . $filename;
         $written = file_put_contents($file_path, $contents);
 
         if (!$written) {
@@ -52,6 +62,57 @@ class FSState extends State
         $filename = str_replace('/', '', $filename);
 
         return $filename;
+    }
+
+    public function deleteFeed(int $feed_id)
+    {
+        $feed = $this->getFeed($feed_id);
+        $file_id = $feed['image'];
+        $file = $this->getFileById($file_id);
+        if ($file['storage_mode'] == 'DISK') {
+            unlink($file['filename']);
+        }
+
+        $items = $this->getFeedItems($feed_id);
+        foreach ($items as $item) {
+            $file_id = $item['image'];
+            $file = $this->getFileById($file_id);
+
+            if (!empty($file_id)) {
+                if ($file['storage_mode'] == 'DISK') {
+                    unlink($file['filename']);
+                }
+            }
+
+            $file_id = $item['audio_file'];
+            if (!empty($file_id)) {
+                $file = $this->getFileById($file_id);
+
+                if ($file['storage_mode'] == 'DISK') {
+                    unlink($file['filename']);
+                }
+            }
+        }
+
+        # Delete feed dir.
+        $feed_dir = $this->getFeedDir($feed['name']);
+        rmdir($feed_dir);
+
+        parent::deleteFeed($feed_id);
+    }
+
+    public function deleteItemMedia(int $item_id)
+    {
+        $item = $this->getFeedItem($item_id);
+
+        $file_id = $item['audio_file'];
+        $file = $this->getFileById($file_id);
+
+        if ($file['storage_mode'] == 'DISK') {
+            unlink($file['filename']);
+        }
+
+        parent::deleteItemMedia($item_id);
     }
 }
 

@@ -29,9 +29,10 @@ class Main
         $this->config = new Config($this->getConfigPath($test_mode));
         $this->logs = new Logs($this);
 
-        $this->state = new State($this);
         if ($this->getConf('podsumer', 'store_media_on_disk')) {
             $this->state = new FSState($this);
+        } else {
+            $this->state = new State($this);
         }
     }
 

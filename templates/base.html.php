@@ -19,6 +19,7 @@
     </div>
     <div class="text-center py-8 text-s text-neutral-500">
         <p>
+
             Thank You for Listening With Podsumer
             <br>
             <span class="text-xs">
@@ -27,8 +28,12 @@
                 or <a target="_blank" rel="noreferrer" href="https://github.com/joshwbrick/podsumer" class="text-amber-700 underline">contributing to</a>
                 further development.
             </span>
+
+        </p>
+        <p class="text-xs">
+            <br>
+            Released under the MIT License &ndash; Database version: <?= $this->main->getState()->getVersion(); ?>
         </p>
     </div>
 </body>
 </html>
-

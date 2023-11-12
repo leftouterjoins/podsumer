@@ -198,6 +198,7 @@ class State
         if (!empty($file) && $file['storage_mode'] === 'DISK') {
             $filename = $file['data'];
             $file['data'] = $this->loadFile($filename);
+            $file['filename'] = $filename;
         }
 
         return $file;
@@ -211,6 +212,7 @@ class State
         if (!empty($file) && $file['storage_mode'] === 'DISK') {
             $filename = $file['data'];
             $file['data'] = $this->loadFile($filename);
+            $file['filename'] = $filename;
         }
 
         return $file;
@@ -283,6 +285,19 @@ class State
         $this->query('VACUUM');
     }
 
+    public function deleteItemMedia(int $item_id)
+    {
+        $vars = ['item_id' => $item_id];
+
+        $sql = 'DELETE FROM file_contents WHERE id IN (SELECT content_id FROM items LEFT JOIN files ON items.audio_file = files.id WHERE items.id = :item_id)';
+        $this->query($sql, $vars);
+
+        $sql = 'UPDATE items SET audio_file = NULL WHERE id = :item_id';
+        $this->query($sql, $vars);
+
+        $this->query('VACUUM');
+    }
+
     public function setItemAudioFile(int $item_id, int $file_id)
     {
         $sql = 'UPDATE items SET audio_file = :file_id WHERE id=:id';
@@ -301,20 +316,6 @@ class State
         $this->query($sql, ['id' => $feed_id, 'file_id' => $file_id]);
     }
 
-    public function deleteItemMedia(int $item_id)
-    {
-        $vars = ['item_id' => $item_id];
-
-        $sql = 'DELETE FROM file_contents WHERE id IN (SELECT content_id FROM items LEFT JOIN files ON items.audio_file = files.id WHERE items.id = :item_id)';
-        $this->query($sql, $vars);
-
-        $sql = 'UPDATE items SET audio_file = NULL WHERE id = :item_id';
-        $this->query($sql, $vars);
-
-        $this->query('VACUUM');
-
-    }
-
     protected function loadFile(string $filename): string
     {
         $contents = file_get_contents($filename);
@@ -326,6 +327,9 @@ class State
         return $contents;
     }
 
-
+    public function getVersion(): int
+    {
+        return self::VERSION;
+    }
 }
 
