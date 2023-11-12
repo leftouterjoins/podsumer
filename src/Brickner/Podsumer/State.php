@@ -331,5 +331,13 @@ class State
     {
         return self::VERSION;
     }
+
+    public function getLibrarySize(): int
+    {
+        $sql = 'SELECT SUM(size) AS `size` FROM files';
+        $size = $this->query($sql)[0]['size'];
+
+        return intval($size);
+    }
 }
 

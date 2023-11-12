@@ -192,7 +192,7 @@ class Main
         return $this->path;
     }
 
-    /**
+   /**
     * @codeCoverageIgnore
     */
     public function getDbSize(): int

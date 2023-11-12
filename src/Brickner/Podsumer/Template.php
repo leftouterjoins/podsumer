@@ -42,7 +42,7 @@ class Template
 
         $cleaned_vars = $this->encodeVars($vars);
         extract($cleaned_vars);
-        $db_size = $this->main->getDbSize();
+        $db_size = $this->main->getDbSize() + $this->main->getState()->getLibrarySize();
 
         include($this->getTemplatePath($base_template));
     }

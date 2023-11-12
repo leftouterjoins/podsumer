@@ -7,13 +7,13 @@ use \Exception;
 
 class FSState extends State
 {
-    protected function getMediaDir(): string
+    public function getMediaDir(): string
     {
         return $this->main->getInstallPath()
             . $this->main->getConf('podsumer', 'media_dir');
     }
 
-    protected function getFeedDir($name): string
+    public function getFeedDir($name): string
     {
         return $this->getMediaDir() . DIRECTORY_SEPARATOR .  $this->escapeFilename($name);
     }
