@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-ini_set('display_errors', false);
+ini_set('display_errors', true);
 ini_set('error_reporting', E_ALL);
 ini_set('variables_order', 'E');
 ini_set('request_order', 'CGP');
