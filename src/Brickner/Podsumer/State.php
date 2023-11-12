@@ -36,7 +36,6 @@ class State
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $this->checkDBInstall();
-
         $this->checkDBVersion();
     }
 
@@ -293,7 +292,7 @@ class State
 
     public function setFeedImageFile(int $feed_id, int $file_id)
     {
-        $sql = 'UPDATE feed SET image = :file_id WHERE id=:id';
+        $sql = 'UPDATE feeds SET image = :file_id WHERE id=:id';
         $this->query($sql, ['id' => $feed_id, 'file_id' => $file_id]);
     }
 

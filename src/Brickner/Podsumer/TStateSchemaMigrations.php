@@ -2,9 +2,11 @@
 
 namespace Brickner\Podsumer;
 
+use \Exception;
+
 trait TStateSchemaMigrations
 {
-    CONST VERSION = 0;
+    CONST VERSION = 1;
 
     private int $cur_version;
 
@@ -24,12 +26,14 @@ trait TStateSchemaMigrations
             if ($this->$upgradeFunc()) {
                 $updated = $this->query("INSERT INTO versions (version) VALUES ($new_version)");
 
-                if (!$updated) {
-                    throw new Exception("Could not upgrade DB");
+                if (false === $updated) {
+                    throw new Exception("Could set new DB version.");
                     break;
                 }
 
                 $this->cur_version = $new_version;
+            } else {
+                throw new Exception("Could not upgrade DB");
             }
         }
     }
@@ -40,7 +44,7 @@ trait TStateSchemaMigrations
         $addFeedImageUrl = $this->query("ALTER TABLE `feeds` ADD COLUMN image_url");
         $addItemImageUrl = $this->query("ALTER TABLE `items` ADD COLUMN image_url");
 
-        return $addStorageMode && $addFeedImageUrl && $addItemImageUrl;
+        return $addStorageMode !== false && $addFeedImageUrl !== false && $addItemImageUrl !== false;
     }
 }
 
