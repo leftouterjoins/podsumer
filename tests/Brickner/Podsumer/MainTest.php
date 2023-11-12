@@ -25,7 +25,7 @@ final class MainTest extends TestCase
 
     public function testConstruct(): void
     {
-        $main = new Main($this->root, [], [], []);
+        $main = new Main($this->root, [], [], [], true);
         $this->assertEquals($main::class, Main::class);
     }
 
