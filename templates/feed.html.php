@@ -29,7 +29,7 @@
         <? } ?>
         </span>
         <br>
-        <?= substr($item['description'], 0, 360); ?>
+        <?= substr(strip_tags($item['description']), 0, 360); ?>
     </div>
     <? endforeach ?>
 </div>
