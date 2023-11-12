@@ -15,7 +15,7 @@ class FSState extends State
 
         # Check permissions of root media directory.
         if (!is_writable($media_dir)) {
-            $made_dir = mkdir($media_dir);
+            $made_dir = mkdir($media_dir, 0755, true);
 
             if (!$made_dir) {
                 $message = "Cannot write to media directory at: $media_dir";
@@ -26,7 +26,7 @@ class FSState extends State
         # Create dir for feed if needed
         $feed_dir = $media_dir . DIRECTORY_SEPARATOR .  $this->escapeFilename($feed['name']);
         if (!file_exists($feed_dir)) {
-            mkdir($feed_dir);
+            mkdir($feed_dir, 0755, true);
         }
 
         # Write file to disk along with image file
