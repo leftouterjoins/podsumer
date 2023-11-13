@@ -12,7 +12,8 @@
     <? foreach ($items as $id => $item): ?>
     <div class="w-full clear-left py-8">
         <a href="/item?item_id=<?= $item['id'] ?>">
-            <img src="/file?file_id=<?= $item['image'] ?: $feed['image'] ?>" class="w-32 border-solid border-neutral-800 border inline float-left mr-4">
+            <img src="/image?<?= 'item_id='.$item['id'] ?: 'feed_id='.$feed['id'] ?>" class="w-32 border-solid border-neutral-800 border inline float-left mr-4">
+
         </a>
         <a href="/item?item_id=<?= $item['id'] ?>" class="text-xl">
             <?= $item['name'] ?>
@@ -28,7 +29,7 @@
         <? } ?>
         </span>
         <br>
-        <?= substr($item['description'], 0, 360); ?>
+        <?= substr(strip_tags($item['description']), 0, 360); ?>
     </div>
     <? endforeach ?>
 </div>

@@ -42,7 +42,7 @@ class Template
 
         $cleaned_vars = $this->encodeVars($vars);
         extract($cleaned_vars);
-        $db_size = $this->main->getDbSize();
+        $db_size = $this->main->getDbSize() + $this->main->getState()->getLibrarySize();
 
         include($this->getTemplatePath($base_template));
     }
@@ -58,10 +58,25 @@ class Template
     protected function encodeVars(array $vars): array
     {
         array_walk_recursive($vars, function (&$var) {
-            $var = htmlentities(strip_tags(strval($var)), ENT_QUOTES | ENT_SUBSTITUTE | ENT_XML1, '', false);
+            $var = strip_tags(strval($var), '<br><p><a><span>');
         });
 
         return $vars;
+    }
+
+    public function hyperlinkUrls(string $text): string
+    {
+        $reg = '/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(\/\S*)?/';
+        $formatText = preg_replace($reg, '<a class="text-amber-200" href="$0" target="_blank">$0</a>', $text);
+
+        $reg2 = '/(?<=\s|\A)([0-9a-zA-Z\-\.]+\.[a-zA-Z0-9\/]{2,})(?=\s|$|\,|\.)/';
+        $formatText = preg_replace($reg2, '<a class="text-amber-200" href="//$0" target="_blank">$0</a>', $formatText);
+
+        $emailRegex = '/(\S+\@\S+\.\S+)\b/';
+        $formatText = preg_replace($emailRegex, '<a class="text-amber-200" href="mailto:$1" target="_blank">$1</a>', $formatText);
+        $formatText = nl2br($formatText);
+
+        return $formatText;
     }
 }
 

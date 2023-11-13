@@ -19,13 +19,13 @@ final class MainTest extends TestCase
         #[Route('/exception', 'GET')]
         function dummyTestEndpointWithExecption(array $args) {
             # asuume things went well.
-            throw new Exception('Test exception');
+            throw new Exception('');
         }
     }
 
     public function testConstruct(): void
     {
-        $main = new Main($this->root, [], [], []);
+        $main = new Main($this->root, [], [], [], true);
         $this->assertEquals($main::class, Main::class);
     }
 
@@ -170,7 +170,7 @@ final class MainTest extends TestCase
         $main = $this->dummyMain();
         $state = $main->getState();
 
-        $this->assertEquals(State::class, $state::class);
+        $this->assertTrue(is_a($state::class, State::class, true));
     }
 
     public function testGetStateFilePath()
@@ -190,7 +190,7 @@ final class MainTest extends TestCase
             'REMOTE_ADDR' => '127.0.0.1',
         ], $env);
 
-        $main = new Main($this->root, $env, $request, $files);
+        $main = new Main($this->root, $env, $request, $files, true);
 
         return $main;
     }

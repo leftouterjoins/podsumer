@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-ini_set('display_errors', false);
+ini_set('display_errors', true);
 ini_set('error_reporting', E_ALL);
 ini_set('variables_order', 'E');
 ini_set('request_order', 'CGP');
@@ -199,8 +199,10 @@ function file_cache(array $args): ?string
     global $main;
 
     $file = new File($main);
+
     if (!empty($args['file_id'])) {
         $file_data = $file->cacheForId(intval($args['file_id']));
+
     } else {
         $main->setResponseCode(404);
     }
@@ -252,8 +254,8 @@ function file_cache(array $args): ?string
     return null;
 }
 
-#[Route('/media', 'GET')]
-function media_cache(array $args)
+#[Route('/audio', 'GET')]
+function audio_cache(array $args)
 {
     global $main;
 
@@ -265,10 +267,52 @@ function media_cache(array $args)
     $item_id = intval($args['item_id']);
     $item = $main->getState()->getFeedItem($item_id);
 
+    $feed = $main->getState()->getFeedForItem($item_id);
+
     $file = new File($main);
-    $file_id = $file->cacheUrl($item['audio_url']);
+    $file_id = $file->cacheUrl($item['audio_url'], $feed);
 
     $main->getState()->setItemAudioFile($item_id, $file_id);
+
+    file_cache(['file_id' => $file_id]);
+}
+
+#[Route('/image', 'GET')]
+function image_cache(array $args)
+{
+    global $main;
+
+    if (array_key_exists('item_id', $args)) {
+
+        $item_id = intval($args['item_id']);
+        $item = $main->getState()->getFeedItem($item_id);
+        $feed = $main->getState()->getFeed($item['feed_id']);
+
+        $file_id = $item['image'];
+
+    } elseif (array_key_exists('feed_id', $args)) {
+
+        $feed_id = intval($args['feed_id']);
+        $feed = $main->getState()->getFeed($feed_id);
+
+        $file_id = $feed['image'];
+
+    } else {
+
+        $main->setResponseCode(404);
+        return;
+    }
+
+    $file_data = $main->getState()->getFileById($file_id);
+
+    $file = new File($main);
+    $file_id = $file->cacheUrl($file_data['url'], $feed);
+
+    if (array_key_exists('item_id', $args)) {
+        $main->getState()->setItemImageFile($item_id, $file_id);
+    } elseif (array_key_exists('feed_id', $args)) {
+        $main->getState()->setFeedImageFile($feed_id, $file_id);
+    }
 
     file_cache(['file_id' => $file_id]);
 }

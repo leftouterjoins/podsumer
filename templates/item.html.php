@@ -5,11 +5,15 @@
     </h1>
 
     <h1 class="text-xl pb-5"><?= $item['name'] ?></h1>
-    <img src="/file?file_id=<?= $item['image'] ?: $feed['image'] ?>" class="mx-auto w-3/5 border-solid border-neutral-800 border">
-    <audio autoplay controls src="/media?item_id=<?= $item['id'] ?>" class="w-full p-4 h-13"></audio>
-    <div class="w-full p-10">
-        <?= htmlspecialchars_decode(nl2br($item['description'])) ?>
+    <img src="/image?<?= 'item_id='.$item['id'] ?: 'feed_id'.$feed['id'] ?>" class="mx-auto w-3/5 border-solid border-neutral-800 border">
+    <audio autoplay controls src="/audio?item_id=<?= $item['id'] ?>" class="w-full p-4 h-13"></audio>
+    <div id="item-desc" class="w-full pb-4 pl-5 pr-5">
+        <p class="pb-4"><?= $item['description'] ?></p>
     </div>
 
 </div>
+<style type="text/css">
+   #item-desc a {color: rgb(253, 230, 138);}
+   #item-desc p {padding-bottom: 1em;}
+</style>
 
