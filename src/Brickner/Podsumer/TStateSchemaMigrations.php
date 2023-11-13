@@ -24,14 +24,18 @@ trait TStateSchemaMigrations
             if ($this->$upgradeFunc()) {
                 $updated = $this->query("INSERT INTO versions (version) VALUES ($new_version)");
 
+                //@codeCoverageIgnoreStart
                 if (false === $updated) {
                     throw new Exception("Could set new DB version.");
                     break;
                 }
+                //@codeCoverageIgnoreEnd
 
                 $this->cur_version = $new_version;
             } else {
+                //@codeCoverageIgnoreStart
                 throw new Exception("Could not upgrade DB");
+                //@codeCoverageIgnoreEnd
             }
         }
     }
