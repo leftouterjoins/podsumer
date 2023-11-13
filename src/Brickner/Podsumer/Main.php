@@ -16,9 +16,11 @@ class Main
     protected State $state;
     protected Config $config;
     protected string $path;
+    protected bool $test_mode;
 
     public function __construct(string $path, array $env, array $request, array $files, bool $test_mode = false)
     {
+        $this->test_mode = $test_mode;
         $this->env = $env;
         $this->args = $request;
         $this->uploads = $files;
@@ -26,7 +28,12 @@ class Main
         $this->path = $path;
         $this->config = new Config($this->getConfigPath($test_mode));
         $this->logs = new Logs($this);
-        $this->state = new State($this);
+
+        if ($this->getConf('podsumer', 'store_media_on_disk')) {
+            $this->state = new FSState($this);
+        } else {
+            $this->state = new State($this);
+        }
     }
 
     public function run(): void
@@ -138,7 +145,7 @@ class Main
 
     public function getResponseCode(): int
     {
-        return http_response_code();
+        return http_response_code() ?: 0;
     }
 
     public function getHost(): string
@@ -164,6 +171,11 @@ class Main
         return $f;
     }
 
+    public function setConf(mixed $value, string $key1, ?string $key2 = null): void
+    {
+        $this->config->set($value, $key1, $key2);
+    }
+
     public function log(string $message): void
     {
         $this->logs->log($message);
@@ -172,6 +184,11 @@ class Main
     public function getState(): State
     {
         return $this->state;
+    }
+
+    public function setState(State $state): void
+    {
+        $this->state = $state;
     }
 
     public function getStateFilePath(): string
@@ -185,7 +202,13 @@ class Main
         return $this->path;
     }
 
-    /**
+    public function setInstallPath(string $path): string
+    {
+        $this->path = $path;
+        return $this->path;
+    }
+
+   /**
     * @codeCoverageIgnore
     */
     public function getDbSize(): int
@@ -199,6 +222,12 @@ class Main
     public function redirect(string $path)
     {
         header("Location: $path");
+        exit(0);
+    }
+
+    public function getTestMode(): bool
+    {
+        return $this->test_mode;
     }
 }
 

@@ -90,7 +90,7 @@ class Logs
 
     protected function write($f, array $message): void
     {
-        if (!fputcsv($f, $message)) {
+        if (!$this->main->getTestMode() && !fputcsv($f, $message)) {
             throw new \Exception('Failed to write to log.');
         }
     }

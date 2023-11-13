@@ -9,7 +9,7 @@
     <? foreach ($feeds as $feed): ?>
     <div class="container py-10 clear-left">
         <a href="/feed?id=<?= $feed['id'] ?>">
-            <img src="/file?file_id=<?= $feed['image'] ?>" class="float-left w-48 pr-5">
+            <img src="/image?feed_id=<?= $feed['id'] ?>" class="float-left w-48 pr-5">
         </a>
 
         <h1 class="text-2xl pb-2">

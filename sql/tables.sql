@@ -40,4 +40,7 @@ CREATE TABLE IF NOT EXISTS `items` (
     image INTEGER NULL
 );
 
+CREATE TABLE IF NOT EXISTS `versions` (
+    version INTEGER NULL
+);
 
