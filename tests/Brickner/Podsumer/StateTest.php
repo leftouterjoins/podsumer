@@ -111,5 +111,11 @@ final class StateTest extends TestCase
         $item = $this->state->getFeedItem(1);
         $this->state->deleteItemMedia($item['id']);
      }
+
+    public function testGetVersion()
+    {
+        // Assert it is greater than 0
+        $this->assertGreaterThan(0, $this->state->getVersion());
+    }
 }
 

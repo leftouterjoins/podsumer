@@ -19,7 +19,7 @@ final class MainTest extends TestCase
         #[Route('/exception', 'GET')]
         function dummyTestEndpointWithExecption(array $args) {
             # asuume things went well.
-            throw new Exception('Test exception');
+            throw new Exception('');
         }
     }
 

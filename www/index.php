@@ -199,8 +199,10 @@ function file_cache(array $args): ?string
     global $main;
 
     $file = new File($main);
+
     if (!empty($args['file_id'])) {
         $file_data = $file->cacheForId(intval($args['file_id']));
+
     } else {
         $main->setResponseCode(404);
     }

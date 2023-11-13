@@ -40,6 +40,15 @@ class Config
         }
     }
 
+    public function set(mixed $value, string $key1, ?string $key2 = null): void
+    {
+        if (null !== $key2) {
+            $this->config[$key1][$key2] = $value;;
+        } else {
+            $this->config[$key1] = $value;
+        }
+    }
+
     protected function parseConfig($path): mixed
     {
         error_clear_last();

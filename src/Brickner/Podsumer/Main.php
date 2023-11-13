@@ -145,7 +145,7 @@ class Main
 
     public function getResponseCode(): int
     {
-        return http_response_code();
+        return http_response_code() ?: 0;
     }
 
     public function getHost(): string
@@ -171,6 +171,11 @@ class Main
         return $f;
     }
 
+    public function setConf(mixed $value, string $key1, ?string $key2 = null): void
+    {
+        $this->config->set($value, $key1, $key2);
+    }
+
     public function log(string $message): void
     {
         $this->logs->log($message);
@@ -181,6 +186,11 @@ class Main
         return $this->state;
     }
 
+    public function setState(State $state): void
+    {
+        $this->state = $state;
+    }
+
     public function getStateFilePath(): string
     {
         return $this->getInstallPath()
@@ -189,6 +199,12 @@ class Main
 
     public function getInstallPath(): string
     {
+        return $this->path;
+    }
+
+    public function setInstallPath(string $path): string
+    {
+        $this->path = $path;
         return $this->path;
     }
 

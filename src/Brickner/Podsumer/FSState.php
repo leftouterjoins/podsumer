@@ -25,10 +25,28 @@ class FSState extends State
 
         # Check permissions of root media directory.
         if (!is_writable($media_dir)) {
-            $made_dir = mkdir($media_dir, 0755, true);
 
-            if (!$made_dir) {
-                $message = "Cannot write to media directory at: $media_dir";
+            if (!file_exists($media_dir)) {
+
+                error_clear_last();
+
+                $made_dir = mkdir($media_dir, 0755, true);
+
+                $error = error_get_last();
+                if (!empty($error)) {
+                    $message = "Cannot create media directory at: $media_dir";
+                    throw new Exception($message);
+                }
+
+                if (!$made_dir) {
+                    $message = "Cannot write to media directory at: $media_dir";
+                    throw new Exception($message);
+                }
+            }
+
+            $modified_perms = chmod($media_dir, 0755);
+            if (false === $modified_perms) {
+                $message = "Cannot modify permissions of media directory at: $media_dir";
                 throw new Exception($message);
             }
         }
@@ -36,14 +54,26 @@ class FSState extends State
         # Create dir for feed if needed
         $feed_dir = $this->getFeedDir($feed['name']);
         if (!file_exists($feed_dir)) {
-            mkdir($feed_dir, 0755, true);
+            error_clear_last();
+
+            @mkdir($feed_dir, 0755, true);
+            $error = error_get_last();
+            if (!empty($error)) {
+                $message = "Cannot create feed directory at: $feed_dir";
+                throw new Exception($message);
+            }
+
         }
 
         # Write file to disk along with image file
         $file_path = $feed_dir . DIRECTORY_SEPARATOR . $filename;
-        $written = file_put_contents($file_path, $contents);
 
-        if (!$written) {
+        error_clear_last();
+        $written = @file_put_contents($file_path, $contents);
+
+        $error = error_get_last();
+
+        if (!$written || !empty($error)) {
             $message = "Cannot write to media to file at: $file_path";
             throw new Exception($message);
         }
@@ -68,7 +98,9 @@ class FSState extends State
     {
         $feed = $this->getFeed($feed_id);
         $file_id = $feed['image'];
+
         $file = $this->getFileById($file_id);
+
         if ($file['storage_mode'] == 'DISK' && file_exists($file['filename'])) {
             unlink($file['filename']);
         }
@@ -112,6 +144,11 @@ class FSState extends State
         $item = $this->getFeedItem($item_id);
 
         $file_id = $item['audio_file'];
+
+        if (empty($file_id)) {
+            return;
+        }
+
         $file = $this->getFileById($file_id);
 
         if ($file['storage_mode'] == 'DISK' && file_exists($file['filename'])) {

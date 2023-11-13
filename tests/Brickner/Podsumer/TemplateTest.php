@@ -51,5 +51,23 @@ final class TemplateTest extends TestCase
 
         $this->assertEquals('test', $out);
     }
+
+    public function testHyperlinkUrls(): void
+    {
+        $env = [
+            'REQUEST_SCHEME' => 'http',
+            'HTTP_HOST' => 'example.com',
+            'REQUEST_URI' => '/',
+            'REQUEST_METHOD' => 'GET',
+            'REMOTE_ADDR' => '127.0.0.1',
+        ];
+
+        $this->main = new Main($this->root, $env, [], [], true);
+        $template = new Template($this->main);
+
+        $test = $template->hyperlinkUrls('This is a link: https://example.com');
+
+        $this->assertEquals('This is a link: <a class="text-amber-200" href="https://example.com" target="_blank">https://example.com</a>', $test);
+    }
 }
 

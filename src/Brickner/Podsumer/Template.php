@@ -64,20 +64,18 @@ class Template
         return $vars;
     }
 
-    protected function hyperlinkUrls(string $text): string
+    public function hyperlinkUrls(string $text): string
     {
-        //Catch all links with protocol
         $reg = '/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(\/\S*)?/';
-        $formatText = preg_replace($reg, '<a class="text-amber-200" href="$0" style="font-weight: normal;" target="_blank" title="$0">$0</a>', $text);
+        $formatText = preg_replace($reg, '<a class="text-amber-200" href="$0" target="_blank">$0</a>', $text);
 
-        //Catch all links without protocol
         $reg2 = '/(?<=\s|\A)([0-9a-zA-Z\-\.]+\.[a-zA-Z0-9\/]{2,})(?=\s|$|\,|\.)/';
-        $formatText = preg_replace($reg2, '<a class="text-amber-200" href="//$0" style="font-weight: normal;" target="_blank" title="$0">$0</a>', $formatText);
+        $formatText = preg_replace($reg2, '<a class="text-amber-200" href="//$0" target="_blank">$0</a>', $formatText);
 
-        //Catch all emails
         $emailRegex = '/(\S+\@\S+\.\S+)\b/';
-        $formatText = preg_replace($emailRegex, '<a class="text-amber-200" href="mailto:$1" style="font-weight: normal;" target="_blank" title="$1">$1</a>', $formatText);
+        $formatText = preg_replace($emailRegex, '<a class="text-amber-200" href="mailto:$1" target="_blank">$1</a>', $formatText);
         $formatText = nl2br($formatText);
+
         return $formatText;
     }
 }
