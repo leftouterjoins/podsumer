@@ -12,7 +12,12 @@
  - OPML Import & Export
    - Import your current subscriptions from another app
    - Export subscriptions to podsumer feeds for use in your mobile or other podcast app.
- - Single file library
+ - Single file library (optional)
+    - Easily move and migrate your library via a single SQLite DB file.
+    - Avoid file permissions headches in docker
+ - Save media to disk (optional)
+    - If you prefer to store audio and images on disk instead of in the database.
+    - Faster backups for very large libraries.
  - Automatic feed refresh
     - Original feeds checked for updates when proxied feeds are queried.
  - Codebase contains zero 3rd-party dependencies.

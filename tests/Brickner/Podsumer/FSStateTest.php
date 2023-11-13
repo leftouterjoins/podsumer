@@ -77,7 +77,14 @@ final class FSStateTest extends TestCase
         $this->expectNotToPerformAssertions();
 
         $this->feed = new Feed(self::TEST_FEED_URL);
-        $this->main->getState()->addFeed($this->feed);
+        $feed_id = $this->main->getState()->addFeed($this->feed);
+        $feed_data = $this->main->getState()->getFeed($feed_id);
+
+        $item = $this->main->getState()->getFeedItems(1)[0];
+        $file = new File($this->main);
+        $file_id = $file->cacheUrl($item['audio_url'], $feed_data);
+        $this->main->getState()->setItemAudioFile($item['id'], $file_id);
+
         $this->main->getState()->deleteFeed(1);
     }
 
@@ -87,13 +94,13 @@ final class FSStateTest extends TestCase
 
         $this->feed = new Feed(self::TEST_FEED_URL);
         $this->state->addFeed($this->feed);
+
         $item = $this->main->getState()->getFeedItems(1)[0];
 
         $feed_data = $this->main->getState()->getFeed(1);
 
         $file = new File($this->main);
         $file_id = $file->cacheUrl($item['audio_url'], $feed_data);
-
         $this->main->getState()->setItemAudioFile($item['id'], $file_id);
 
         $this->state->deleteItemMedia($item['id']);
