@@ -80,10 +80,10 @@ class State
         }
     }
 
-    public function addFeed(Feed $feed)
+    public function addFeed(Feed $feed): ?int
     {
         if (!$feed->feedLoaded()) {
-            return;
+            return 0;
         }
 
         $feed_url_hash = $feed->getUrlHash();
@@ -107,6 +107,8 @@ class State
 
         $items = $feed->getFeedItems();
         $this->addFeedItems($items, $feed);
+
+        return intval($feed_id);
     }
 
     protected function addFeedItems(\SimpleXMLElement $items, Feed $feed)
