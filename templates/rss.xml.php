@@ -13,7 +13,9 @@
     <? foreach($items as $item): ?>
     <item>
       <title><?= $item['name'] ?></title>
-      <description><![CDATA[ <?= $item['description'] ?> ]]></description>
+      <description>
+        <![CDATA[ <?= $item['description'] ?> ]]>
+      </description>
       <pubDate><?= $item['published'] ?></pubDate>
       <enclosure url="<?= $host ?>/media?item_id=<?= $item['id'] ?>" type="audio/mp3" length="<?= $item['size'] ?>"/>
       <link><?= $host ?>/item?item_id=<?= $item['id'] ?></link>
