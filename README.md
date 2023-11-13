@@ -37,7 +37,7 @@ The docker image is based on the official PHP Debian Bookworm with Apache image.
 
 ```
   podsumer:
-    image: ghcr.io/joshwbrick/podsumer:latest
+    image: ghcr.io/joshwbrick/podsumer:v0.9.4
     container_name: podsumer
     volumes:
         /path/to/dir/for/db:/opt/podsumer/store
