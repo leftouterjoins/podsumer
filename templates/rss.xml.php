@@ -13,7 +13,7 @@
     <? foreach($items as $item): ?>
     <item>
       <title><?= $item['name'] ?></title>
-      <description><?= htmlentities($item['description']) ?></description>
+      <description><?= strip_tags($item['description']) ?></description>
       <pubDate><?= $item['published'] ?></pubDate>
       <enclosure url="<?= $host ?>/media?item_id=<?= $item['id'] ?>" type="audio/mp3" length="<?= $item['size'] ?>"/>
       <link><?= $host ?>/item?item_id=<?= $item['id'] ?></link>
