@@ -8,6 +8,7 @@
  - Privacy oriented
     - No data or usage collection
     - Proxy and cache podcast feeds to reduce your traffic to data collecting feed and media servers.
+ - Per episode artwork is supported
  - Supports streaming audio files (e.g. seek to any part of a podcast)
  - OPML Import & Export
    - Import your current subscriptions from another app
