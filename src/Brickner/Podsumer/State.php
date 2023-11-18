@@ -97,7 +97,7 @@ class State
         $feed_rec['image'] = $this->cacheFile($feed->getImage(), $feed_rec);
         $feed_rec['image_url'] = $feed->getImage();
 
-        $sql = 'INSERT INTO feeds (url_hash, name, last_update, url, description, image, image_url) VALUES (:url_hash, :name, :last_update, :url, :description, :image, :image_url) ON CONFLICT(url_hash) DO UPDATE SET name=:name, last_update=:last_update, description=:description, image=:image, image_url=:image_url';
+        $sql = 'INSERT INTO feeds (url_hash, name, last_update, url, description, image, image_url) VALUES (:url_hash, :name, :last_update, :url, :description, :image, :image_url) ON CONFLICT(url_hash) DO UPDATE SET id=:id';
         $this->query($sql, $feed_rec);
         $feed_id = $this->pdo->lastInsertId();
 
@@ -274,7 +274,7 @@ class State
             'data' => $contents
         ];
 
-        $sql = 'INSERT INTO file_contents (content_hash, data) VALUES (:content_hash, :data) ON CONFLICT(content_hash) DO UPDATE SET content_hash=:content_hash';
+        $sql = 'INSERT INTO file_contents (content_hash, data) VALUES (:content_hash, :data) ON CONFLICT(content_hash) DO UPDATE SET id=id';
         $this->query($sql, $file_content);
 
         $sql = 'SELECT id FROM file_contents WHERE content_hash = :content_hash';
