@@ -9,8 +9,7 @@ class FSState extends State
 {
     public function getMediaDir(): string
     {
-        return $this->main->getInstallPath()
-            . $this->main->getConf('podsumer', 'media_dir');
+        return $this->main->getConf('podsumer', 'media_dir');
     }
 
     public function getFeedDir($name): string
