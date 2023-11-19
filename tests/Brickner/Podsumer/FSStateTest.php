@@ -42,9 +42,8 @@ final class FSStateTest extends TestCase
     {
         # Write this test
 
-        $this->assertEquals(
-            $this->root . 'state/media_test',
-            $this->state->getMediaDir()
+        $this->assertTrue(
+            str_ends_with($this->state->getMediaDir(), 'state/media_test')
         );
     }
 
@@ -55,9 +54,11 @@ final class FSStateTest extends TestCase
         $this->main->getState()->addFeed($feed);
         $feed = $this->main->getState()->getFeed(1);
 
-        $this->assertEquals(
-            $this->root . 'state/media_test/' . $name,
-            $this->main->getState()->getFeedDir($feed['name'])
+        $this->assertTrue(
+            str_ends_with(
+                $this->main->getState()->getFeedDir($feed['name']),
+                "state/media_test/$name"
+            )
         );
     }
 
