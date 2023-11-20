@@ -72,7 +72,7 @@ class State
             $this->main->log($e->getMessage());
 
             if ($this->main->getTestMode()) {
-                echo $e->getMessage();
+                throw $e;
             }
 
 
@@ -97,7 +97,7 @@ class State
         $feed_rec['image'] = $this->cacheFile($feed->getImage(), $feed_rec);
         $feed_rec['image_url'] = $feed->getImage();
 
-        $sql = 'INSERT INTO feeds (url_hash, name, last_update, url, description, image, image_url) VALUES (:url_hash, :name, :last_update, :url, :description, :image, :image_url) ON CONFLICT(url_hash) DO UPDATE SET id=:id';
+        $sql = 'INSERT INTO feeds (url_hash, name, last_update, url, description, image, image_url) VALUES (:url_hash, :name, :last_update, :url, :description, :image, :image_url) ON CONFLICT(url_hash) DO UPDATE SET id=id';
         $this->query($sql, $feed_rec);
         $feed_id = $this->pdo->lastInsertId();
 
