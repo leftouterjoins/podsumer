@@ -5,6 +5,10 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php composer-setup.php && \
     php -r "unlink('composer-setup.php');" && \
     mv composer.phar /usr/local/bin/composer
+RUN apt-get update && apt-get install -y \
+		libzip-dev && \
+    docker-php-ext-configure zip && \
+	docker-php-ext-install -j$(nproc) zip
 RUN a2enmod rewrite
 RUN pecl install pcov && docker-php-ext-enable pcov
 RUN mkdir -p /opt/podsumer/
