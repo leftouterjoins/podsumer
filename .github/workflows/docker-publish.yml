@@ -12,7 +12,7 @@ on:
     branches: [ "development" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
-   push:
+  push:
     branches: [ "development" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
