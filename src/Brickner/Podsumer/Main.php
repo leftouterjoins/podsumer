@@ -136,7 +136,8 @@ class Main
       $user = urlencode($this->user);
       $pass = urlencode($this->pass);
 
-      return "$user:$pass@";
+      # return "$user:$pass@";
+      return '';
     }
 
     /**
