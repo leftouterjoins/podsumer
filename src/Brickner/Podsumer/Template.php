@@ -58,8 +58,8 @@ class Template
     protected function encodeVars(array $vars): array
     {
         array_walk_recursive($vars, function (&$var) {
-            # $var = strip_tags(strval($var), '<br><p><a><span>');
-            $var = htmlentities(strip_tags(strval($var)), ENT_QUOTES | ENT_SUBSTITUTE | ENT_XML1, '', false);
+            $var = strip_tags(strval($var), '<br><p><a><span>');
+            #$var = htmlentities(strip_tags(strval($var)), ENT_QUOTES | ENT_SUBSTITUTE | ENT_XML1, '', false);
         });
 
         return $vars;
