@@ -18,6 +18,12 @@ class Main
     protected string $path;
     protected bool $test_mode;
 
+    # Authentication
+    protected ?string $user;
+    protected ?string $pass;
+    protected ?string $sent_user;
+    protected ?string $sent_pass;
+
     public function __construct(string $path, array $env, array $request, array $files, bool $test_mode = false)
     {
         $this->test_mode = $test_mode;
@@ -29,6 +35,12 @@ class Main
         $this->config = new Config($this->getConfigPath($test_mode));
         $this->logs = new Logs($this);
 
+        $this->user = $this->config->get('podsumer', 'user');
+        $this->pass = $this->config->get('podsumer', 'pass');
+
+        $this->sent_user = $_SERVER['PHP_AUTH_USER'] ?? null;
+        $this->sent_pass = $_SERVER['PHP_AUTH_PW'] ?? null;
+
         if ($this->getConf('podsumer', 'store_media_on_disk')) {
             $this->state = new FSState($this);
         } else {
@@ -36,8 +48,30 @@ class Main
         }
     }
 
+    protected function authenticate(): void
+    {
+        # If either user or pass is not set disable authentication.
+        if (empty($this->user) || empty($this->pass)) {
+            return;
+        }
+
+        if (
+                empty($this->sent_user)
+             || empty($this->sent_pass)
+             || $this->user !== $this->sent_user
+             || $this->pass !== $this->sent_pass
+        ) {
+            header('WWW-Authenticate: Basic realm="Protected Area"');
+            header('HTTP/1.0 401 Unauthorized');
+            exit;
+        }
+
+    }
+
     public function run(): void
     {
+        $this->authenticate();
+
         $route = (new Route(
             $this->getRoute(),
             $this->getMethod(),
@@ -80,16 +114,29 @@ class Main
             . $this->env['REQUEST_URI'];
     }
 
-    public function getBaseUrl(): string
+    public function getBaseUrl(bool $include_auth = false): string
     {
         return $this->env['REQUEST_SCHEME']
             . '://'
+            . ($include_auth ? $this->getAuth() : '')
             . $this->env['HTTP_HOST'];
     }
 
     public function getArg(string $key): mixed
     {
         return $this->args[$key];
+    }
+
+    public function getAuth(): string
+    {
+      if (empty($this->user) || empty($this->pass)) {
+        return '';
+      }
+
+      $user = urlencode($this->user);
+      $pass = urlencode($this->pass);
+
+      return "$user:$pass@";
     }
 
     /**

@@ -184,7 +184,7 @@ function opml(array $args)
 
     $vars = [
         'feeds' => $feeds,
-        'host' => $main->getBaseUrl()
+        'host' => $main->getBaseUrl(true)
     ];
 
     header("Content-disposition: attachment; filename=\"podsumer.opml\"");
