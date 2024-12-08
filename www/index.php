@@ -5,6 +5,7 @@ ini_set('error_reporting', E_ALL);
 ini_set('variables_order', 'E');
 ini_set('request_order', 'CGP');
 ini_set('memory_limit', '-1');
+ini_set('max_execution_time', 360);
 
 # Detect install directory.
 const PODSUMER_PATH = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
