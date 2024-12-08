@@ -37,14 +37,24 @@ class State
         $this->pdo = new PDO('sqlite:' . $this->state_file_path);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+        $this->optimizeSettings();
         $this->checkDBInstall();
         $this->checkDBVersion();
+    }
+
+    protected function optimizeSettings()
+    {
+        $this->pdo->exec("PRAGMA journal_mode = WAL;");
+        $this->pdo->exec("PRAGMA synchronous = NORMAL;");
+        $this->pdo->exec("PRAGMA cache_size = -2000;");
+        $this->pdo->exec("PRAGMA foreign_keys = ON;");
+        $this->pdo->exec("PRAGMA temp_store = MEMORY;");
+        $this->pdo->exec('PRAGMA foreign_keys = ON');
     }
 
     protected function installTables()
     {
         $table_sql = file_get_contents($this->sql_dir_path . '/tables.sql');
-        $this->pdo->exec('PRAGMA foreign_keys = ON');
         $this->pdo->exec($table_sql);
     }
 
