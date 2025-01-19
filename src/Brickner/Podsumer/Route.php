@@ -9,7 +9,8 @@ class Route
 
     public function __construct(
         protected string $route,
-        protected string $method
+        protected string $method,
+        protected array $queryParams = []
     ) {
         $this->collectDefinedRoutes();
 
@@ -26,7 +27,8 @@ class Route
                     $args = $attr->getArguments();
                     $this->routes[$args[0]] = [
                         $fnName,
-                        $args[1]
+                        $args[1],
+                        $args[2] ?? false
                     ];
                 }
             }

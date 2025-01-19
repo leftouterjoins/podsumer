@@ -38,3 +38,4 @@ class OPML
         return $feeds;
     }
 }
+
