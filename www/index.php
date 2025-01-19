@@ -30,7 +30,7 @@ $main->run();
  *
  * Renders the default page.
  */
-#[Route('/', 'GET')]
+#[Route('/', 'GET', true)]
 function home(array $args): void
 {
     global $main;
@@ -47,7 +47,7 @@ function home(array $args): void
  *
  * Adds new feed(s) based on entered URL or URLs from an uploaded OPML file.
  */
-#[Route('/add', 'POST')]
+#[Route('/add', 'POST', true)]
 function add(array $args): void
 {
     global $main;
@@ -78,7 +78,7 @@ function add(array $args): void
     $main->redirect('/');
 }
 
-#[Route('/feed', 'GET')]
+#[Route('/feed', 'GET', true)]
 function feed(array $args): void
 {
     global $main;
@@ -96,7 +96,7 @@ function feed(array $args): void
     Template::render($main, 'feed', $vars);
 }
 
-#[Route('/item', 'GET')]
+#[Route('/item', 'GET', true)]
 function item(array $args): void
 {
     global $main;
@@ -122,7 +122,7 @@ function item(array $args): void
     Template::render($main, 'item', $vars);
 }
 
-#[Route('/delete_feed', 'GET')]
+#[Route('/delete_feed', 'GET', true)]
 function delete_feed(array $args)
 {
     global $main;
@@ -133,7 +133,7 @@ function delete_feed(array $args)
     $main->redirect('/');
 }
 
-#[Route('/delete_audio', 'GET')]
+#[Route('/delete_audio', 'GET', true)]
 function delete_audio(array $args)
 {
     global $main;
@@ -145,7 +145,7 @@ function delete_audio(array $args)
     $main->redirect('/feed?id=' . $item['feed_id']);
 }
 
-#[Route('/rss', 'GET')]
+#[Route('/rss', 'GET', true)]
 function rss(array $args)
 {
     global $main;
@@ -176,7 +176,7 @@ function rss(array $args)
     Template::renderXml($main, 'rss', $vars);
 }
 
-#[Route('/opml', 'GET')]
+#[Route('/opml', 'GET', true)]
 function opml(array $args)
 {
     global $main;
@@ -185,7 +185,7 @@ function opml(array $args)
 
     $vars = [
         'feeds' => $feeds,
-        'host' => $main->getBaseUrl(true)
+        'host' => $main->getBaseUrl()
     ];
 
     header("Content-disposition: attachment; filename=\"podsumer.opml\"");
@@ -318,7 +318,7 @@ function image_cache(array $args)
     file_cache(['file_id' => $file_id]);
 }
 
-#[Route('/refresh', 'GET')]
+#[Route('/refresh', 'GET', true)]
 function refresh(array $args)
 {
     global $main;

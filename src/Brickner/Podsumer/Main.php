@@ -70,7 +70,6 @@ class Main
 
     public function run(): void
     {
-        $this->authenticate();
 
         $route = (new Route(
             $this->getRoute(),
@@ -82,6 +81,10 @@ class Main
             $this->setResponseCode(404);
             $this->logs->accessLog();
             return;
+        }
+
+        if ($route[2] ?? false) {
+          $this->authenticate();
         }
 
         try {
@@ -114,11 +117,10 @@ class Main
             . $this->env['REQUEST_URI'];
     }
 
-    public function getBaseUrl(bool $include_auth = false): string
+    public function getBaseUrl(): string
     {
         return $this->env['REQUEST_SCHEME']
             . '://'
-            . ($include_auth ? $this->getAuth() : '')
             . $this->env['HTTP_HOST'];
     }
 
@@ -127,18 +129,18 @@ class Main
         return $this->args[$key];
     }
 
-    public function getAuth(): string
-    {
-      if (empty($this->user) || empty($this->pass)) {
-        return '';
-      }
+    # public function getAuth(): string
+    # {
+    #   if (empty($this->user) || empty($this->pass)) {
+    #     return '';
+    #   }
 
-      $user = urlencode($this->user);
-      $pass = urlencode($this->pass);
+    #   $user = urlencode($this->user);
+    #   $pass = urlencode($this->pass);
 
-      # return "$user:$pass@";
-      return '';
-    }
+    #   # return "$user:$pass@";
+    #   return '';
+    # }
 
     /**
     * @codeCoverageIgnore

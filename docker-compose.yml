@@ -8,11 +8,6 @@ services:
     volumes:
       - ./:/opt/podsumer
       - ./state/media/:/opt/media
-    networks:
-      - default
     ports:
       - 3095:3094
-networks:
-  backplane:
-    driver: bridge
 
