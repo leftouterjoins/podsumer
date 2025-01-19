@@ -145,7 +145,7 @@ function delete_audio(array $args)
     $main->redirect('/feed?id=' . $item['feed_id']);
 }
 
-#[Route('/rss', 'GET', true)]
+#[Route('/rss', 'GET')]
 function rss(array $args)
 {
     global $main;
