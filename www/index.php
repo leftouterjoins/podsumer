@@ -189,7 +189,7 @@ function opml(array $args)
     ];
 
     header("Content-disposition: attachment; filename=\"podsumer.opml\"");
-    header("Content-Type: text/x-opml");
+    header("Content-Type: text/x-opml; charset=UTF-8");
 
     Template::renderXml($main, 'opml', $vars);
 }
