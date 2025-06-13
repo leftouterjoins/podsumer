@@ -39,11 +39,15 @@ class Feed
     protected function validateUrl(string $url)
     {
         $scheme = parse_url($url, PHP_URL_SCHEME);
-        if (false === $scheme || is_null($scheme) || !str_contains($scheme, 'http')) {
+        if (false === $scheme || is_null($scheme)) {
             return false;
         }
 
-        return true;
+        if (str_starts_with($scheme, 'http') || $scheme === 'file') {
+            return true;
+        }
+
+        return false;
     }
 
     protected function parseFeed(string $feed_contents): void

@@ -17,6 +17,7 @@ class Main
     protected Config $config;
     protected string $path;
     protected bool $test_mode;
+    protected int $response_code = 0;
 
     # Authentication
     protected ?string $user;
@@ -190,12 +191,13 @@ class Main
 
     public function setResponseCode(int $code): void
     {
-        http_response_code($code);
+        $this->response_code = $code;
+        @http_response_code($code);
     }
 
     public function getResponseCode(): int
     {
-        return http_response_code() ?: 0;
+        return $this->response_code;
     }
 
     public function getHost(): string

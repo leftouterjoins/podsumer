@@ -10,17 +10,21 @@ final class MainTest extends TestCase
 
     public static function setupBeforeClass(): void
     {
+        ob_start();
         #[Route('/', 'GET')]
-        function dummyTestEndpoint200(array $args) {
-            # asuume things went well.
-            http_response_code(200);
+        function dummyTestEndpoint200(array $args, Main $main) {
+            $main->setResponseCode(200);
         }
 
         #[Route('/exception', 'GET')]
-        function dummyTestEndpointWithExecption(array $args) {
-            # asuume things went well.
+        function dummyTestEndpointWithExecption(array $args, Main $main) {
             throw new Exception('');
         }
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        ob_end_clean();
     }
 
     public function testConstruct(): void
@@ -36,7 +40,7 @@ final class MainTest extends TestCase
         $main = $this->dummyMain($env);
         $main->run();
 
-        $this->assertEquals(http_response_code(), 200);
+        $this->assertEquals(200, $main->getResponseCode());
     }
 
     public function testRunNotFound(): void
@@ -46,7 +50,7 @@ final class MainTest extends TestCase
         $main = $this->dummyMain($env);
         $main->run();
 
-        $this->assertEquals(http_response_code(), 404);
+        $this->assertEquals(404, $main->getResponseCode());
     }
 
     public function testRunException(): void
@@ -56,7 +60,7 @@ final class MainTest extends TestCase
         $main = $this->dummyMain($env);
         $main->run();
 
-        $this->assertEquals(http_response_code(), 500);
+        $this->assertEquals(500, $main->getResponseCode());
     }
 
     public function testGetUrl(): void

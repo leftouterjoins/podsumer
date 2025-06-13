@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>Test Feed</title>
+    <pubDate>Mon, 01 Jan 2021 00:00:00 GMT</pubDate>
+    <description>Test feed description</description>
+    <itunes:image href="IMAGE_FILE_URL" />
+    <item>
+      <title>Test Item</title>
+      <link>https://example.com/test1</link>
+      <guid>test1</guid>
+      <pubDate>Mon, 01 Jan 2021 00:00:00 GMT</pubDate>
+      <enclosure url="AUDIO_FILE_URL" type="audio/mpeg" length="12345" />
+    </item>
+  </channel>
+</rss>

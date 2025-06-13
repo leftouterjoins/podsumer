@@ -8,12 +8,29 @@ use Brickner\Podsumer\File;
 
 final class FSStateTest extends TestCase
 {
-    const TEST_FEED_URL = 'https://feeds.npr.org/500005/podcast.xml';
+    private static string $feedFile;
     private Main $main;
     private FSState $state;
     private Feed $feed;
 
     public string $root = __DIR__ . DIRECTORY_SEPARATOR . '../../..' . DIRECTORY_SEPARATOR;
+
+    public static function setUpBeforeClass(): void
+    {
+        $path = realpath(__DIR__ . '/../../fixtures/feed.xml');
+        $audio = realpath(__DIR__ . '/../../fixtures/audio.mp3');
+        $image = realpath(__DIR__ . '/../../fixtures/image.jpg');
+        $contents = file_get_contents($path);
+        $contents = str_replace('AUDIO_FILE_URL', 'file://' . $audio, $contents);
+        $contents = str_replace('IMAGE_FILE_URL', 'file://' . $image, $contents);
+        self::$feedFile = tempnam(sys_get_temp_dir(), 'feed');
+        file_put_contents(self::$feedFile, $contents);
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        @unlink(self::$feedFile);
+    }
 
     protected function setUp(): void
     {
@@ -49,7 +66,7 @@ final class FSStateTest extends TestCase
 
     public function testGetFeedDir()
     {
-        $feed = new Feed(self::TEST_FEED_URL);
+        $feed = new Feed('file://' . self::$feedFile);
         $name = $feed->getTitle();
         $this->main->getState()->addFeed($feed);
         $feed = $this->main->getState()->getFeed(1);
@@ -69,7 +86,7 @@ final class FSStateTest extends TestCase
         $this->main->setInstallPath('/');
         $this->main->setConf('/dev/random', 'podsumer', 'media_dir');
 
-        $this->feed = new Feed(self::TEST_FEED_URL);
+        $this->feed = new Feed('file://' . self::$feedFile);
         $this->main->getState()->addFeed($this->feed);
     }
 
@@ -77,7 +94,7 @@ final class FSStateTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $this->feed = new Feed(self::TEST_FEED_URL);
+        $this->feed = new Feed('file://' . self::$feedFile);
         $feed_id = $this->main->getState()->addFeed($this->feed);
         $feed_data = $this->main->getState()->getFeed($feed_id);
 
@@ -93,7 +110,7 @@ final class FSStateTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $this->feed = new Feed(self::TEST_FEED_URL);
+        $this->feed = new Feed('file://' . self::$feedFile);
         $this->state->addFeed($this->feed);
 
         $item = $this->main->getState()->getFeedItems(1)[0];

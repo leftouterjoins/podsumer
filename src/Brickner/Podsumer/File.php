@@ -47,6 +47,20 @@ class File
 
     public static function downloadUrl($url, $user = null, $pass = null): string
     {
+        $scheme = parse_url($url, PHP_URL_SCHEME);
+
+        // Allow reading local files when the `file` scheme is used. This is
+        // helpful for tests which operate without network access.
+        if ($scheme === 'file' || empty($scheme)) {
+            $path = str_replace('file://', '', $url);
+            $contents = @file_get_contents($path);
+            if (false === $contents) {
+                throw new Exception('Cannot download url: ' . $url);
+            }
+
+            return $contents;
+        }
+
         $curl = curl_init();
 
         curl_setopt($curl, \CURLOPT_URL, $url);
@@ -56,7 +70,7 @@ class File
         curl_setopt($curl, \CURLOPT_MAXREDIRS, 10);
 
         if (!empty($user) && !empty($pass)) {
-            curl_setopt($curl,\CURLOPT_USERPWD, "$user:$pass");
+            curl_setopt($curl, \CURLOPT_USERPWD, "$user:$pass");
             curl_setopt($curl, \CURLOPT_HTTPAUTH, \CURLAUTH_ANY);
         }
 
