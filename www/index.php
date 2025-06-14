@@ -162,6 +162,12 @@ function rss(array $args)
     $items = $main->getState()->getFeedItems($feed_id);
     $feed = $main->getState()->getFeed($feed_id);
 
+    foreach ($items as &$i) {
+        $i['published'] = date(DATE_RSS, strtotime($i['published']));
+    }
+
+    $feed['last_update'] = date(DATE_RSS, strtotime($feed['last_update']));
+
     $vars = [
         'items' => $items,
         'feed' => $feed,
