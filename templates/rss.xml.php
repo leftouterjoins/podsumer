@@ -4,6 +4,8 @@
     <title><?= $feed['name'] ?></title>
     <description><?=  $feed['description'] ?></description>
     <itunes:image href="<?= $host ?>/image?feed_id=<?= $feed['id'] ?>" />
+    <itunes:summary><![CDATA[ <?= substr(strip_tags($feed['description']), 0, 4000) ?> ]]></itunes:summary>
+    <itunes:explicit>false</itunes:explicit>
     <language>en-us</language>
     <generator>podsumer</generator>
     <lastBuildDate><?= $feed['last_update'] ?></lastBuildDate>
@@ -13,7 +15,10 @@
     <? foreach($items as $item): ?>
     <item>
       <title><?= $item['name'] ?></title>
+      <itunes:title><?= $item['name'] ?></itunes:title>
       <description><![CDATA[ <?= $item['description'] ?> ]]></description>
+      <itunes:summary><![CDATA[ <?= substr(strip_tags($item['description']), 0, 4000) ?> ]]></itunes:summary>
+      <itunes:explicit>false</itunes:explicit>
       <pubDate><?= $item['published'] ?></pubDate>
       <enclosure url="<?= $host ?>/audio?item_id=<?= $item['id'] ?>" type="audio/mpeg" length="<?= $item['size'] ?>"/>
       <link><?= $host ?>/item?item_id=<?= $item['id'] ?></link>
