@@ -179,6 +179,7 @@ function rss(array $args)
         return;
     }
 
+    header('Content-Type: application/rss+xml');
     Template::renderXml($main, 'rss', $vars);
 }
 
