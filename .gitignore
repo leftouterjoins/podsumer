@@ -1,6 +1,0 @@
-clover.xml
-coverage
-coverage.txt
-.phpunit*
-state
-vendor
