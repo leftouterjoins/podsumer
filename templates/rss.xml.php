@@ -6,19 +6,31 @@
     <itunes:image href="<?= $host ?>/image?feed_id=<?= $feed['id'] ?>" />
     <language>en-us</language>
     <generator>podsumer</generator>
-    <lastBuildDate><?= $feed['last_update'] ?></lastBuildDate>
-    <pubDate><?= $feed['last_update'] ?></pubDate>
+    <lastBuildDate><?= date('r', strtotime($feed['last_update'])) ?></lastBuildDate>
+    <pubDate><?= date('r', strtotime($feed['last_update'])) ?></pubDate>
     <atom:link href="<?= $host ?>/rss?feed_id=<?= $feed['id'] ?>" rel="self" type="application/rss+xml" />
     <link><?= $feed['url'] ?></link>
+    <itunes:category text="Technology">
+      <itunes:category text="Podcasting" />
+    </itunes:category>
+    <itunes:explicit>no</itunes:explicit>
+    <itunes:owner>
+      <itunes:name><?= $feed['owner_name'] ?? 'Podcast Owner' ?></itunes:name>
+      <itunes:email><?= $feed['owner_email'] ?? 'podcast@example.com' ?></itunes:email>
+    </itunes:owner>
+    <itunes:author><?= $feed['author'] ?? $feed['name'] ?></itunes:author>
+    <itunes:type>episodic</itunes:type>
     <? foreach($items as $item): ?>
     <item>
       <title><?= $item['name'] ?></title>
       <description><![CDATA[ <?= $item['description'] ?> ]]></description>
-      <pubDate><?= $item['published'] ?></pubDate>
-      <enclosure url="<?= $host ?>/audio?item_id=<?= $item['id'] ?>" type="audio/mp3" length="<?= $item['size'] ?>"/>
+      <pubDate><?= date('r', strtotime($item['published'])) ?></pubDate>
+      <enclosure url="<?= $host ?>/audio?item_id=<?= $item['id'] ?>" type="audio/mpeg" length="<?= $item['size'] ?>"/>
       <link><?= $host ?>/item?item_id=<?= $item['id'] ?></link>
-      <guid><?= $host ?>/item?item_id=<?= $item['id'] ?></guid>
+      <guid isPermaLink="false"><?= $host ?>/item?item_id=<?= $item['id'] ?></guid>
       <itunes:image href="<?= $host ?>/image?item_id=<?= $item['id'] ?>" />
+      <itunes:duration><?= $item['duration'] ?? '00:00' ?></itunes:duration>
+      <itunes:explicit>no</itunes:explicit>
     </item>
     <? endforeach ?>
   </channel>
