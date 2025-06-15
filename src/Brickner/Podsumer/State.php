@@ -196,7 +196,7 @@ class State
 
     public function getFeedItems(int $feed_id): array
     {
-        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.feed_id = :id ORDER BY items.published DESC';
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, files.size AS file_size FROM items JOIN feeds ON feeds.id = items.feed_id LEFT JOIN files ON items.audio_file = files.id WHERE items.feed_id = :id ORDER BY items.published DESC';
         return $this->query($sql, ['id' => $feed_id]);
     }
 
