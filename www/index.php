@@ -145,7 +145,7 @@ function delete_audio(array $args)
     $main->redirect('/feed?id=' . $item['feed_id']);
 }
 
-#[Route('/rss', 'GET')]
+#[Route('/rss', ['GET', 'HEAD'])]
 function rss(array $args)
 {
     global $main;
@@ -173,6 +173,36 @@ function rss(array $args)
         return;
     }
 
+    // Set proper Content-Type for RSS feeds
+    header('Content-Type: application/rss+xml; charset=utf-8');
+    
+    // Add Last-Modified header based on feed update time
+    $lastModified = strtotime($feed['last_update']);
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $lastModified) . ' GMT');
+    
+    // Generate ETag based on feed content
+    $etag = '"' . md5($feed['id'] . $feed['last_update'] . count($items)) . '"';
+    header('ETag: ' . $etag);
+    
+    // Add cache headers
+    header('Cache-Control: public, max-age=300'); // 5 minutes
+    
+    // Handle conditional requests
+    $headers = $main->getHeaders();
+    $ifNoneMatch = $headers['If-None-Match'] ?? null;
+    $ifModifiedSince = $headers['If-Modified-Since'] ?? null;
+    
+    if ($ifNoneMatch === $etag || 
+        ($ifModifiedSince && strtotime($ifModifiedSince) >= $lastModified)) {
+        $main->setResponseCode(304); // Not Modified
+        return;
+    }
+    
+    // Handle HEAD requests - return headers only
+    if ($main->getMethod() === 'HEAD') {
+        return;
+    }
+
     Template::renderXml($main, 'rss', $vars);
 }
 
@@ -194,7 +224,7 @@ function opml(array $args)
     Template::renderXml($main, 'opml', $vars);
 }
 
-#[Route('/file', 'GET')]
+#[Route('/file', ['GET', 'HEAD'])]
 function file_cache(array $args): ?string
 {
     global $main;
@@ -206,6 +236,7 @@ function file_cache(array $args): ?string
 
     } else {
         $main->setResponseCode(404);
+        return null;
     }
 
     if (empty($file_data)) {
@@ -244,8 +275,22 @@ function file_cache(array $args): ?string
     // Add ETag for cache validation
     $etag = '"' . md5($file_data['url'] . $file_data['cached']) . '"';
     header('ETag: ' . $etag);
+    
+    // Add Last-Modified header
+    $lastModified = strtotime($file_data['cached']);
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $lastModified) . ' GMT');
 
     $headers = $main->getHeaders();
+    
+    // Handle conditional requests for caching
+    $ifNoneMatch = $headers['If-None-Match'] ?? null;
+    $ifModifiedSince = $headers['If-Modified-Since'] ?? null;
+    
+    if ($ifNoneMatch === $etag || 
+        ($ifModifiedSince && strtotime($ifModifiedSince) >= $lastModified)) {
+        $main->setResponseCode(304); // Not Modified
+        return null;
+    }
 
     $range = $headers['Range'] ?? null;
     $data = $file_data['data'];
@@ -287,7 +332,7 @@ function file_cache(array $args): ?string
     return null;
 }
 
-#[Route('/audio', 'GET')]
+#[Route('/audio', ['GET', 'HEAD'])]
 function audio_cache(array $args)
 {
     global $main;
@@ -310,7 +355,7 @@ function audio_cache(array $args)
     file_cache(['file_id' => $file_id]);
 }
 
-#[Route('/image', 'GET')]
+#[Route('/image', ['GET', 'HEAD'])]
 function image_cache(array $args)
 {
     global $main;
