@@ -119,7 +119,11 @@ class Main
 
     public function getBaseUrl(): string
     {
-        return $this->env['REQUEST_SCHEME']
+        $scheme = isset($this->env['HTTPS']) || $this->getConf('podsumer', 'ssl')
+            ? 'https'
+            : 'http';
+
+        return $scheme
             . '://'
             . $this->env['HTTP_HOST'];
     }
