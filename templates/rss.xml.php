@@ -25,7 +25,7 @@
       <title><?= $item['name'] ?></title>
       <description><![CDATA[ <?= $item['description'] ?> ]]></description>
       <pubDate><?= date('r', strtotime($item['published'])) ?></pubDate>
-      <enclosure url="<?= $host ?>/audio?item_id=<?= $item['id'] ?>" type="audio/mpeg" length="<?= $item['file_size'] ?? '10000' ?>"/>
+      <enclosure url="<?= $host ?>/audio?item_id=<?= $item['id'] ?>" type="audio/mpeg" length="<?= $item['size'] ?>"/>
       <link><?= $host ?>/item?item_id=<?= $item['id'] ?></link>
       <guid isPermaLink="false"><?= $host ?>/item?item_id=<?= $item['id'] ?></guid>
       <itunes:image href="<?= $host ?>/image?item_id=<?= $item['id'] ?>" />
