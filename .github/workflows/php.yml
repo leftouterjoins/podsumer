@@ -7,7 +7,7 @@ on:
     branches: [ "development" ]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -49,6 +49,6 @@ jobs:
       with:
         publish_dir: ./output
         publish_branch: image-data
-        github_token: ${{ secrets.APP_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         user_name: 'github-actions[bot]'
         user_email: 'github-actions[bot]@users.noreply.github.com'
