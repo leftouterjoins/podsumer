@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   podsumer:
     image: podsumer
@@ -9,5 +8,5 @@ services:
       - ./:/opt/podsumer
       - ./state/media/:/opt/media
     ports:
-      - 3095:3094
+      - 80:3094
 
