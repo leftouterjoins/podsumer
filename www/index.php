@@ -216,8 +216,34 @@ function file_cache(array $args): ?string
     $data = $file_data['data'];
     $size = strlen($data);
 
-    header('Content-Type: ' . $file_data['mimetype']);
+    // Fix mimetype for binary files - remove charset parameter
+    $mimetype = $file_data['mimetype'];
+    if (str_starts_with($mimetype, 'audio/') || 
+        str_starts_with($mimetype, 'image/') || 
+        str_starts_with($mimetype, 'video/')) {
+        // Remove charset parameter from binary files
+        $mimetype = explode(';', $mimetype)[0];
+    }
+
+    header('Content-Type: ' . $mimetype);
     header('Accept-Ranges: bytes');
+
+    // Add CORS headers for cross-origin access
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: GET, HEAD');
+    header('Access-Control-Allow-Headers: Range');
+
+    // Add Content-Disposition header for better compatibility
+    $filename = $file_data['filename'] ?? 'audio.mp3';
+    header('Content-Disposition: inline; filename="' . $filename . '"');
+    
+    // Add cache control headers
+    header('Cache-Control: public, max-age=31536000'); // 1 year
+    header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT');
+    
+    // Add ETag for cache validation
+    $etag = '"' . md5($file_data['url'] . $file_data['cached']) . '"';
+    header('ETag: ' . $etag);
 
     $headers = $main->getHeaders();
 
@@ -226,21 +252,27 @@ function file_cache(array $args): ?string
     if (!empty($range)) {
         $range = str_replace('bytes=', '', $range); # 'bytes=0-10'
         $range = explode ('-', $range); # '0-10' => ['0', '10']
-        $range = array_map('intval', $range); # ['0', '10'] => [0, 10]
-        $start = $range[0];
-        $end = $range[1] ?: $size-1;
+        $start = intval($range[0]);
+        $end = (!empty($range[1])) ? intval($range[1]) : $size - 1;
 
-        $data = substr($data, $start, $end-$start+1 );
-        $main->log("$start, $end");
-
-        if (strlen($data) <= $size) {
-            $main->setResponseCode(206);
+        // Validate range
+        if ($start >= $size || $end >= $size || $start > $end) {
+            $main->setResponseCode(416); // Range Not Satisfiable
+            header("Content-Range: bytes */$size");
+            return null;
         }
 
+        $data = substr($data, $start, $end - $start + 1);
+        $main->setResponseCode(206); // Partial Content
         header("Content-Range: bytes $start-$end/$size");
     }
 
     header('Content-Length: ' . strlen($data));
+
+    // Handle HEAD requests
+    if ($main->getMethod() === 'HEAD') {
+        return null;
+    }
 
     if (array_key_exists('return', $args) && $args['return'] === true) {
         return $data;
