@@ -177,7 +177,7 @@ function rss(array $args)
     header('Content-Type: application/rss+xml; charset=utf-8');
     
     // Add Last-Modified header based on feed update time
-    $lastModified = strtotime($feed['last_update']);
+    $lastModified = is_numeric($feed['last_update']) ? intval($feed['last_update']) : strtotime($feed['last_update']);
     header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $lastModified) . ' GMT');
     
     // Generate ETag based on feed content
@@ -193,7 +193,7 @@ function rss(array $args)
     $ifModifiedSince = $headers['If-Modified-Since'] ?? null;
     
     if ($ifNoneMatch === $etag || 
-        ($ifModifiedSince && strtotime($ifModifiedSince) >= $lastModified)) {
+        ($ifModifiedSince && strtotime($ifModifiedSince) !== false && strtotime($ifModifiedSince) >= $lastModified)) {
         $main->setResponseCode(304); // Not Modified
         return;
     }
@@ -277,7 +277,7 @@ function file_cache(array $args): ?string
     header('ETag: ' . $etag);
     
     // Add Last-Modified header
-    $lastModified = strtotime($file_data['cached']);
+    $lastModified = is_numeric($file_data['cached']) ? intval($file_data['cached']) : strtotime($file_data['cached']);
     header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $lastModified) . ' GMT');
 
     $headers = $main->getHeaders();
@@ -287,7 +287,7 @@ function file_cache(array $args): ?string
     $ifModifiedSince = $headers['If-Modified-Since'] ?? null;
     
     if ($ifNoneMatch === $etag || 
-        ($ifModifiedSince && strtotime($ifModifiedSince) >= $lastModified)) {
+        ($ifModifiedSince && strtotime($ifModifiedSince) !== false && strtotime($ifModifiedSince) >= $lastModified)) {
         $main->setResponseCode(304); // Not Modified
         return null;
     }
