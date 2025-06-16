@@ -357,9 +357,14 @@ class State
     public function getPlaybackPosition(int $item_id): int
     {
         $sql = 'SELECT playback_position FROM items WHERE id = :id';
-        $pos = $this->query($sql, ['id' => $item_id])[0]['playback_position'] ?? 0;
+        $result = $this->query($sql, ['id' => $item_id]);
 
-        return intval($pos);
+        // If the query helper returned false or an empty result set, default to 0
+        if (false === $result || empty($result) || !isset($result[0]['playback_position'])) {
+            return 0;
+        }
+
+        return intval($result[0]['playback_position']);
     }
 
     protected function loadFile(string $filename): string
