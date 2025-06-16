@@ -9,4 +9,3 @@ services:
       - ./state/media/:/opt/media
     ports:
       - 80:3094
-
