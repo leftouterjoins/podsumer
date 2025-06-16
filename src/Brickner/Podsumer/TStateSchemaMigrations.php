@@ -10,7 +10,8 @@ trait TStateSchemaMigrations
 
     private array $versions = [ # ORDER IS IMPORTANT
         'create',
-        'addDiskStorage'
+        'addDiskStorage',
+        'addPlaybackPosition'
     ];
 
     protected function checkDBVersion()
@@ -47,6 +48,13 @@ trait TStateSchemaMigrations
         $addItemImageUrl = $this->query("ALTER TABLE `items` ADD COLUMN image_url");
 
         return $addStorageMode !== false && $addFeedImageUrl !== false && $addItemImageUrl !== false;
+    }
+
+    public function addPlaybackPosition(): bool {
+
+        $addPlayback = $this->query("ALTER TABLE `items` ADD COLUMN playback_position INTEGER DEFAULT 0");
+
+        return $addPlayback !== false;
     }
 }
 
