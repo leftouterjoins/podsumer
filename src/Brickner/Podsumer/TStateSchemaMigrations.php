@@ -10,23 +10,25 @@ trait TStateSchemaMigrations
 
     private array $versions = [ # ORDER IS IMPORTANT
         'create',
-        'addDiskStorage'
+        'addDiskStorage',
+        'addPlaybackPosition'
     ];
 
     protected function checkDBVersion()
     {
         $this->cur_version = intval($this->query('SELECT MAX(version) AS version FROM versions')[0]['version']) ?? 0;
 
-        while (self::VERSION > $this->cur_version) {
+        while (State::VERSION > $this->cur_version) {
             $new_version = $this->cur_version + 1;
-            $upgradeFunc = $this->versions[$new_version];
+            $upgradeFunc = $this->versions[$new_version] ?? null;
 
-            if ($this->$upgradeFunc()) {
+            if (!is_null($upgradeFunc) && $result = $this->$upgradeFunc()) {
+
                 $updated = $this->query("INSERT INTO versions (version) VALUES ($new_version)");
 
                 //@codeCoverageIgnoreStart
                 if (false === $updated) {
-                    throw new Exception("Could set new DB version.");
+                    throw new Exception("Could not set new DB version.");
                     break;
                 }
                 //@codeCoverageIgnoreEnd
@@ -45,8 +47,14 @@ trait TStateSchemaMigrations
         $addStorageMode = $this->query("ALTER TABLE `files` ADD COLUMN storage_mode TEXT CHECK(storage_mode IN ('DB','DISK')) NOT NULL DEFAULT 'DB'");
         $addFeedImageUrl = $this->query("ALTER TABLE `feeds` ADD COLUMN image_url");
         $addItemImageUrl = $this->query("ALTER TABLE `items` ADD COLUMN image_url");
-
+        
         return $addStorageMode !== false && $addFeedImageUrl !== false && $addItemImageUrl !== false;
+    }
+
+    public function addPlaybackPosition(): bool {
+
+        $addPlayback = $this->query("ALTER TABLE `items` ADD COLUMN playback_position INTEGER DEFAULT 0");
+        return $addPlayback !== false;
     }
 }
 
