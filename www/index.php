@@ -422,3 +422,32 @@ function doRefresh(int $feed_id) {
     }
 }
 
+#[Route('/get_playback', 'GET', true)]
+function get_playback(array $args): void
+{
+    global $main;
+
+    if (empty($args['item_id'])) {
+        $main->setResponseCode(404);
+        return;
+    }
+
+    $pos = $main->getState()->getPlaybackPosition(intval($args['item_id']));
+
+    header('Content-Type: application/json');
+    echo json_encode(['position' => intval($pos)]);
+}
+
+#[Route('/set_playback', 'POST', true)]
+function set_playback(array $args): void
+{
+    global $main;
+
+    if (empty($args['item_id']) || !isset($args['position'])) {
+        $main->setResponseCode(404);
+        return;
+    }
+
+    $main->getState()->setPlaybackPosition(intval($args['item_id']), intval($args['position']));
+}
+

@@ -13,7 +13,7 @@ class State
 {
     use TStateSchemaMigrations;
 
-    CONST VERSION = 1;
+    CONST VERSION = 2; # The version of the schema for this commit.
 
     protected Main $main;
     protected $state_file_path;
@@ -190,14 +190,19 @@ class State
 
     public function getFeedItem(int $item_id): array
     {
-        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.id = :id ORDER BY items.published DESC';
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.id = :id ORDER BY items.published DESC';
         return $this->query($sql, ['id' => $item_id])[0];
     }
 
     public function getFeedItems(int $feed_id): array
     {
-        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.feed_id = :id ORDER BY items.published DESC';
-        return $this->query($sql, ['id' => $feed_id]);
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.feed_id = :id ORDER BY items.published DESC';
+        $result = $this->query($sql, ['id' => $feed_id]);
+
+        // The query helper returns false when an exception is caught. Convert that
+        // into an empty array so that we always satisfy the declared return type
+        // and avoid triggering a TypeError further up the call-stack.
+        return (false === $result) ? [] : $result;
     }
 
     public function getFeedByHash(string $hash): array
@@ -341,6 +346,25 @@ class State
     {
         $sql = 'UPDATE feeds SET image = :file_id WHERE id=:id';
         $this->query($sql, ['id' => $feed_id, 'file_id' => $file_id]);
+    }
+
+    public function setPlaybackPosition(int $item_id, int $position): void
+    {
+        $sql = 'UPDATE items SET playback_position = :position WHERE id = :id';
+        $this->query($sql, ['id' => $item_id, 'position' => $position]);
+    }
+
+    public function getPlaybackPosition(int $item_id): int
+    {
+        $sql = 'SELECT playback_position FROM items WHERE id = :id';
+        $result = $this->query($sql, ['id' => $item_id]);
+
+        // If the query helper returned false or an empty result set, default to 0
+        if (false === $result || empty($result) || !isset($result[0]['playback_position'])) {
+            return 0;
+        }
+
+        return intval($result[0]['playback_position']);
     }
 
     protected function loadFile(string $filename): string
