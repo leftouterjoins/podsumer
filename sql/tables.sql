@@ -37,11 +37,9 @@ CREATE TABLE IF NOT EXISTS `items` (
     size INTEGER NOT NULL,
     audio_url TEXT NOT NULL,
     audio_file INTEGER NULL,
-    image INTEGER NULL,
-    playback_position INTEGER DEFAULT 0
+    image INTEGER NULL
 );
 
 CREATE TABLE IF NOT EXISTS `versions` (
-    version INTEGER NULL
+    version INTEGER PRIMARY KEY AUTOINCREMENT
 );
-
