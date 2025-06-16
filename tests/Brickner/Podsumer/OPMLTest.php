@@ -8,7 +8,7 @@ final class OPMLTest extends TestCase
 {
     public function testParse()
     {
-        $opml_data = file_get_contents('http://hosting.opml.org/dave/spec/states.opml');
+        $opml_data = file_get_contents(__DIR__ . '/../../opml-sample.opml');
         $tmp = tempnam("/tmp", "opml-test");
         file_put_contents($tmp, $opml_data);
         $opml = OPML::parse(['tmp_name' => $tmp]);
