@@ -18,6 +18,7 @@ use Brickner\Podsumer\File;
 use Brickner\Podsumer\Main;
 use Brickner\Podsumer\OPML;
 use Brickner\Podsumer\Template;
+use Brickner\Podsumer\PodcastIndex;
 
 # Create the application.
 $main = new Main(PODSUMER_PATH, array_merge($_SERVER, $_ENV), array_merge($_GET, $_POST), $_FILES);
@@ -54,6 +55,36 @@ function episodes(array $args): void
     ];
 
     Template::render($main, 'episodes', $vars);
+}
+
+#[Route('/search', 'GET', true)]
+function search(array $args): void
+{
+    global $main;
+
+    $page = isset($args['page']) ? max(1, intval($args['page'])) : 1;
+    $per_page = intval($main->getConf('podsumer', 'items_per_page')) ?: 10;
+    $q = $args['q'] ?? '';
+
+    $results = [];
+    $page_count = 1;
+
+    if (!empty($q)) {
+        $key = strval($main->getConf('podsumer', 'podcastindex_key'));
+        $secret = strval($main->getConf('podsumer', 'podcastindex_secret'));
+        $all = PodcastIndex::search($q, $page * $per_page, $key, $secret);
+        $page_count = max(1, intval(ceil(count($all) / $per_page)));
+        $results = array_slice($all, ($page - 1) * $per_page, $per_page);
+    }
+
+    $vars = [
+        'feeds' => $results,
+        'q' => $q,
+        'page' => $page,
+        'page_count' => $page_count
+    ];
+
+    Template::render($main, 'search', $vars);
 }
 
 /**

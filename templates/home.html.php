@@ -41,5 +41,12 @@
         &nbsp;&nbsp;
         <input type="submit" class="bg-neutral-500 text-white font-bold py-2 px-4 rounded">
     </form>
+
+    <form method="GET" action="/search" class="clear-left py-10">
+        <h1 class="text-2xl">Search PodcastIndex</h1>
+        <input type="text" class="text-black inline w-1/2" name="q" placeholder="Search term">
+        &nbsp;&nbsp;
+        <input type="submit" class="bg-neutral-500 text-white font-bold py-2 px-4 rounded">
+    </form>
 </div>
 
