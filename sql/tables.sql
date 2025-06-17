@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS `items` (
     size INTEGER NOT NULL,
     audio_url TEXT NOT NULL,
     audio_file INTEGER NULL,
-    image INTEGER NULL
+    image INTEGER NULL,
+    sponsorblock TEXT
 );
 
 CREATE TABLE IF NOT EXISTS `versions` (

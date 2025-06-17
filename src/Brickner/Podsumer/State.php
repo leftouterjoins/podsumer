@@ -13,7 +13,7 @@ class State
 {
     use TStateSchemaMigrations;
 
-    CONST VERSION = 2; # The version of the schema for this commit.
+    CONST VERSION = 3; # The version of the schema for this commit.
 
     protected Main $main;
     protected $state_file_path;
@@ -365,6 +365,24 @@ class State
         }
 
         return intval($result[0]['playback_position']);
+    }
+
+    public function setSponsorBlock(int $item_id, string $data): void
+    {
+        $sql = 'UPDATE items SET sponsorblock = :data WHERE id = :id';
+        $this->query($sql, ['id' => $item_id, 'data' => $data]);
+    }
+
+    public function getSponsorBlock(int $item_id): ?string
+    {
+        $sql = 'SELECT sponsorblock FROM items WHERE id = :id';
+        $result = $this->query($sql, ['id' => $item_id]);
+
+        if (false === $result || empty($result) || empty($result[0]['sponsorblock'])) {
+            return null;
+        }
+
+        return strval($result[0]['sponsorblock']);
     }
 
     protected function loadFile(string $filename): string
