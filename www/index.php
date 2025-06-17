@@ -510,6 +510,14 @@ function sponsor_segments(array $args): void
 {
     global $main;
 
+    // Feature flag – disabled by default
+    $enabled = filter_var($main->getConf('podsumer', 'sponsorblock_enabled'), \FILTER_VALIDATE_BOOLEAN);
+    if (!$enabled) {
+        header('Content-Type: application/json');
+        echo json_encode([]);
+        return;
+    }
+
     // Validate required parameter
     if (empty($args['item_id'])) {
         $main->setResponseCode(404);
@@ -555,9 +563,13 @@ function sponsor_segments(array $args): void
         return;
     }
 
-    $segments = \Brickner\Podsumer\SponsorBlock::getSegments($videoIds[0]);
+    $videoId = $videoIds[0];
+    $segments = \Brickner\Podsumer\SponsorBlock::getSegments($videoId);
 
     header('Content-Type: application/json');
-    echo json_encode($segments);
+    echo json_encode([
+        'videoId'  => $videoId,
+        'segments' => $segments,
+    ]);
 }
 

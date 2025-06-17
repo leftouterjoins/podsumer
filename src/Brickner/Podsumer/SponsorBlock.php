@@ -20,6 +20,7 @@ class SponsorBlock
      */
     public static function getSegments(string $videoId, array $categories = ['sponsor', 'selfpromo', 'interaction', 'intro', 'outro']): array
     {
+        $categories = ['sponsor', 'selfpromo', 'interaction', 'intro', 'outro'];
         if (empty($videoId)) {
             return [];
         }
