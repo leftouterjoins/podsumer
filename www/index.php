@@ -83,9 +83,15 @@ function feed(array $args): void
 {
     global $main;
 
+    $page = isset($args['page']) ? max(1, intval($args['page'])) : 1;
+    $per_page = intval($main->getConf('podsumer', 'items_per_page')) ?: 10;
+    $feed_id = intval($args['id']);
+
     $vars = [
-        'feed' => $main->getState()->getFeed(intval($args['id'])),
-        'items' => $main->getState()->getFeedItems(intval($args['id']))
+        'feed' => $main->getState()->getFeed($feed_id),
+        'items' => $main->getState()->getFeedItemsPage($feed_id, $per_page, $page),
+        'page' => $page,
+        'page_count' => max(1, ceil($main->getState()->countFeedItems($feed_id) / $per_page))
     ];
 
     if (empty($vars['feed']) || empty($vars['items'])) {

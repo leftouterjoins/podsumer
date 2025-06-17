@@ -32,4 +32,14 @@
         <?= substr(strip_tags($item['description']), 0, 360); ?>
     </div>
     <? endforeach ?>
+    <div class="py-4 font-bold">
+        <? if ($page > 1) { ?>
+            <a href="/feed?id=<?= $feed['id'] ?>&page=<?= $page - 1 ?>">Previous</a>
+        <? } ?>
+        <? if ($page < $page_count) { ?>
+            <? if ($page > 1) { ?>&nbsp;|&nbsp;<? } ?>
+            <a href="/feed?id=<?= $feed['id'] ?>&page=<?= $page + 1 ?>">Next</a>
+        <? } ?>
+        <span>&nbsp;&nbsp;Page <?= $page ?> of <?= $page_count ?></span>
+    </div>
 </div>
