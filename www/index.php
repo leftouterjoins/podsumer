@@ -510,14 +510,31 @@ function sponsor_segments(array $args): void
 {
     global $main;
 
+    // Validate required parameter
     if (empty($args['item_id'])) {
         $main->setResponseCode(404);
+        header('Content-Type: application/json');
         echo json_encode(['error' => 'missing item_id']);
         return;
     }
 
+    // Retrieve the requested item and ensure it exists
     $item = $main->getState()->getFeedItem(intval($args['item_id']));
-    $feed = $main->getState()->getFeed(intval($item['feed_id']));
+    if (empty($item)) {
+        $main->setResponseCode(404);
+        header('Content-Type: application/json');
+        echo json_encode(['error' => 'item not found']);
+        return;
+    }
+
+    // Retrieve the feed associated with the item and ensure it exists
+    $feed = $main->getState()->getFeed(intval($item['feed_id'] ?? 0));
+    if (empty($feed)) {
+        $main->setResponseCode(404);
+        header('Content-Type: application/json');
+        echo json_encode(['error' => 'feed not found']);
+        return;
+    }
 
     // Compose search query – podcast name + episode title.
     $query = ($feed['name'] ?? '') . ' ' . ($item['name'] ?? '');
