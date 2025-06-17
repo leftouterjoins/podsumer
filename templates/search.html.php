@@ -12,13 +12,14 @@
     <? foreach ($feeds as $feed): ?>
     <div class="container py-10 clear-left">
         <? if (!empty($feed['artwork'])) { ?>
-        <img src="<?= $feed['artwork'] ?>" class="float-left w-48 pr-5">
+        <img src="<?= htmlspecialchars($feed['artwork'], ENT_QUOTES) ?>" class="float-left w-48 pr-5">
         <? } ?>
-        <h1 class="text-2xl pb-2"><?= $feed['title'] ?></h1>
-        <p class="text-neutral-400 text-s pb-2 font-bold">
-            <a href="/add?url=<?= urlencode($feed['url']) ?>">Subscribe</a>
-        </p>
-        <p><?= substr($feed['description'] ?? '', 0, 360) ?></p>
+        <h1 class="text-2xl pb-2"><?= htmlspecialchars($feed['title'], ENT_QUOTES) ?></h1>
+        <form method="POST" action="/add" class="text-neutral-400 text-s pb-2 font-bold">
+            <input type="hidden" name="url" value="<?= htmlspecialchars($feed['url'], ENT_QUOTES) ?>">
+            <button type="submit" class="underline">Subscribe</button>
+        </form>
+        <p><?= htmlspecialchars(substr($feed['description'] ?? '', 0, 360), ENT_QUOTES) ?></p>
     </div>
     <? endforeach ?>
 
