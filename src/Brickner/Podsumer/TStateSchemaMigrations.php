@@ -11,7 +11,8 @@ trait TStateSchemaMigrations
     private array $versions = [ # ORDER IS IMPORTANT
         'create',
         'addDiskStorage',
-        'addPlaybackPosition'
+        'addPlaybackPosition',
+        'addSponsorBlock'
     ];
 
     protected function checkDBVersion()
@@ -55,6 +56,17 @@ trait TStateSchemaMigrations
 
         $addPlayback = $this->query("ALTER TABLE `items` ADD COLUMN playback_position INTEGER DEFAULT 0");
         return $addPlayback !== false;
+    }
+
+    public function addSponsorBlock(): bool {
+        $cols = $this->query("PRAGMA table_info(items)");
+        foreach ($cols as $col) {
+            if (($col['name'] ?? '') === 'sponsorblock') {
+                return true;
+            }
+        }
+        $addSb = $this->query("ALTER TABLE `items` ADD COLUMN sponsorblock TEXT");
+        return $addSb !== false;
     }
 }
 

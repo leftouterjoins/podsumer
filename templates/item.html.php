@@ -8,7 +8,7 @@
 
     <div class="media-container">
         <img src="/image?<?= 'item_id='.$item['id'] ?: 'feed_id'.$feed['id'] ?>" class="album-art">
-        <audio autoplay controls src="/audio?item_id=<?= $item['id'] ?>" class="player"></audio>
+        <audio controls src="/audio?item_id=<?= $item['id'] ?>" class="player"></audio>
     </div>
 
     <div id="item-desc">
@@ -71,6 +71,61 @@
         const itemId = <?= $item['id'] ?>;
         const interval = (<?= $this->main->getConf('podsumer', 'playback_interval') ?? 5 ?>) * 1000;
         const rewind = <?= $this->main->getConf('podsumer', 'playback_rewind') ?? 5 ?>;
+        let sbSegments = null;
+        let sbReady = false;
+
+        async function computeHashPrefix() {
+            const resp = await fetch('/audio?item_id=' + itemId, {headers: {Range: 'bytes=0-131071'}});
+            const buf = await resp.arrayBuffer();
+            const hash = await crypto.subtle.digest('SHA-256', buf);
+            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('').substring(0, 6);
+        }
+
+        async function fetchSponsorblock() {
+            try {
+                const r = await fetch('/get_sponsorblock?item_id=' + itemId);
+
+                if (r.status === 204) {
+                    const prefix = await computeHashPrefix();
+                    const categories = encodeURIComponent(JSON.stringify(['sponsor']));
+                    const api = 'https://sponsor.ajay.app/api/skipSegments/' + prefix +
+                        '?categories=' + categories + '&service=podcast';
+                    const data = await fetch(api).then(x => x.json());
+                    sbSegments = (data[0]?.segments || []).map(s => s.segment);
+
+                    const params = new URLSearchParams();
+                    params.append('item_id', itemId);
+                    params.append('data', JSON.stringify(data));
+                    fetch('/set_sponsorblock', {method: 'POST', body: params});
+                } else if (r.ok) {
+                    const data = await r.json();
+                    sbSegments = (data[0]?.segments || []).map(s => s.segment);
+                }
+            } finally {
+                sbReady = true;
+            }
+        }
+
+        function skipIfNeeded() {
+            if (!sbSegments) return;
+            const pos = audio.currentTime;
+            for (const seg of sbSegments) {
+                if (pos >= seg[0] && pos < seg[1]) {
+                    audio.currentTime = seg[1];
+                    break;
+                }
+            }
+        }
+
+        audio.addEventListener('timeupdate', skipIfNeeded);
+
+        audio.addEventListener('play', async () => {
+            if (!sbReady) {
+                audio.pause();
+                await fetchSponsorblock();
+                audio.play();
+            }
+        }, {once: true});
 
         fetch('/get_playback?item_id=' + itemId)
             .then(r => r.json())
