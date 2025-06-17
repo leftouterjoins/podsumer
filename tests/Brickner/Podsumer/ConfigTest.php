@@ -22,6 +22,14 @@ final class ConfigTest extends TestCase
         $this->assertEquals($user, 'user');
     }
 
+    public function testGetItemsPerPage(): void
+    {
+        $config = new Config($this->root . DIRECTORY_SEPARATOR . 'conf/test.conf');
+        $per_page = $config->get('podsumer', 'items_per_page');
+
+        $this->assertEquals(10, $per_page);
+    }
+
     public function testGetGroup(): void
     {
         $config = new Config($this->root . DIRECTORY_SEPARATOR . 'conf/test.conf');
