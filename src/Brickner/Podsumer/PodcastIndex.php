@@ -28,6 +28,7 @@ class PodcastIndex
         curl_setopt($curl, \CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curl, \CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, \CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($curl, \CURLOPT_TIMEOUT, 60);
 
         $result = curl_exec($curl);
         // Always close the handle to avoid leaking resources.

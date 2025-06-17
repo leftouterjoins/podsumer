@@ -97,6 +97,15 @@ class FSState extends State
     {
         $feed = $this->getFeed($feed_id);
 
+        # If no feed record is found, or if the feed record lacks a valid
+        # name, run the parent clean-up logic and exit early. Attempting to
+        # continue without a valid feed name can lead to resolving the media
+        # root directory as the feed directory which is unsafe.
+        if (empty($feed) || empty(trim($feed['name'] ?? ''))) {
+            parent::deleteFeed($feed_id);
+            return;
+        }
+
         # Capture all related files before we alter the database so we can
         # safely remove them from disk afterwards.
         $files_to_delete = [];
@@ -130,11 +139,25 @@ class FSState extends State
         }
 
         # Finally, try to remove the (now empty) feed directory
-        $feed_dir = $this->getFeedDir($feed['name'] ?? '') ?: null;
-        if ($feed_dir && file_exists($feed_dir)) {
-            $files_in_dir = array_diff(scandir($feed_dir), ['.', '..']);
-            if (empty($files_in_dir)) {
-                @rmdir($feed_dir);
+        $feed_name = trim($feed['name']);
+
+        if ($feed_name !== '') {
+            $feed_dir = $this->getFeedDir($feed_name);
+            $media_dir = rtrim($this->getMediaDir(), DIRECTORY_SEPARATOR);
+
+            # Ensure the directory we are about to touch is not the media root
+            if ($feed_dir !== $media_dir && file_exists($feed_dir) && is_dir($feed_dir)) {
+                $dir_contents = @scandir($feed_dir);
+
+                # scandir() returns false on failure. Guard against that so we
+                # do not pass a boolean to array_diff(), which would raise a
+                # TypeError.
+                if (false !== $dir_contents) {
+                    $files_in_dir = array_diff($dir_contents, ['.', '..']);
+                    if (empty($files_in_dir)) {
+                        @rmdir($feed_dir);
+                    }
+                }
             }
         }
     }
