@@ -1,7 +1,7 @@
 <div class="container py-10">
     <h1 class="text-2xl">Search Podcasts</h1>
     <form method="GET" action="/search" class="py-4">
-        <input type="text" name="q" value="<?= $q ?>" class="text-black w-1/2" placeholder="Search term">
+        <input type="text" name="q" value="<?= htmlspecialchars($q, ENT_QUOTES) ?>" class="text-black w-1/2" placeholder="Search term">
         <input type="submit" class="bg-neutral-500 text-white font-bold py-2 px-4 rounded" value="Search">
     </form>
 
