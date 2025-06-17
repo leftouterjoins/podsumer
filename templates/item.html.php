@@ -120,5 +120,45 @@
             link.setAttribute('target', '_blank');
             link.setAttribute('rel', 'noopener noreferrer');
         });
+
+        /* ------------------------------------------------------------------
+         * SponsorBlock integration – fetch segments and auto-skip them.
+         * ------------------------------------------------------------------ */
+        fetch('/sponsor_segments?item_id=' + itemId)
+            .then(r => r.json())
+            .then(segments => {
+                if (!Array.isArray(segments) || segments.length === 0) return;
+
+                // Flatten into simpler array of [start, end] seconds
+                const ranges = segments
+                    .map(s => Array.isArray(s.segment) ? s.segment.map(Number) : null)
+                    .filter(Boolean);
+
+                let currentRangeIdx = -1;
+
+                audio.addEventListener('timeupdate', () => {
+                    const t = audio.currentTime;
+
+                    // Optimization: if we are inside previously skipped range, do nothing.
+                    if (currentRangeIdx >= 0) {
+                        const [s, e] = ranges[currentRangeIdx];
+                        if (t >= s && t < e) {
+                            audio.currentTime = e + 0.05; // minimal jump to pass end
+                            return;
+                        }
+                    }
+
+                    // Otherwise check if we just entered any range
+                    for (let i = 0; i < ranges.length; i++) {
+                        const [start, end] = ranges[i];
+                        if (t >= start && t < end) {
+                            currentRangeIdx = i;
+                            audio.currentTime = end + 0.05;
+                            break;
+                        }
+                    }
+                });
+            })
+            .catch(() => {/* ignore network errors */});
     })();
 </script>

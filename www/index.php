@@ -110,7 +110,8 @@ function add(array $args): void
 
     $uploads = $main->getUploads();
 
-    if (count(array_filter($uploads['opml'])) > 2) {
+    // Only attempt to process OPML file if it was actually uploaded
+    if (isset($uploads['opml']) && is_array($uploads['opml']) && count(array_filter($uploads['opml'])) > 2) {
 
         $feed_urls = OPML::parse($uploads['opml']);
 
@@ -502,5 +503,35 @@ function set_playback(array $args): void
     }
 
     $main->getState()->setPlaybackPosition(intval($args['item_id']), intval($args['position']));
+}
+
+#[Route('/sponsor_segments', 'GET', true)]
+function sponsor_segments(array $args): void
+{
+    global $main;
+
+    if (empty($args['item_id'])) {
+        $main->setResponseCode(404);
+        echo json_encode(['error' => 'missing item_id']);
+        return;
+    }
+
+    $item = $main->getState()->getFeedItem(intval($args['item_id']));
+    $feed = $main->getState()->getFeed(intval($item['feed_id']));
+
+    // Compose search query – podcast name + episode title.
+    $query = ($feed['name'] ?? '') . ' ' . ($item['name'] ?? '');
+
+    $videoIds = \Brickner\Podsumer\YouTubeSearch::search($query, 1);
+    if (empty($videoIds)) {
+        header('Content-Type: application/json');
+        echo json_encode([]);
+        return;
+    }
+
+    $segments = \Brickner\Podsumer\SponsorBlock::getSegments($videoIds[0]);
+
+    header('Content-Type: application/json');
+    echo json_encode($segments);
 }
 
