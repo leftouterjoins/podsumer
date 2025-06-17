@@ -72,7 +72,7 @@ function search(array $args): void
     if (!empty($q)) {
         $key = strval($main->getConf('podsumer', 'podcastindex_key'));
         $secret = strval($main->getConf('podsumer', 'podcastindex_secret'));
-        $all = PodcastIndex::search($q, $page * $per_page, $key, $secret);
+        $all = PodcastIndex::search($q, 1000, $key, $secret);
         $page_count = max(1, intval(ceil(count($all) / $per_page)));
         $results = array_slice($all, ($page - 1) * $per_page, $per_page);
     }
