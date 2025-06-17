@@ -81,26 +81,30 @@
             return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('').substring(0, 6);
         }
 
+        async function checkSponsorblock() {
+            const r = await fetch('/get_sponsorblock?item_id=' + itemId);
+            if (r.ok) {
+                const data = await r.json();
+                sbSegments = (data[0]?.segments || []).map(s => s.segment);
+                sbReady = true;
+            } else if (r.status === 204) {
+                sbReady = false;
+            }
+        }
+
         async function fetchSponsorblock() {
             try {
-                const r = await fetch('/get_sponsorblock?item_id=' + itemId);
+                const prefix = await computeHashPrefix();
+                const categories = encodeURIComponent(JSON.stringify(['sponsor']));
+                const api = 'https://sponsor.ajay.app/api/skipSegments/' + prefix +
+                    '?categories=' + categories + '&service=podcast';
+                const data = await fetch(api).then(x => x.json());
+                sbSegments = (data[0]?.segments || []).map(s => s.segment);
 
-                if (r.status === 204) {
-                    const prefix = await computeHashPrefix();
-                    const categories = encodeURIComponent(JSON.stringify(['sponsor']));
-                    const api = 'https://sponsor.ajay.app/api/skipSegments/' + prefix +
-                        '?categories=' + categories + '&service=podcast';
-                    const data = await fetch(api).then(x => x.json());
-                    sbSegments = (data[0]?.segments || []).map(s => s.segment);
-
-                    const params = new URLSearchParams();
-                    params.append('item_id', itemId);
-                    params.append('data', JSON.stringify(data));
-                    fetch('/set_sponsorblock', {method: 'POST', body: params});
-                } else if (r.ok) {
-                    const data = await r.json();
-                    sbSegments = (data[0]?.segments || []).map(s => s.segment);
-                }
+                const params = new URLSearchParams();
+                params.append('item_id', itemId);
+                params.append('data', JSON.stringify(data));
+                fetch('/set_sponsorblock', {method: 'POST', body: params});
             } finally {
                 sbReady = true;
             }
@@ -118,6 +122,9 @@
         }
 
         audio.addEventListener('timeupdate', skipIfNeeded);
+
+        // check for cached sponsorblock data when page loads
+        checkSponsorblock();
 
         audio.addEventListener('play', async () => {
             if (!sbReady) {
