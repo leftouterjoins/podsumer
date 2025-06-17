@@ -44,9 +44,13 @@ function home(array $args): void
 function episodes(array $args): void
 {
     global $main;
+    $page = isset($args['page']) ? max(1, intval($args['page'])) : 1;
+    $per_page = intval($main->getConf('podsumer', 'items_per_page')) ?: 10;
 
     $vars = [
-        'items' => $main->getState()->getAllItems()
+        'items' => $main->getState()->getAllItemsPage($per_page, $page),
+        'page' => $page,
+        'page_count' => max(1, ceil($main->getState()->countAllItems() / $per_page))
     ];
 
     Template::render($main, 'episodes', $vars);
