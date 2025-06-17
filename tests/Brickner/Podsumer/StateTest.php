@@ -84,6 +84,14 @@ final class StateTest extends TestCase
         $this->assertEquals(4, count($items));
     }
 
+    public function testGetAllItems()
+    {
+        $this->feed = new Feed(self::TEST_FEED_URL);
+        $this->state->addFeed($this->feed);
+        $items = $this->state->getAllItems();
+        $this->assertEquals(4, count($items));
+    }
+
     public function testGetFeedItemsPage()
     {
         $this->feed = new Feed(self::TEST_FEED_URL);

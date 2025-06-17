@@ -205,12 +205,22 @@ class State
         return (false === $result) ? [] : $result;
     }
 
+    public function getAllItems(): array
+    {
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position, feeds.name AS feed_name FROM items JOIN feeds ON feeds.id = items.feed_id ORDER BY items.published DESC';
+
+        $result = $this->query($sql);
+
+        return (false === $result) ? [] : $result;
+     }
+
     public function getFeedItemsPage(int $feed_id, int $limit, int $page = 1): array
     {
         $offset = ($page - 1) * $limit;
         $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.feed_id = :id ORDER BY items.published DESC LIMIT :limit OFFSET :offset';
         $params = ['id' => $feed_id, 'limit' => $limit, 'offset' => $offset];
         $result = $this->query($sql, $params);
+
 
         return (false === $result) ? [] : $result;
     }

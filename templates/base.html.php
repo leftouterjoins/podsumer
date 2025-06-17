@@ -11,6 +11,8 @@
         <h1 class="text-m font-black text-right">
             <a href="/">Feeds</a>
             &nbsp;|&nbsp;
+            <a href="/episodes">Episodes</a>
+            &nbsp;|&nbsp;
             <a href="/opml">OPML</a>
             &nbsp;|&nbsp;
            <?= round($db_size/1024/1024/1024, 2) ?> GB
