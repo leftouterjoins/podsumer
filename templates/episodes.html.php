@@ -7,7 +7,7 @@
     <? foreach ($items as $item): ?>
     <div class="w-full clear-left py-8">
         <a href="/item?item_id=<?= $item['id'] ?>">
-            <img src="/image?<?= 'item_id=' . $item['id'] ?: 'feed_id=' . $item['feed_id'] ?>" class="w-32 border-solid border-neutral-800 border inline float-left mr-4">
+            <img src="/image?<?= !empty($item['item_image']) ? 'item_id=' . $item['id'] : 'feed_id=' . $item['feed_id'] ?>" class="w-32 border-solid border-neutral-800 border inline float-left mr-4">
         </a>
         <a href="/item?item_id=<?= $item['id'] ?>" class="text-xl">
             <?= $item['name'] ?>

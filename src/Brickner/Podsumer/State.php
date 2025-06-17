@@ -205,7 +205,7 @@ class State
         return (false === $result) ? [] : $result;
     }
 
-
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, items.image AS item_image, feeds.image AS feed_image, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position, feeds.name AS feed_name FROM items JOIN feeds ON feeds.id = items.feed_id ORDER BY items.published DESC';
     public function getAllItems(): array
     {
         $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position, feeds.name AS feed_name FROM items JOIN feeds ON feeds.id = items.feed_id ORDER BY items.published DESC';
