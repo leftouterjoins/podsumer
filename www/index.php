@@ -40,6 +40,18 @@ function home(array $args): void
     Template::render($main, 'home', $vars);
 }
 
+#[Route('/episodes', 'GET', true)]
+function episodes(array $args): void
+{
+    global $main;
+
+    $vars = [
+        'items' => $main->getState()->getAllItems()
+    ];
+
+    Template::render($main, 'episodes', $vars);
+}
+
 /**
  * Add new feed(s)
  * Path: /add
