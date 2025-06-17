@@ -527,8 +527,17 @@ function sponsor_segments(array $args): void
         return;
     }
 
+    // Extract feed_id and validate it exists before continuing
+    $feed_id = $item['feed_id'] ?? null;
+    if (empty($feed_id)) {
+        $main->setResponseCode(404);
+        header('Content-Type: application/json');
+        echo json_encode(['error' => 'feed not found']);
+        return;
+    }
+
     // Retrieve the feed associated with the item and ensure it exists
-    $feed = $main->getState()->getFeed(intval($item['feed_id'] ?? 0));
+    $feed = $main->getState()->getFeed(intval($feed_id));
     if (empty($feed)) {
         $main->setResponseCode(404);
         header('Content-Type: application/json');

@@ -30,6 +30,9 @@ class PodcastIndex
         curl_setopt($curl, \CURLOPT_CONNECTTIMEOUT, 30);
 
         $result = curl_exec($curl);
+        // Always close the handle to avoid leaking resources.
+        curl_close($curl);
+
         if (false === $result) {
             return [];
         }
