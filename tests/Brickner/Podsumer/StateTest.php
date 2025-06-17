@@ -100,6 +100,22 @@ final class StateTest extends TestCase
         $this->assertEquals(2, count($items));
     }
 
+    public function testGetAllItemsPage()
+    {
+        $this->feed = new Feed(self::TEST_FEED_URL);
+        $this->state->addFeed($this->feed);
+        $items = $this->state->getAllItemsPage(2, 1);
+        $this->assertEquals(2, count($items));
+    }
+
+    public function testCountAllItems()
+    {
+        $this->feed = new Feed(self::TEST_FEED_URL);
+        $this->state->addFeed($this->feed);
+        $count = $this->state->countAllItems();
+        $this->assertEquals(4, $count);
+    }
+
     public function testGetFeedByHash()
     {
         $this->feed = new Feed(self::TEST_FEED_URL);
