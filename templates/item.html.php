@@ -71,6 +71,53 @@
         const itemId = <?= $item['id'] ?>;
         const interval = (<?= $this->main->getConf('podsumer', 'playback_interval') ?? 5 ?>) * 1000;
         const rewind = <?= $this->main->getConf('podsumer', 'playback_rewind') ?? 5 ?>;
+        const guid = <?= json_encode($item['guid']) ?>;
+        let sbSegments = [];
+        let sbReady = false;
+        let playQueued = false;
+
+        function loadSponsorblock() {
+            fetch('/get_sponsorblock?item_id=' + itemId)
+                .then(r => r.json())
+                .then(d => {
+                    sbSegments = d.segments || [];
+                    if (sbSegments.length === 0) {
+                        const api = 'https://sponsor.ajay.app/api/skipSegments?service=podcast&url=' + encodeURIComponent(guid);
+                        return fetch(api)
+                            .then(r => r.json())
+                            .then(s => {
+                                sbSegments = Array.isArray(s) ? s : [];
+                                const params = new URLSearchParams();
+                                params.append('item_id', itemId);
+                                params.append('segments', JSON.stringify(sbSegments));
+                                fetch('/set_sponsorblock', {method: 'POST', body: params});
+                            });
+                    }
+                })
+                .finally(() => {
+                    sbReady = true;
+                    if (playQueued) { audio.play(); }
+                });
+        }
+
+        audio.addEventListener('play', () => {
+            if (!sbReady) {
+                playQueued = true;
+                audio.pause();
+                loadSponsorblock();
+            }
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            if (!sbReady) return;
+            const ct = audio.currentTime;
+            for (const seg of sbSegments) {
+                if (ct >= seg.start && ct < seg.end) {
+                    audio.currentTime = seg.end;
+                    break;
+                }
+            }
+        });
 
         fetch('/get_playback?item_id=' + itemId)
             .then(r => r.json())

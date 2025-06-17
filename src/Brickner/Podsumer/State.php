@@ -13,7 +13,7 @@ class State
 {
     use TStateSchemaMigrations;
 
-    CONST VERSION = 2; # The version of the schema for this commit.
+    CONST VERSION = 3; # The version of the schema for this commit.
 
     protected Main $main;
     protected $state_file_path;
@@ -190,13 +190,13 @@ class State
 
     public function getFeedItem(int $item_id): array
     {
-        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.id = :id ORDER BY items.published DESC';
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position, items.sponsorblock FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.id = :id ORDER BY items.published DESC';
         return $this->query($sql, ['id' => $item_id])[0];
     }
 
     public function getFeedItems(int $feed_id): array
     {
-        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.feed_id = :id ORDER BY items.published DESC';
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position, items.sponsorblock FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.feed_id = :id ORDER BY items.published DESC';
         $result = $this->query($sql, ['id' => $feed_id]);
 
         // The query helper returns false when an exception is caught. Convert that
@@ -365,6 +365,24 @@ class State
         }
 
         return intval($result[0]['playback_position']);
+    }
+
+    public function setSponsorblock(int $item_id, string $data): void
+    {
+        $sql = 'UPDATE items SET sponsorblock = :data WHERE id = :id';
+        $this->query($sql, ['id' => $item_id, 'data' => $data]);
+    }
+
+    public function getSponsorblock(int $item_id): ?string
+    {
+        $sql = 'SELECT sponsorblock FROM items WHERE id = :id';
+        $result = $this->query($sql, ['id' => $item_id]);
+
+        if (false === $result || empty($result) || !isset($result[0]['sponsorblock'])) {
+            return null;
+        }
+
+        return strval($result[0]['sponsorblock']);
     }
 
     protected function loadFile(string $filename): string

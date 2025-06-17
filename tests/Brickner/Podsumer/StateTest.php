@@ -117,5 +117,18 @@ final class StateTest extends TestCase
         // Assert it is greater than 0
         $this->assertGreaterThan(0, $this->state->getVersion());
     }
+
+    public function testSponsorblock()
+    {
+        $this->feed = new Feed(self::TEST_FEED_URL);
+        $this->state->addFeed($this->feed);
+        $item = $this->state->getFeedItem(1);
+
+        $json = '[{"start":0,"end":1}]';
+        $this->state->setSponsorblock($item['id'], $json);
+        $ret = $this->state->getSponsorblock($item['id']);
+
+        $this->assertEquals($json, $ret);
+    }
 }
 

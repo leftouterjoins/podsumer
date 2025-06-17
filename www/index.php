@@ -451,3 +451,36 @@ function set_playback(array $args): void
     $main->getState()->setPlaybackPosition(intval($args['item_id']), intval($args['position']));
 }
 
+#[Route('/get_sponsorblock', 'GET', true)]
+function get_sponsorblock(array $args): void
+{
+    global $main;
+
+    if (empty($args['item_id'])) {
+        $main->setResponseCode(404);
+        return;
+    }
+
+    $data = $main->getState()->getSponsorblock(intval($args['item_id']));
+    $segments = [];
+    if (!empty($data)) {
+        $segments = json_decode($data, true, 512, JSON_OBJECT_AS_ARRAY) ?? [];
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode(['segments' => $segments]);
+}
+
+#[Route('/set_sponsorblock', 'POST', true)]
+function set_sponsorblock(array $args): void
+{
+    global $main;
+
+    if (empty($args['item_id']) || !isset($args['segments'])) {
+        $main->setResponseCode(404);
+        return;
+    }
+
+    $main->getState()->setSponsorblock(intval($args['item_id']), strval($args['segments']));
+}
+
