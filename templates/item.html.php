@@ -11,19 +11,135 @@
         <audio autoplay controls src="/audio?item_id=<?= $item['id'] ?>" class="player"></audio>
     </div>
 
-    <?php
-        $sponsorOn = filter_var($this->main->getConf('podsumer', 'sponsorblock_enabled'), FILTER_VALIDATE_BOOLEAN);
+    <div id="item-desc">
+        <?php
+        $description = $item['description'];
+        // Check if description contains HTML tags
+        if (strip_tags($description) === $description) {
+            // No HTML tags found, wrap in pre tag
+            echo '<pre>' . htmlspecialchars($description) . '</pre>';
+        } else {
+            // HTML tags found, display as-is
+            echo $description;
+        }
+        ?>
+    </div>
+
+    <?php 
+    // Display ad segments if ad blocking is enabled and segments exist
+    if ($this->main->getConf('podsumer', 'ad_blocking_enabled')) {
+        $adSectionsData = [];
+        if (!empty($item['ad_sections'])) {
+            if (is_string($item['ad_sections'])) {
+                $adSectionsData = json_decode($item['ad_sections'], true) ?: [];
+            } else {
+                $adSectionsData = $item['ad_sections'];
+            }
+        }
+        
+        if (!empty($adSectionsData) && is_array($adSectionsData)) {
+            ?>
+            <div class="ad-segments-container">
+                <h3 class="ad-segments-title">Ad Segments Detected</h3>
+                <table class="w-full">
+                    <thead>
+                        <tr class="text-left">
+                            <th class="py-3 pl-4 text-base font-bold w-12">#</th>
+                            <th class="py-3 pl-4 text-base font-bold w-36">Time Range</th>
+                            <th class="py-3 pl-4 text-base font-bold w-20">Duration</th>
+                            <th class="py-3 pl-4 text-base font-bold">Summary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($adSectionsData as $index => $segment): ?>
+                            <?php 
+                            // Format time with hours if needed
+                            $formatTime = function($seconds) {
+                                $totalSeconds = intval($seconds);
+                                $hours = intval($totalSeconds / 3600);
+                                $minutes = intval(($totalSeconds % 3600) / 60);
+                                $secs = $totalSeconds % 60;
+                                
+                                if ($hours > 0) {
+                                    return sprintf('%d:%02d:%02d', $hours, $minutes, $secs);
+                                } else {
+                                    return sprintf('%d:%02d', $minutes, $secs);
+                                }
+                            };
+                            
+                            $startTime = $formatTime($segment['start']);
+                            $endTime = $formatTime($segment['end']);
+                            $duration = $segment['end'] - $segment['start'];
+                            $durationFormatted = $formatTime($duration);
+                            $reason = isset($segment['reason']) ? htmlspecialchars($segment['reason']) : '';
+                            ?>
+                            <tr class="<?= $index % 2 === 1 ? 'bg-neutral-800' : '' ?>">
+                                <td class="py-3 pl-4 text-base w-12">
+                                    <?= $index + 1 ?>.
+                                </td>
+                                <td class="py-3 pl-4 text-sm font-mono whitespace-nowrap w-36">
+                                    <?= $startTime ?> - <?= $endTime ?>
+                                </td>
+                                <td class="py-3 pl-4 text-sm text-neutral-400 whitespace-nowrap w-20">
+                                    <?= $durationFormatted ?>
+                                </td>
+                                <td class="py-3 pl-4 text-base text-neutral-300">
+                                    <?= $reason ?: '—' ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php
+        }
+    }
     ?>
 
-    <!-- Sponsor break timestamps will be rendered here -->
-    <?php if ($sponsorOn): ?>
-    <div class="alpha-notice">SponsorBlock skipping is in alpha.</div>
-    <?php endif; ?>
-    <div id="sponsor-breaks" class="sponsor-breaks"></div>
-
-    <div id="item-desc">
-        <?= $item['description'] ?>
-    </div>
+    <?php
+    // Display transcript if available
+    if (!empty($item['transcript'])) {
+        $transcriptData = json_decode($item['transcript'], true);
+        if ($transcriptData && isset($transcriptData['segments']) && is_array($transcriptData['segments'])) {
+            ?>
+            <div class="transcript-container">
+                <h3 class="transcript-title">Transcript</h3>
+                <div class="transcript-content">
+                    <?php foreach ($transcriptData['segments'] as $segment): ?>
+                        <?php 
+                        $start = floatval($segment['start'] ?? 0);
+                        $end = floatval($segment['end'] ?? 0);
+                        $text = isset($segment['text']) && is_string($segment['text']) ? trim($segment['text']) : '';
+                        
+                        if (!empty($text)) {
+                            // Format time with hours if needed
+                            $formatTime = function($seconds) {
+                                $totalSeconds = intval($seconds);
+                                $hours = intval($totalSeconds / 3600);
+                                $minutes = intval(($totalSeconds % 3600) / 60);
+                                $secs = $totalSeconds % 60;
+                                
+                                if ($hours > 0) {
+                                    return sprintf('%d:%02d:%02d', $hours, $minutes, $secs);
+                                } else {
+                                    return sprintf('%d:%02d', $minutes, $secs);
+                                }
+                            };
+                            
+                            $startTime = $formatTime($start);
+                        ?>
+                        <div class="transcript-segment" data-start="<?= $start ?>" data-end="<?= $end ?>">
+                            <span class="transcript-timestamp"><?= $startTime ?></span>
+                            <span class="transcript-text"><?= htmlspecialchars($text) ?></span>
+                        </div>
+                        <?php } ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php
+        }
+    }
+    ?>
 
 </div>
 
@@ -40,6 +156,15 @@
    }
    #item-desc p {
        margin-bottom: 1em;
+   }
+   #item-desc pre {
+       white-space: pre-wrap;
+       word-wrap: break-word;
+       font-family: inherit;
+       font-size: inherit;
+       line-height: inherit;
+       margin: 0;
+       padding: 0;
    }
 
    .media-container {
@@ -69,44 +194,141 @@
        color: rgb(253, 230, 138);
    }
 
-   .sponsor-breaks {
-       max-width: 380px;
-       margin: 0.5rem auto 1.5rem;
-       text-align: center;
-       font-size: 0.9rem;
-       color: rgb(253, 230, 138);
-   }
-
-   .sponsor-breaks a {
-       color: rgb(253, 230, 138);
-       text-decoration: underline;
-       margin: 0 4px;
-   }
-   .sponsor-breaks a:hover {
-       opacity: 0.8;
-   }
-
-   .alpha-notice {
-       text-align: center;
-       font-size: 0.8rem;
-       color: rgb(253, 230, 138);
-       margin-bottom: 0.25rem;
-   }
-
    @media (max-width: 640px) {
        .media-container {
            max-width: 90%;
        }
    }
+
+   /* Ad segments styling */
+   .ad-segments-container {
+       max-width: 65ch;
+       margin: 2rem auto;
+   }
+
+   .ad-segments-title {
+       font-size: 1.25rem;
+       font-weight: 600;
+       margin: 0 0 1rem 0;
+       text-align: left;
+   }
+
+   @media (max-width: 640px) {
+       .ad-segments-container {
+           max-width: 90%;
+           margin: 2rem auto;
+       }
+   }
+
+   /* Transcript styling */
+   .transcript-container {
+       max-width: 65ch;
+       margin: 2rem auto;
+   }
+
+   .transcript-title {
+       font-size: 1.25rem;
+       font-weight: 600;
+       margin: 0 0 1rem 0;
+       text-align: left;
+   }
+
+   .transcript-content {
+       max-height: 400px;
+       overflow-y: auto;
+       padding: 1rem;
+   }
+
+   .transcript-segment {
+       margin-bottom: 0.75rem;
+       padding: 0.5rem;
+       cursor: pointer;
+       transition: opacity 0.2s ease;
+       display: flex;
+       align-items: flex-start;
+   }
+
+   .transcript-segment:hover {
+       opacity: 0.8;
+   }
+
+   .transcript-timestamp {
+       font-family: monospace;
+       font-size: 0.875rem;
+       color: #9ca3af;
+       margin-right: 0.75rem;
+       min-width: 4rem;
+       flex-shrink: 0;
+   }
+
+   .transcript-text {
+       color: #e5e7eb;
+       line-height: 1.5;
+       flex: 1;
+   }
+
+   @media (max-width: 640px) {
+       .transcript-container {
+           max-width: 90%;
+           margin: 2rem auto;
+       }
+       
+       .transcript-content {
+           max-height: 300px;
+           padding: 0.75rem;
+       }
+       
+       .transcript-segment {
+           padding: 0.5rem 0.25rem;
+       }
+       
+       .transcript-timestamp {
+           display: block;
+           margin-bottom: 0.25rem;
+           margin-right: 0;
+           text-align: left;
+           min-width: auto;
+       }
+   }
 </style>
 <script type="text/javascript">
     (function() {
-        const sponsorEnabled = <?= $sponsorOn ? 'true' : 'false' ?>;
-
         const audio = document.querySelector('audio');
         const itemId = <?= $item['id'] ?>;
         const interval = (<?= $this->main->getConf('podsumer', 'playback_interval') ?? 5 ?>) * 1000;
         const rewind = <?= $this->main->getConf('podsumer', 'playback_rewind') ?? 5 ?>;
+        
+        // Ad sections data - decode JSON if it's a string
+        <?php 
+        $adSectionsData = [];
+        if (!empty($item['ad_sections'])) {
+            if (is_string($item['ad_sections'])) {
+                $adSectionsData = json_decode($item['ad_sections'], true) ?: [];
+            } else {
+                $adSectionsData = $item['ad_sections'];
+            }
+        }
+        ?>
+        const adSections = <?= json_encode($adSectionsData) ?>;
+        const adBlockingEnabled = <?= $this->main->getConf('podsumer', 'ad_blocking_enabled') ? 'true' : 'false' ?>;
+        const useFfmpeg = <?= $this->main->getConf('podsumer', 'use_ffmpeg_ad_removal') ? 'true' : 'false' ?>;
+        
+        // Skip ads during playback if ad blocking is enabled and ffmpeg is not used
+        if (adBlockingEnabled && !useFfmpeg && Array.isArray(adSections) && adSections.length > 0) {
+            audio.addEventListener('timeupdate', function() {
+                const currentTime = audio.currentTime;
+                
+                // Check if we're in an ad section
+                for (const ad of adSections) {
+                    if (currentTime >= ad.start && currentTime < ad.end) {
+                        // Skip to the end of the ad
+                        audio.currentTime = ad.end;
+                        console.log('Skipped ad section from', ad.start, 'to', ad.end);
+                        break;
+                    }
+                }
+            });
+        }
 
         fetch('/get_playback?item_id=' + itemId)
             .then(r => r.json())
@@ -157,111 +379,18 @@
             link.setAttribute('rel', 'noopener noreferrer');
         });
 
-        /* ------------------------------------------------------------------
-         * SponsorBlock integration – fetch segments and auto-skip them.
-         * ------------------------------------------------------------------ */
-        if (sponsorEnabled) {
-            fetch('/sponsor_segments?item_id=' + itemId)
-                .then(r => r.json())
-                .then(data => {
-                    const { videoId, segments } = Array.isArray(data) ? { videoId: null, segments: data } : data;
-
-                    if (!Array.isArray(segments) || segments.length === 0) return;
-
-                    // Prepare enriched data containing start, end, category
-                    const enriched = segments
-                        .map(s =>
-                            Array.isArray(s.segment)
-                                ? {
-                                      start: Number(s.segment[0]),
-                                      end:   Number(s.segment[1]),
-                                      category: s.category || ''
-                                  }
-                                : null
-                        )
-                        .filter(Boolean)
-                        .sort((a, b) => a.start - b.start); // ensure chronological order
-
-                    // Extract ranges ([start,end]) for auto-skip logic
-                    const ranges = enriched.map(e => [e.start, e.end]);
-
-                    /* ------------------------------------------------------
-                     * 1) Render sponsor break list with clickable end times
-                     * ------------------------------------------------------ */
-                    const container = document.getElementById('sponsor-breaks');
-                    if (container) {
-                        function fmt(sec) {
-                            const m = Math.floor(sec / 60);
-                            const s = Math.floor(sec % 60).toString().padStart(2, '0');
-                            return `${m}:${s}`;
-                        }
-
-                        const label = document.createElement('span');
-                        label.textContent = videoId ? `Sponsor breaks (video ${videoId}):` : 'Sponsor breaks:';
-                        container.appendChild(label);
-
-                        enriched.forEach((seg, idx) => {
-                            const { start, end, category } = seg;
-                            
-                            // separator bullet except first
-                            if (idx > 0) {
-                                const sep = document.createTextNode(' • ');
-                                container.appendChild(sep);
-                            }
-
-                            const link = document.createElement('a');
-                            link.href = `#t=${Math.floor(end)}`; // for bookmarking, optional
-                            link.textContent = `${fmt(start)}–${fmt(end)}${category ? ' (' + category + ')' : ''}`;
-                            link.dataset.time = end.toString();
-
-                            link.addEventListener('click', ev => {
-                                ev.preventDefault();
-                                // Seek safely to just after the sponsor break ends
-                                const target = Number(link.dataset.time) + 0.05;
-                                const max = (Number.isFinite(audio.duration) && audio.duration > 0) ? audio.duration - 0.01 : target;
-                                audio.currentTime = Math.min(target, max);
-                                audio.play();
-                            });
-
-                            container.appendChild(link);
-                        });
-                    }
-
-                    let currentRangeIdx = -1;
-                    let skipTarget = null; // holds the time we are currently trying to seek to
-
-                    function safeJump(endTime) {
-                        const buffer = 0.05;
-                        const desired = endTime + buffer;
-                        const max = (Number.isFinite(audio.duration) && audio.duration > 0) ? audio.duration - 0.01 : desired;
-                        skipTarget = Math.min(desired, max);
-                        audio.currentTime = skipTarget;
-                    }
-
-                    audio.addEventListener('timeupdate', () => {
-                        const t = audio.currentTime;
-
-                        // If a skip is in progress, wait until we are very close to the target before clearing it
-                        if (skipTarget !== null) {
-                            if (t >= skipTarget - 0.02) {
-                                skipTarget = null; // reached target (or close enough)
-                            } else {
-                                return; // still waiting for the player to seek; do nothing else
-                            }
-                        }
-
-                        // Check if we are currently inside a sponsor range
-                        for (let i = 0; i < ranges.length; i++) {
-                            const [start, end] = ranges[i];
-                            if (t >= start && t < end) {
-                                currentRangeIdx = i;
-                                safeJump(end);
-                                break;
-                            }
-                        }
-                    });
-                })
-                .catch(() => {/* ignore network errors */});
-        }
+        // Make transcript segments clickable to jump to specific times
+        document.querySelectorAll('.transcript-segment').forEach(segment => {
+            segment.addEventListener('click', function() {
+                const startTime = parseFloat(this.getAttribute('data-start'));
+                if (!isNaN(startTime) && audio) {
+                    audio.currentTime = startTime;
+                    // Scroll audio player into view
+                    audio.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        });
     })();
+
+
 </script>

@@ -13,7 +13,7 @@ class State
 {
     use TStateSchemaMigrations;
 
-    CONST VERSION = 2; # The version of the schema for this commit.
+    CONST VERSION = 6; # The version of the schema for this commit.
 
     protected Main $main;
     protected $state_file_path;
@@ -190,13 +190,14 @@ class State
 
     public function getFeedItem(int $item_id): array
     {
-        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.id = :id ORDER BY items.published DESC';
-        return $this->query($sql, ['id' => $item_id])[0];
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position, items.ad_sections, items.transcript FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.id = :id ORDER BY items.published DESC';
+        $result = $this->query($sql, ['id' => $item_id]);
+        return $result !== false && isset($result[0]) ? $result[0] : [];
     }
 
     public function getFeedItems(int $feed_id): array
     {
-        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.feed_id = :id ORDER BY items.published DESC';
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position, items.ad_sections FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.feed_id = :id ORDER BY items.published DESC';
         $result = $this->query($sql, ['id' => $feed_id]);
 
         // The query helper returns false when an exception is caught. Convert that
@@ -207,7 +208,7 @@ class State
 
     public function getAllItems(): array
     {
-        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position, feeds.name AS feed_name FROM items JOIN feeds ON feeds.id = items.feed_id ORDER BY items.published DESC';
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position, items.ad_sections, feeds.name AS feed_name FROM items JOIN feeds ON feeds.id = items.feed_id ORDER BY items.published DESC';
 
         $result = $this->query($sql);
 
@@ -217,7 +218,7 @@ class State
     public function getAllItemsPage(int $limit, int $page = 1): array
     {
         $offset = ($page - 1) * $limit;
-        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position, feeds.name AS feed_name FROM items JOIN feeds ON feeds.id = items.feed_id ORDER BY items.published DESC LIMIT :limit OFFSET :offset';
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position, items.ad_sections, feeds.name AS feed_name FROM items JOIN feeds ON feeds.id = items.feed_id ORDER BY items.published DESC LIMIT :limit OFFSET :offset';
         $params = ['limit' => $limit, 'offset' => $offset];
         $result = $this->query($sql, $params);
 
@@ -235,7 +236,7 @@ class State
     public function getFeedItemsPage(int $feed_id, int $limit, int $page = 1): array
     {
         $offset = ($page - 1) * $limit;
-        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.feed_id = :id ORDER BY items.published DESC LIMIT :limit OFFSET :offset';
+        $sql = 'SELECT items.name, items.feed_id, items.id, items.guid, items.audio_url, items.audio_file, COALESCE(items.image, feeds.image) AS image, items.size, items.published, items.description, items.playback_position, items.ad_sections FROM items JOIN feeds ON feeds.id = items.feed_id WHERE items.feed_id = :id ORDER BY items.published DESC LIMIT :limit OFFSET :offset';
         $params = ['id' => $feed_id, 'limit' => $limit, 'offset' => $offset];
         $result = $this->query($sql, $params);
 
@@ -259,10 +260,10 @@ class State
 
     public function getFileById(int $file_id): array
     {
-        $sql = 'SELECT files.id, url, url_hash, mimetype, filename, size, cached, storage_mode, file_contents.content_hash, file_contents.data FROM files JOIN file_contents ON files.content_hash = file_contents.content_hash WHERE files.id = :file_id';
+        $sql = 'SELECT files.id, url, url_hash, mimetype, filename, size, cached, file_contents.content_hash, file_contents.data FROM files JOIN file_contents ON files.content_hash = file_contents.content_hash WHERE files.id = :file_id';
         $file = $this->query($sql, ['file_id' => $file_id])[0] ?? [];
 
-        if (!empty($file) && $file['storage_mode'] === 'DISK') {
+        if (!empty($file)) {
             $filename = $file['data'];
 
             try {
@@ -279,10 +280,10 @@ class State
 
     public function getFileByUrlHash(string $url_hash): array
     {
-        $sql = 'SELECT files.id, url, url_hash, mimetype, filename, size, cached, storage_mode, file_contents.content_hash, file_contents.data FROM files JOIN file_contents ON files.content_hash = file_contents.content_hash WHERE url_hash = :url_hash';
+        $sql = 'SELECT files.id, url, url_hash, mimetype, filename, size, cached, file_contents.content_hash, file_contents.data FROM files JOIN file_contents ON files.content_hash = file_contents.content_hash WHERE url_hash = :url_hash';
         $file = $this->query($sql, ['url_hash' => $url_hash])[0] ?? [];
 
-        if (!empty($file) && $file['storage_mode'] === 'DISK') {
+        if (!empty($file)) {
             $filename = $file['data'];
 
             try {
@@ -311,15 +312,12 @@ class State
             'mimetype' => $mimetype,
             'size' => strlen($contents),
             'cached' => time(),
-            'content_hash' => $content_hash,
-            'storage_mode' => ($this->main->getConf('podsumer', 'store_media_on_disk'))
-                ? 'DISK'
-                : 'DB'
+            'content_hash' => $content_hash
         ];
 
         $file['content_id'] = $this->addFileContents($content_hash, $contents, $filename, $feed);
 
-        $sql = 'INSERT INTO files (url, url_hash, filename, size, cached, content_hash, mimetype, content_id, storage_mode) VALUES (:url, :url_hash, :filename, :size, :cached, :content_hash, :mimetype, :content_id, :storage_mode) ON CONFLICT(url_hash) DO UPDATE SET size=:size, cached=:cached, content_hash=:content_hash, mimetype=:mimetype, content_id=:content_id, storage_mode=:storage_mode';
+        $sql = 'INSERT INTO files (url, url_hash, filename, size, cached, content_hash, mimetype, content_id) VALUES (:url, :url_hash, :filename, :size, :cached, :content_hash, :mimetype, :content_id) ON CONFLICT(url_hash) DO UPDATE SET size=:size, cached=:cached, content_hash=:content_hash, mimetype=:mimetype, content_id=:content_id';
         $this->query($sql, $file);
 
         $sql = 'SELECT id FROM files WHERE content_hash = :content_hash';
@@ -413,6 +411,52 @@ class State
         return intval($result[0]['playback_position']);
     }
 
+    public function setItemTranscript(int $item_id, string $transcript): void
+    {
+        $sql = 'UPDATE items SET transcript = :transcript WHERE id = :id';
+        $this->query($sql, ['id' => $item_id, 'transcript' => $transcript]);
+    }
+
+    public function setItemAdSections(int $item_id, array $ad_sections): void
+    {
+        $json = json_encode($ad_sections, JSON_THROW_ON_ERROR);
+        $sql = 'UPDATE items SET ad_sections = :ad_sections WHERE id = :id';
+        $this->query($sql, ['id' => $item_id, 'ad_sections' => $json]);
+    }
+
+    public function clearItemAdSections(int $item_id): void
+    {
+        $sql = 'UPDATE items SET ad_sections = NULL WHERE id = :id';
+        $this->query($sql, ['id' => $item_id]);
+    }
+
+    public function getItemTranscript(int $item_id): ?string
+    {
+        $sql = 'SELECT transcript FROM items WHERE id = :id';
+        $result = $this->query($sql, ['id' => $item_id]);
+        
+        if (false === $result || empty($result)) {
+            return null;
+        }
+        
+        return $result[0]['transcript'] ?? null;
+    }
+
+    public function getItemAdSections(int $item_id): array
+    {
+        $sql = 'SELECT ad_sections FROM items WHERE id = :id';
+        $result = $this->query($sql, ['id' => $item_id]);
+        
+        if (false === $result || empty($result) || empty($result[0]['ad_sections'])) {
+            return [];
+        }
+        
+        $json = $result[0]['ad_sections'];
+        $sections = json_decode($json, true);
+        
+        return is_array($sections) ? $sections : [];
+    }
+
     protected function loadFile(string $filename): string
     {
         $contents = false;
@@ -434,10 +478,284 @@ class State
 
     public function getLibrarySize(): int
     {
-        $sql = 'SELECT SUM(size) AS `size` FROM files';
-        $size = $this->query($sql)[0]['size'];
+        $sql = 'SELECT SUM(size) AS size FROM files';
+        $result = $this->query($sql);
 
-        return intval($size);
+        return intval(($result && isset($result[0]['size'])) ? $result[0]['size'] : 0);
+    }
+
+    // Job Management Methods
+    
+    public function createJob(string $type, ?int $feed_id = null, ?int $item_id = null): int
+    {
+        // Check for duplicate jobs
+        if ($this->isDuplicateJob($type, $feed_id, $item_id)) {
+            throw new Exception("Duplicate job already running or queued");
+        }
+        
+        // Check for feed refresh rate limiting (60 seconds)
+        if ($type === 'refresh_feed' && $feed_id && $this->isRecentFeedRefresh($feed_id)) {
+            throw new Exception("Feed was refreshed within the last 60 seconds");
+        }
+        
+        $sql = 'INSERT INTO jobs (type, feed_id, item_id, status) VALUES (:type, :feed_id, :item_id, :status)';
+        $this->query($sql, [
+            'type' => $type,
+            'feed_id' => $feed_id,
+            'item_id' => $item_id,
+            'status' => 'queued'
+        ]);
+        
+        return intval($this->pdo->lastInsertId());
+    }
+    
+    public function startJob(int $job_id, int $pid): bool
+    {
+        $sql = 'UPDATE jobs SET status = :status, pid = :pid, started_at = :started_at WHERE id = :id AND status = :old_status';
+        $result = $this->query($sql, [
+            'id' => $job_id,
+            'status' => 'running',
+            'pid' => $pid,
+            'started_at' => date('Y-m-d H:i:s'),
+            'old_status' => 'queued'
+        ]);
+        
+        return $result !== false;
+    }
+    
+
+    
+    public function completeJob(int $job_id, ?float $openai_cost = null): bool
+    {
+        $sql = 'UPDATE jobs SET status = :status, finished_at = :finished_at, openai_cost = :openai_cost WHERE id = :id';
+        $result = $this->query($sql, [
+            'id' => $job_id,
+            'status' => 'completed',
+            'finished_at' => date('Y-m-d H:i:s'),
+            'openai_cost' => $openai_cost ?? 0.0
+        ]);
+        
+        return $result !== false;
+    }
+    
+    public function failJob(int $job_id, string $error, ?float $openai_cost = null): bool
+    {
+        $sql = 'UPDATE jobs SET status = :status, finished_at = :finished_at, error = :error, openai_cost = :openai_cost WHERE id = :id';
+        $result = $this->query($sql, [
+            'id' => $job_id,
+            'status' => 'failed',
+            'finished_at' => date('Y-m-d H:i:s'),
+            'error' => $error,
+            'openai_cost' => $openai_cost ?? 0.0
+        ]);
+        
+        return $result !== false;
+    }
+    
+    public function cancelJob(int $job_id): bool
+    {
+        $job = $this->getJob($job_id);
+        if (!$job) return false;
+        
+        // Try to kill the process if it's running
+        if ($job['status'] === 'running' && $job['pid']) {
+            exec("kill -TERM {$job['pid']} 2>/dev/null");
+        }
+        
+        $sql = 'UPDATE jobs SET status = :status, finished_at = :finished_at WHERE id = :id';
+        $result = $this->query($sql, [
+            'id' => $job_id,
+            'status' => 'cancelled',
+            'finished_at' => date('Y-m-d H:i:s')
+        ]);
+        
+        return $result !== false;
+    }
+    
+    public function getJob(int $job_id): array
+    {
+        $sql = 'SELECT * FROM jobs WHERE id = :id';
+        $result = $this->query($sql, ['id' => $job_id]);
+        return $result !== false && isset($result[0]) ? $result[0] : [];
+    }
+    
+    public function getRunningJobs(): array
+    {
+        $sql = 'SELECT j.*, f.name as feed_name, i.name as item_name 
+                FROM jobs j 
+                LEFT JOIN feeds f ON j.feed_id = f.id 
+                LEFT JOIN items i ON j.item_id = i.id 
+                WHERE j.status IN (:running, :queued) 
+                ORDER BY j.created_at DESC';
+        $result = $this->query($sql, ['running' => 'running', 'queued' => 'queued']);
+        return $result !== false ? $result : [];
+    }
+    
+    public function getAllJobs(int $limit = 50): array
+    {
+        $sql = 'SELECT j.*, f.name as feed_name, i.name as item_name 
+                FROM jobs j 
+                LEFT JOIN feeds f ON j.feed_id = f.id 
+                LEFT JOIN items i ON j.item_id = i.id 
+                ORDER BY j.created_at DESC 
+                LIMIT :limit';
+        $result = $this->query($sql, ['limit' => $limit]);
+        return $result !== false ? $result : [];
+    }
+    
+    public function hasRunningJobs(): bool
+    {
+        $sql = 'SELECT COUNT(*) as count FROM jobs WHERE status IN (:running, :queued)';
+        $result = $this->query($sql, ['running' => 'running', 'queued' => 'queued']);
+        return $result !== false && isset($result[0]['count']) ? intval($result[0]['count']) > 0 : false;
+    }
+    
+    public function hasRunningJob(string $type): bool
+    {
+        $sql = 'SELECT COUNT(*) as count FROM jobs WHERE type = :type AND status IN (:running, :queued)';
+        $result = $this->query($sql, [
+            'type' => $type,
+            'running' => 'running',
+            'queued' => 'queued'
+        ]);
+        return $result !== false && isset($result[0]['count']) ? intval($result[0]['count']) > 0 : false;
+    }
+    
+    private function isDuplicateJob(string $type, ?int $feed_id, ?int $item_id): bool
+    {
+        $sql = 'SELECT COUNT(*) as count FROM jobs WHERE type = :type AND status IN (:running, :queued)';
+        $params = [
+            'type' => $type,
+            'running' => 'running',
+            'queued' => 'queued'
+        ];
+        
+        if ($feed_id !== null) {
+            $sql .= ' AND feed_id = :feed_id';
+            $params['feed_id'] = $feed_id;
+        }
+        
+        if ($item_id !== null) {
+            $sql .= ' AND item_id = :item_id';
+            $params['item_id'] = $item_id;
+        }
+        
+        $result = $this->query($sql, $params);
+        return $result !== false && isset($result[0]['count']) ? intval($result[0]['count']) > 0 : false;
+    }
+    
+    private function isRecentFeedRefresh(int $feed_id): bool
+    {
+        $sql = 'SELECT COUNT(*) as count FROM jobs 
+                WHERE type = :type AND feed_id = :feed_id 
+                AND started_at > datetime("now", "-60 seconds")';
+        $result = $this->query($sql, [
+            'type' => 'refresh_feed',
+            'feed_id' => $feed_id
+        ]);
+        return $result !== false && isset($result[0]['count']) ? intval($result[0]['count']) > 0 : false;
+    }
+    
+    public function getJobStats(): array
+    {
+        $sql = 'SELECT 
+                    COUNT(*) as total_jobs,
+                    COUNT(CASE WHEN status = "running" THEN 1 END) as running_jobs,
+                    COUNT(CASE WHEN status = "queued" THEN 1 END) as queued_jobs,
+                    COUNT(CASE WHEN status = "completed" THEN 1 END) as completed_jobs,
+                    COUNT(CASE WHEN status = "failed" THEN 1 END) as failed_jobs,
+                    COUNT(CASE WHEN status = "cancelled" THEN 1 END) as cancelled_jobs,
+                    COALESCE(SUM(openai_cost), 0) as total_openai_cost
+                FROM jobs';
+        $result = $this->query($sql);
+        return $result !== false && isset($result[0]) ? $result[0] : [];
+    }
+
+    public function getRunningJobForFeed(int $feed_id): ?array
+    {
+        $sql = 'SELECT j.*, f.name as feed_name FROM jobs j 
+                LEFT JOIN feeds f ON j.feed_id = f.id 
+                WHERE j.feed_id = :feed_id AND j.status IN ("queued", "running") AND j.type = "refresh_feed"
+                ORDER BY j.created_at DESC LIMIT 1';
+        $result = $this->query($sql, ['feed_id' => $feed_id]);
+        return $result && is_array($result) && !empty($result) ? $result[0] : null;
+    }
+
+    public function getRunningJobForItem(int $item_id): ?array
+    {
+        $sql = 'SELECT j.*, i.name as item_name FROM jobs j 
+                LEFT JOIN items i ON j.item_id = i.id 
+                WHERE j.item_id = :item_id AND j.status IN ("queued", "running") AND j.type IN ("process_ads", "download_item")
+                ORDER BY j.created_at DESC LIMIT 1';
+        $result = $this->query($sql, ['item_id' => $item_id]);
+        return $result && is_array($result) && !empty($result) ? $result[0] : null;
+    }
+
+    public function getFeedsWithoutRunningJobs(): array
+    {
+        $sql = 'SELECT f.* FROM feeds f 
+                LEFT JOIN jobs j ON f.id = j.feed_id AND j.status IN ("queued", "running") AND j.type = "refresh_feed"
+                WHERE j.id IS NULL
+                ORDER BY f.name';
+        $result = $this->query($sql);
+        return $result && is_array($result) ? $result : [];
+    }
+
+    public function updateJobLog(int $job_id, string $log_message): bool
+    {
+        $sql = 'UPDATE jobs SET log = COALESCE(log, "") || :log_message WHERE id = :job_id';
+        return $this->query($sql, [
+            'job_id' => $job_id,
+            'log_message' => date('Y-m-d H:i:s') . ': ' . $log_message . "\n"
+        ]) !== false;
+    }
+
+    public function setJobLog(int $job_id, string $log_content): bool
+    {
+        $sql = 'UPDATE jobs SET log = :log_content WHERE id = :job_id';
+        return $this->query($sql, [
+            'job_id' => $job_id,
+            'log_content' => $log_content
+        ]) !== false;
+    }
+
+    public function updateJobCost(int $job_id, float $cost): bool
+    {
+        $sql = 'UPDATE jobs SET openai_cost = :cost WHERE id = :job_id';
+        return $this->query($sql, [
+            'job_id' => $job_id,
+            'cost' => $cost
+        ]) !== false;
+    }
+    
+    public function getItemsNeedingAdProcessing(): array
+    {
+        // Items need ad processing if:
+        // 1. They have an audio file
+        // 2. Either they don't have a transcript OR they don't have ad_sections processed yet (NULL or empty string)
+        // 3. They are the most recent episode with audio for their feed (to avoid processing all old episodes)
+        $sql = 'SELECT items.id, items.name, items.audio_file, items.transcript, items.ad_sections, feeds.name AS feed_name 
+                FROM items 
+                JOIN feeds ON feeds.id = items.feed_id 
+                WHERE items.audio_file IS NOT NULL 
+                AND (
+                    items.transcript IS NULL OR items.transcript = "" 
+                    OR items.ad_sections IS NULL OR items.ad_sections = ""
+                )
+                AND items.id IN (
+                    SELECT i2.id 
+                    FROM items i2 
+                    WHERE i2.feed_id = items.feed_id 
+                    AND i2.audio_file IS NOT NULL
+                    ORDER BY i2.published DESC 
+                    LIMIT 1
+                )
+                ORDER BY items.published DESC';
+        $result = $this->query($sql);
+        
+        // No additional filtering needed - if ad_sections is not null/empty string, 
+        // it means ad detection was performed (even if result was empty array for ad-free episodes)
+        return $result && is_array($result) ? $result : [];
     }
 }
 

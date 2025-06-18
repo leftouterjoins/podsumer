@@ -130,7 +130,7 @@ class FSState extends State
 
         # Remove the on-disk files we captured earlier
         foreach ($files_to_delete as $file) {
-            if (!empty($file) && ($file['storage_mode'] ?? null) === 'DISK') {
+            if (!empty($file)) {
                 $filename = $file['filename'] ?? null;
                 if (!empty($filename) && file_exists($filename)) {
                     @unlink($filename);
@@ -174,7 +174,7 @@ class FSState extends State
 
         $file = $this->getFileById($file_id);
 
-        if (!empty($file) && ($file['storage_mode'] ?? null) === 'DISK') {
+        if (!empty($file)) {
             $filename = $file['filename'] ?? null;
 
             if (!empty($filename) && file_exists($filename)) {

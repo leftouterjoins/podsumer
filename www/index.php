@@ -19,6 +19,7 @@ use Brickner\Podsumer\Main;
 use Brickner\Podsumer\OPML;
 use Brickner\Podsumer\Template;
 use Brickner\Podsumer\PodcastIndex;
+use Brickner\Podsumer\AdDetection;
 
 # Create the application.
 $main = new Main(PODSUMER_PATH, array_merge($_SERVER, $_ENV), array_merge($_GET, $_POST), $_FILES);
@@ -103,7 +104,12 @@ function add(array $args): void
 
     if (!empty($args['url'])) {
         $feed = new Feed($args['url']);
-        $main->getState()->addFeed($feed);
+        $feed_id = $main->getState()->addFeed($feed);
+        
+        // Create a background job to refresh the feed (which will trigger automatic download)
+        if ($feed_id > 0) {
+            createRefreshJobForNewFeed($main, $feed_id);
+        }
     }
 
     # Add an array of feeds via uploaded OPML file.
@@ -117,7 +123,12 @@ function add(array $args): void
 
         foreach ($feed_urls as $url) {
             $feed = new Feed($url);
-            $main->getState()->addFeed($feed);
+            $feed_id = $main->getState()->addFeed($feed);
+            
+            // Create a background job to refresh the feed (which will trigger automatic download)
+            if ($feed_id > 0) {
+                createRefreshJobForNewFeed($main, $feed_id);
+            }
         }
     }
 
@@ -464,6 +475,39 @@ function refresh(array $args)
     $main->redirect('/feed?id=' . intval($args['feed_id']));
 }
 
+function createRefreshJobForNewFeed(Main $main, int $feed_id): void {
+    try {
+        // Create a refresh job for the new feed
+        $job_id = $main->getState()->createJob('refresh_feed', $feed_id);
+        
+        // Start the refresh script in the background
+        $cmd = sprintf(
+            'cd %s && nohup /usr/local/bin/php scripts/refresh_feeds.php --feed_id=%d --job_id=%d > /dev/null 2>&1 & echo $!',
+            PODSUMER_PATH,
+            $feed_id,
+            $job_id
+        );
+        
+        $output = [];
+        $return_var = 0;
+        exec($cmd, $output, $return_var);
+        
+        if ($return_var === 0) {
+            $pid = intval(trim($output[0] ?? '0'));
+            if ($pid > 0) {
+                $main->getState()->startJob($job_id, $pid);
+            }
+        } else {
+            // If we can't start the background job, fail it
+            $main->getState()->failJob($job_id, 'Failed to start background refresh process');
+        }
+        
+    } catch (Exception $e) {
+        // Log error but don't fail the entire add operation
+        $main->log("Error creating refresh job for new feed $feed_id: " . $e->getMessage());
+    }
+}
+
 function doRefresh(int $feed_id) {
 
     global $main;
@@ -505,71 +549,476 @@ function set_playback(array $args): void
     $main->getState()->setPlaybackPosition(intval($args['item_id']), intval($args['position']));
 }
 
-#[Route('/sponsor_segments', 'GET', true)]
-function sponsor_segments(array $args): void
+#[Route('/process_ad_detection', 'POST', true)]
+function process_ad_detection(array $args): void
 {
     global $main;
-
-    // Feature flag – disabled by default
-    $enabled = filter_var($main->getConf('podsumer', 'sponsorblock_enabled'), \FILTER_VALIDATE_BOOLEAN);
-    if (!$enabled) {
-        header('Content-Type: application/json');
-        echo json_encode([]);
-        return;
-    }
-
-    // Validate required parameter
-    if (empty($args['item_id'])) {
-        $main->setResponseCode(404);
-        header('Content-Type: application/json');
-        echo json_encode(['error' => 'missing item_id']);
-        return;
-    }
-
-    // Retrieve the requested item and ensure it exists
-    $item = $main->getState()->getFeedItem(intval($args['item_id']));
-    if (empty($item)) {
-        $main->setResponseCode(404);
-        header('Content-Type: application/json');
-        echo json_encode(['error' => 'item not found']);
-        return;
-    }
-
-    // Extract feed_id and validate it exists before continuing
-    $feed_id = $item['feed_id'] ?? null;
-    if (empty($feed_id)) {
-        $main->setResponseCode(404);
-        header('Content-Type: application/json');
-        echo json_encode(['error' => 'feed not found']);
-        return;
-    }
-
-    // Retrieve the feed associated with the item and ensure it exists
-    $feed = $main->getState()->getFeed(intval($feed_id));
-    if (empty($feed)) {
-        $main->setResponseCode(404);
-        header('Content-Type: application/json');
-        echo json_encode(['error' => 'feed not found']);
-        return;
-    }
-
-    // Compose search query – podcast name + episode title.
-    $query = ($feed['name'] ?? '') . ' ' . ($item['name'] ?? '');
-
-    $videoIds = \Brickner\Podsumer\YouTubeSearch::search($query, 1);
-    if (empty($videoIds)) {
-        header('Content-Type: application/json');
-        echo json_encode([]);
-        return;
-    }
-
-    $videoId = $videoIds[0];
-    $segments = \Brickner\Podsumer\SponsorBlock::getSegments($videoId);
-
+    
+    // Set JSON header early
     header('Content-Type: application/json');
-    echo json_encode([
-        'videoId'  => $videoId,
-        'segments' => $segments,
-    ]);
+    
+    // Ensure no output before JSON
+    if (ob_get_level() > 0) {
+        ob_clean();
+    }
+
+    // Get item_id from JSON body
+    $input = json_decode(file_get_contents('php://input'), true);
+    $item_id = intval($input['item_id'] ?? 0);
+    
+    if (empty($item_id)) {
+        echo json_encode(['error' => 'No item ID provided']);
+        return;
+    }
+    
+    // Check if ad blocking is enabled
+    if (!$main->getConf('podsumer', 'ad_blocking_enabled')) {
+        echo json_encode(['error' => 'Ad blocking is not enabled']);
+        return;
+    }
+
+    try {
+        // Create job in database
+        $job_id = $main->getState()->createJob('process_ads', null, $item_id);
+        
+        // Start the ad detection script in the background with proper error handling
+        $cmd = sprintf(
+            'cd %s && nohup /usr/local/bin/php scripts/refresh_feeds.php --item_id=%d --job_id=%d > /dev/null 2>&1 & echo $!',
+            PODSUMER_PATH,
+            $item_id,
+            $job_id
+        );
+        
+        $output = [];
+        $return_var = 0;
+        exec($cmd, $output, $return_var);
+        
+        if ($return_var !== 0) {
+            $main->getState()->failJob($job_id, 'Failed to start background process');
+            echo json_encode(['error' => 'Failed to start background process']);
+            return;
+        }
+        
+        $pid = intval(trim($output[0] ?? '0'));
+        if ($pid > 0) {
+            $main->getState()->startJob($job_id, $pid);
+        }
+        
+        // Return immediately
+        echo json_encode(['success' => true, 'job_id' => $job_id, 'pid' => $pid]);
+        
+    } catch (Exception $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+}
+
+#[Route('/download_episode', 'POST', true)]
+function download_episode(array $args): void
+{
+    global $main;
+    
+    // Get item_id from JSON body
+    $input = json_decode(file_get_contents('php://input'), true);
+    $item_id = intval($input['item_id'] ?? 0);
+    
+    header('Content-Type: application/json');
+    
+    if (empty($item_id)) {
+        echo json_encode(['error' => 'No item ID provided']);
+        return;
+    }
+    
+    try {
+        // Check if item exists
+        $item = $main->getState()->getFeedItem($item_id);
+        if (empty($item)) {
+            echo json_encode(['error' => 'Item not found']);
+            return;
+        }
+        
+        // Check if item already has audio
+        if (!empty($item['audio_file'])) {
+            echo json_encode(['error' => 'Item already has audio downloaded']);
+            return;
+        }
+        
+        // Create job in database
+        $job_id = $main->getState()->createJob('download_item', null, $item_id);
+        
+        // Start the download script in the background
+        $cmd = sprintf(
+            'cd %s && nohup /usr/local/bin/php scripts/refresh_feeds.php --item_id=%d --job_id=%d --download_only > /dev/null 2>&1 & echo $!',
+            PODSUMER_PATH,
+            $item_id,
+            $job_id
+        );
+        
+        $output = [];
+        $return_var = 0;
+        exec($cmd, $output, $return_var);
+        
+        if ($return_var !== 0) {
+            $main->getState()->failJob($job_id, 'Failed to start background process');
+            echo json_encode(['error' => 'Failed to start background process']);
+            return;
+        }
+        
+        $pid = intval(trim($output[0] ?? '0'));
+        if ($pid > 0) {
+            $main->getState()->startJob($job_id, $pid);
+        }
+        
+        echo json_encode(['success' => true, 'job_id' => $job_id, 'pid' => $pid]);
+        
+    } catch (Exception $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+}
+
+#[Route('/refresh_all', 'POST', true)]
+function refresh_all(array $args): void
+{
+    global $main;
+    
+    header('Content-Type: application/json');
+    
+    try {
+        // Get feeds that don't already have running refresh jobs
+        $feeds = $main->getState()->getFeedsWithoutRunningJobs();
+        
+        if (empty($feeds)) {
+            echo json_encode(['error' => 'No feeds available to refresh (all feeds are already being refreshed or no feeds exist)']);
+            return;
+        }
+        
+        $job_ids = [];
+        $failed_feeds = [];
+        
+        // Create a refresh_feed job for each feed without a running job
+        foreach ($feeds as $feed) {
+            try {
+                $job_id = $main->getState()->createJob('refresh_feed', $feed['id']);
+                
+                // Start the refresh script in the background
+                $cmd = sprintf(
+                    'cd %s && nohup /usr/local/bin/php scripts/refresh_feeds.php --feed_id=%d --job_id=%d > /dev/null 2>&1 & echo $!',
+                    PODSUMER_PATH,
+                    $feed['id'],
+                    $job_id
+                );
+                
+                $output = [];
+                $return_var = 0;
+                exec($cmd, $output, $return_var);
+                
+                if ($return_var !== 0) {
+                    $main->getState()->failJob($job_id, 'Failed to start background process');
+                    $failed_feeds[] = $feed['name'];
+                } else {
+                    $pid = intval(trim($output[0] ?? '0'));
+                    if ($pid > 0) {
+                        $main->getState()->startJob($job_id, $pid);
+                    }
+                    $job_ids[] = $job_id;
+                }
+                
+            } catch (Exception $e) {
+                $failed_feeds[] = $feed['name'] . ' (' . $e->getMessage() . ')';
+            }
+        }
+        
+        $success_count = count($job_ids);
+        $total_count = count($feeds);
+        $failed_count = count($failed_feeds);
+        
+        $response = [
+            'success' => true,
+            'message' => "Started refresh for {$success_count} of {$total_count} available feeds",
+            'job_ids' => $job_ids,
+            'success_count' => $success_count,
+            'total_count' => $total_count
+        ];
+        
+        if ($failed_count > 0) {
+            $response['failed_count'] = $failed_count;
+            $response['failed_feeds'] = $failed_feeds;
+            $response['message'] .= " ({$failed_count} failed)";
+        }
+        
+        echo json_encode($response);
+        
+    } catch (Exception $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+}
+
+#[Route('/refresh_feed', 'POST', true)]
+function refresh_feed(array $args): void
+{
+    global $main;
+    
+    // Get feed_id from JSON body
+    $input = json_decode(file_get_contents('php://input'), true);
+    $feed_id = intval($input['feed_id'] ?? 0);
+    
+    header('Content-Type: application/json');
+    
+    if (empty($feed_id)) {
+        echo json_encode(['error' => 'No feed ID provided']);
+        return;
+    }
+    
+    try {
+        // Create job in database
+        $job_id = $main->getState()->createJob('refresh_feed', $feed_id);
+        
+        // Start the refresh script in the background with proper error handling
+        $cmd = sprintf(
+            'cd %s && nohup /usr/local/bin/php scripts/refresh_feeds.php --feed_id=%d --job_id=%d > /dev/null 2>&1 & echo $!',
+            PODSUMER_PATH,
+            $feed_id,
+            $job_id
+        );
+        
+        $output = [];
+        $return_var = 0;
+        exec($cmd, $output, $return_var);
+        
+        if ($return_var !== 0) {
+            $main->getState()->failJob($job_id, 'Failed to start background process');
+            echo json_encode(['error' => 'Failed to start background process']);
+            return;
+        }
+        
+        $pid = intval(trim($output[0] ?? '0'));
+        if ($pid > 0) {
+            $main->getState()->startJob($job_id, $pid);
+        }
+        
+        // Return immediately
+        echo json_encode(['success' => true, 'job_id' => $job_id, 'pid' => $pid]);
+        
+    } catch (Exception $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+}
+
+#[Route('/jobs', 'GET', true)]
+function jobs(array $args): void
+{
+    global $main;
+    
+    $jobs = $main->getState()->getAllJobs(100);
+    $running_jobs = $main->getState()->getRunningJobs();
+    $job_stats = $main->getState()->getJobStats();
+    
+    $vars = [
+        'jobs' => $jobs,
+        'running_jobs' => $running_jobs,
+        'job_stats' => $job_stats
+    ];
+    
+    Template::render($main, 'jobs', $vars);
+}
+
+#[Route('/cancel_job', 'POST', true)]
+function cancel_job(array $args): void
+{
+    global $main;
+    
+    header('Content-Type: application/json');
+    
+    $input = json_decode(file_get_contents('php://input'), true);
+    $job_id = intval($input['job_id'] ?? 0);
+    
+    if (empty($job_id)) {
+        echo json_encode(['error' => 'No job ID provided']);
+        return;
+    }
+    
+    try {
+        $success = $main->getState()->cancelJob($job_id);
+        if ($success) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['error' => 'Failed to cancel job']);
+        }
+    } catch (Exception $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+}
+
+#[Route('/job_status', 'GET', true)]
+function job_status(array $args): void
+{
+    global $main;
+    
+    header('Content-Type: application/json');
+    
+    $job_id = intval($args['job_id'] ?? 0);
+    
+    if (empty($job_id)) {
+        $running_jobs = $main->getState()->getRunningJobs();
+        echo json_encode(['running_jobs' => $running_jobs]);
+    } else {
+        $job = $main->getState()->getJob($job_id);
+        echo json_encode(['job' => $job]);
+    }
+}
+
+#[Route('/process_all_ads', 'POST', true)]
+function process_all_ads(array $args): void
+{
+    global $main;
+    
+    header('Content-Type: application/json');
+    
+    try {
+        // Check if ad blocking is enabled
+        if (!$main->getConf('podsumer', 'ad_blocking_enabled')) {
+            echo json_encode(['error' => 'Ad blocking is not enabled in configuration']);
+            return;
+        }
+        
+        // Get all items that have audio files but don't have both transcript and ad_sections
+        $items = $main->getState()->getItemsNeedingAdProcessing();
+        
+        if (empty($items)) {
+            echo json_encode(['error' => 'No items found that need ad processing']);
+            return;
+        }
+        
+        $job_ids = [];
+        $failed_items = [];
+        
+        // Create an ad processing job for each item
+        foreach ($items as $item) {
+            try {
+                $job_id = $main->getState()->createJob('process_ads', null, $item['id']);
+                
+                // Start the ad processing script in the background
+                $cmd = sprintf(
+                    'cd %s && nohup /usr/local/bin/php scripts/refresh_feeds.php --item_id=%d --job_id=%d > /dev/null 2>&1 & echo $!',
+                    PODSUMER_PATH,
+                    $item['id'],
+                    $job_id
+                );
+                
+                $output = [];
+                $return_var = 0;
+                exec($cmd, $output, $return_var);
+                
+                if ($return_var !== 0) {
+                    $main->getState()->failJob($job_id, 'Failed to start background process');
+                    $failed_items[] = $item['name'];
+                } else {
+                    $pid = intval(trim($output[0] ?? '0'));
+                    if ($pid > 0) {
+                        $main->getState()->startJob($job_id, $pid);
+                    }
+                    $job_ids[] = $job_id;
+                }
+                
+            } catch (Exception $e) {
+                $failed_items[] = $item['name'] . ' (' . $e->getMessage() . ')';
+            }
+        }
+        
+        $success_count = count($job_ids);
+        $total_count = count($items);
+        $failed_count = count($failed_items);
+        
+        $response = [
+            'success' => true,
+            'message' => "Started ad processing for {$success_count} of {$total_count} items",
+            'job_ids' => $job_ids,
+            'success_count' => $success_count,
+            'total_count' => $total_count
+        ];
+        
+        if ($failed_count > 0) {
+            $response['failed_count'] = $failed_count;
+            $response['failed_items'] = $failed_items;
+            $response['message'] .= " ({$failed_count} failed)";
+        }
+        
+        echo json_encode($response);
+        
+    } catch (Exception $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+}
+
+#[Route('/reprocess_ads', 'POST', true)]
+function reprocess_ads(array $args): void
+{
+    global $main;
+    
+    header('Content-Type: application/json');
+    
+    if (empty($args['item_id'])) {
+        echo json_encode(['error' => 'Item ID is required']);
+        return;
+    }
+    
+    $item_id = intval($args['item_id']);
+    
+    // Verify item exists
+    $item = $main->getState()->getFeedItem($item_id);
+    if (empty($item)) {
+        echo json_encode(['error' => 'Item not found']);
+        return;
+    }
+    
+    // Check if item has a transcript
+    $transcript = $main->getState()->getItemTranscript($item_id);
+    if (empty($transcript)) {
+        echo json_encode(['error' => 'Item has no transcript to reprocess. Please run ad processing first.']);
+        return;
+    }
+    
+    try {
+        // Clear existing ad sections to force reprocessing
+        $main->getState()->clearItemAdSections($item_id);
+        $main->log("Cleared ad sections for item {$item_id} to force reprocessing");
+        
+        // Create a new ad detection job
+        $job_id = $main->getState()->createJob('process_ads', null, $item_id);
+        
+        // Start the ad processing script in the background
+        $cmd = sprintf(
+            'cd %s && nohup /usr/local/bin/php scripts/refresh_feeds.php --item_id=%d --job_id=%d > /dev/null 2>&1 & echo $!',
+            PODSUMER_PATH,
+            $item_id,
+            $job_id
+        );
+        
+        $output = [];
+        $return_var = 0;
+        exec($cmd, $output, $return_var);
+        
+        if ($return_var !== 0) {
+            $main->getState()->failJob($job_id, 'Failed to start background process');
+            echo json_encode(['error' => 'Failed to start reprocessing job']);
+            return;
+        }
+        
+        $pid = intval(trim($output[0] ?? '0'));
+        if ($pid > 0) {
+            $main->getState()->startJob($job_id, $pid);
+        }
+        
+        $main->log("Created ad detection reprocess job {$job_id} for item {$item_id} ({$item['name']})");
+        
+        echo json_encode([
+            'success' => true, 
+            'message' => 'Ad reprocessing job started successfully',
+            'job_id' => $job_id
+        ]);
+        
+    } catch (Exception $e) {
+        $main->log("Failed to create reprocess job for item {$item_id}: " . $e->getMessage());
+        echo json_encode(['error' => 'Failed to create reprocess job: ' . $e->getMessage()]);
+    }
 }
 

@@ -31,7 +31,6 @@ final class FSStateTest extends TestCase
 
         $this->main = new Main($this->root, $env, [], [], true);
 
-        $this->main->setConf(true, 'podsumer', 'store_media_on_disk');
         $this->main->setConf('state/media_test', 'podsumer', 'media_dir');
 
         $this->state = new FSState($this->main);

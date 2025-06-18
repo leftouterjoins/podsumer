@@ -23,7 +23,14 @@
                 &nbsp;|&nbsp;
                 <a href="/rss?feed_id=<?= $feed['id'] ?>">RSS</a>
                 &nbsp;|&nbsp;
-                <a href="/refresh?feed_id=<?= $feed['id'] ?>">Refresh</a>
+                <?php
+                $running_job = $this->main->getState()->getRunningJobForFeed($feed['id']);
+                if ($running_job):
+                ?>
+                <a href="/jobs" class="text-yellow-400">Refreshing (Job #<?= $running_job['id'] ?>)</a>
+                <?php else: ?>
+                <a href="#" onclick="refreshFeed(<?= $feed['id'] ?>); return false;">Refresh</a>
+                <?php endif; ?>
                 &nbsp;|&nbsp;
                 <a href="/delete_feed?feed_id=<?= $feed['id'] ?>">Delete</a>
             </span>
@@ -49,4 +56,46 @@
         <input type="submit" class="bg-neutral-500 text-white font-bold py-2 px-4 rounded">
     </form>
 </div>
+
+<script type="text/javascript">
+function refreshFeed(feedId) {
+    if (!confirm('Refresh this feed? This will run in the background.')) {
+        return;
+    }
+    
+    const link = event.target;
+    link.textContent = 'Refreshing...';
+    link.style.pointerEvents = 'none';
+    
+    fetch('/refresh_feed', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ feed_id: feedId })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        link.textContent = 'Refresh';
+        link.style.pointerEvents = 'auto';
+        if (data.success) {
+            alert('Feed refresh started in the background.');
+            location.reload(); // Reload to show job status
+        } else {
+            alert('Error starting feed refresh: ' + (data.error || 'Unknown error'));
+        }
+    })
+    .catch(err => {
+        link.textContent = 'Refresh';
+        link.style.pointerEvents = 'auto';
+        alert('Error starting feed refresh: ' + err.message);
+        console.error('Fetch error:', err);
+    });
+}
+</script>
 
