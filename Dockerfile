@@ -15,7 +15,7 @@ RUN docker-php-ext-install pdo pdo_sqlite
 RUN a2enmod rewrite
 
 # Set working directory
-WORKDIR /var/www/html
+WORKDIR /opt/podsumer
 
 # Copy application files
 COPY . .
@@ -27,9 +27,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html \
-    && chmod +x /var/www/html/scripts/refresh_feeds.php
+RUN chown -R www-data:www-data /opt/podsumer \
+    && chmod -R 755 /opt/podsumer \
+    && chmod +x /opt/podsumer/scripts/refresh_feeds.php
 
 # Create media directory
 RUN mkdir -p /opt/media && chown -R www-data:www-data /opt/media
@@ -39,8 +39,8 @@ COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
 # Create a script to generate the crontab with the configured interval
 RUN echo '#!/bin/bash\n\
-REFRESH_INTERVAL=$(php -r "include \"/var/www/html/conf/podsumer.conf\"; echo \$feed_refresh_interval ?? 6;")\n\
-echo "0 */${REFRESH_INTERVAL} * * * www-data /usr/local/bin/php /var/www/html/scripts/refresh_feeds.php >> /var/log/cron.log 2>&1" > /etc/cron.d/podsumer-cron\n\
+REFRESH_INTERVAL=$(php -r "include \"/opt/podsumer/conf/podsumer.conf\"; echo \$feed_refresh_interval ?? 6;")\n\
+echo "0 */${REFRESH_INTERVAL} * * * www-data /usr/local/bin/php /opt/podsumer/scripts/refresh_feeds.php >> /var/log/cron.log 2>&1" > /etc/cron.d/podsumer-cron\n\
 chmod 0644 /etc/cron.d/podsumer-cron\n\
 crontab /etc/cron.d/podsumer-cron\n\
 service cron start\n\
