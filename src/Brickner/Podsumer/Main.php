@@ -41,15 +41,17 @@ class Main
         $this->sent_user = $_SERVER['PHP_AUTH_USER'] ?? null;
         $this->sent_pass = $_SERVER['PHP_AUTH_PW'] ?? null;
 
-        if ($this->getConf('podsumer', 'store_media_on_disk')) {
-            $this->state = new FSState($this);
-        } else {
-            $this->state = new State($this);
-        }
+        // Always use FSState for disk storage
+        $this->state = new FSState($this);
     }
 
     protected function authenticate(): void
     {
+        # Skip authentication in CLI mode (for background scripts)
+        if ($this->getMethod() === 'CLI') {
+            return;
+        }
+
         # If either user or pass is not set disable authentication.
         if (empty($this->user) || empty($this->pass)) {
             return;
@@ -111,10 +113,10 @@ class Main
 
     public function getUrl(): string
     {
-        return $this->env['REQUEST_SCHEME']
+        return ($this->env['REQUEST_SCHEME'] ?? 'http')
             . '://'
-            . $this->env['HTTP_HOST']
-            . $this->env['REQUEST_URI'];
+            . ($this->env['HTTP_HOST'] ?? 'localhost')
+            . ($this->env['REQUEST_URI'] ?? '/');
     }
 
     public function getBaseUrl(): string
@@ -125,7 +127,7 @@ class Main
 
         return $scheme
             . '://'
-            . $this->env['HTTP_HOST'];
+            . ($this->env['HTTP_HOST'] ?? 'localhost');
     }
 
     public function getArg(string $key): mixed
@@ -189,7 +191,7 @@ class Main
 
     public function getMethod(): string
     {
-        return $this->env['REQUEST_METHOD'];
+        return $this->env['REQUEST_METHOD'] ?? 'CLI';
     }
 
     public function setResponseCode(int $code): void
@@ -204,12 +206,12 @@ class Main
 
     public function getHost(): string
     {
-        return $this->env['HTTP_HOST'];
+        return $this->env['HTTP_HOST'] ?? 'localhost';
     }
 
     public function getRemoteAddress(): string
     {
-        return $this->env['REMOTE_ADDR'];
+        return $this->env['REMOTE_ADDR'] ?? '127.0.0.1';
     }
 
     public function getConfigPath($test_mode = false): string

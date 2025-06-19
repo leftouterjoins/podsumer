@@ -28,6 +28,7 @@ final class StateTest extends TestCase
         unlink($tmp_main->getStateFilePath());
 
         $this->main = new Main($this->root, $env, [], [], true);
+        $this->main->setConf('state/media_test', 'podsumer', 'media_dir');
         $this->state = new State($this->main);
     }
 

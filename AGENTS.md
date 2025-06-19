@@ -33,7 +33,7 @@ Podsumer is a self-hosted podcast aggregator (podcatcher) written in PHP with ze
 4. **Constants**: UPPERCASE with underscores (e.g., `VERSION`, `PODSUMER_PATH`)
 5. **Database Tables**: Plural snake_case (e.g., `feeds`, `items`, `file_contents`)
 6. **Database Columns**: snake_case (e.g., `url_hash`, `last_update`)
-7. **Configuration Keys**: snake_case (e.g., `store_media_on_disk`, `state_file`)
+7. **Configuration Keys**: snake_case (e.g., `media_dir`, `state_file`)
 
 ### File Organization
 
@@ -155,7 +155,7 @@ function feed(array $args): void
 
 ## Special Considerations
 
-1. **Media Storage**: Can be configured for database or disk storage, but cannot be changed after library is established
+1. **Media Storage**: All media files are stored on disk in the configured media_dir
 2. **Performance**: Database operations use transactions and optimized PRAGMA settings
 3. **Compatibility**: Requires SQLite 3.6.19+ with foreign key support
 4. **Memory**: No memory limit set (`memory_limit = -1`)
@@ -173,7 +173,6 @@ function feed(array $args): void
 2. Generate coverage: `composer coverage`
 3. View coverage locally: `composer coverage-dev`
 4. Ensure no regression in test coverage
-5. Test with both database and disk storage modes
 
 ## Contribution Behavior
 

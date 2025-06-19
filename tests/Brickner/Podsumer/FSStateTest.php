@@ -31,7 +31,6 @@ final class FSStateTest extends TestCase
 
         $this->main = new Main($this->root, $env, [], [], true);
 
-        $this->main->setConf(true, 'podsumer', 'store_media_on_disk');
         $this->main->setConf('state/media_test', 'podsumer', 'media_dir');
 
         $this->state = new FSState($this->main);
@@ -75,18 +74,23 @@ final class FSStateTest extends TestCase
 
     public function testDeleteFeed()
     {
-        $this->expectNotToPerformAssertions();
-
         $this->feed = new Feed(self::TEST_FEED_URL);
         $feed_id = $this->main->getState()->addFeed($this->feed);
-        $feed_data = $this->main->getState()->getFeed($feed_id);
 
-        $item = $this->main->getState()->getFeedItems(1)[0];
+        // Sanity-check feed was added
+        $this->assertNotEmpty($this->main->getState()->getFeed($feed_id));
+
+        // Give the feed one audio file so deleteFeed has something to clean up
+        $item = $this->main->getState()->getFeedItems($feed_id)[0];
         $file = new File($this->main);
-        $file_id = $file->cacheUrl($item['audio_url'], $feed_data);
+        $file_id = $file->cacheUrl($item['audio_url'], $this->main->getState()->getFeed($feed_id));
         $this->main->getState()->setItemAudioFile($item['id'], $file_id);
 
-        $this->main->getState()->deleteFeed(1);
+        // Delete the feed
+        $this->main->getState()->deleteFeed($feed_id);
+
+        // Verify it's gone
+        $this->assertEmpty($this->main->getState()->getFeed($feed_id));
     }
 
     public function testDeleteItemMedia()

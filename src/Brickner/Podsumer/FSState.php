@@ -96,46 +96,70 @@ class FSState extends State
     public function deleteFeed(int $feed_id)
     {
         $feed = $this->getFeed($feed_id);
-        $file_id = $feed['image'];
 
-        $file = $this->getFileById($file_id);
-
-        if ($file['storage_mode'] == 'DISK' && file_exists($file['filename'])) {
-            unlink($file['filename']);
+        # If no feed record is found, or if the feed record lacks a valid
+        # name, run the parent clean-up logic and exit early. Attempting to
+        # continue without a valid feed name can lead to resolving the media
+        # root directory as the feed directory which is unsafe.
+        if (empty($feed) || empty(trim($feed['name'] ?? ''))) {
+            parent::deleteFeed($feed_id);
+            return;
         }
 
-        $items = $this->getFeedItems($feed_id);
-        foreach ($items as $item) {
-            $file_id = $item['image'];
+        # Capture all related files before we alter the database so we can
+        # safely remove them from disk afterwards.
+        $files_to_delete = [];
 
-            if (!empty($file_id)) {
+        $image_file_id = $feed['image'] ?? null;
+        if ($image_file_id) {
+            $files_to_delete[] = $this->getFileById($image_file_id);
+        }
 
-                $file = $this->getFileById($file_id);
-
-                if ($file['storage_mode'] == 'DISK' && file_exists($file['filename'])) {
-                    unlink($file['filename']);
-                }
-            }
-
-            $file_id = $item['audio_file'];
-
-            if (!empty($file_id)) { # The audio for an item may not be downloaded.
-
-                $file = $this->getFileById($file_id);
-
-                if ($file['storage_mode'] == 'DISK' && file_exists($file['filename'])) {
-                    unlink($file['filename']);
+        # Collect images / audio from each item before DB deletion
+        foreach ($this->getFeedItems($feed_id) as $item) {
+            foreach (['image', 'audio_file'] as $col) {
+                $fid = $item[$col] ?? null;
+                if ($fid) {
+                    $files_to_delete[] = $this->getFileById($fid);
                 }
             }
         }
 
-        # Delete feed dir.
-        $feed_dir = $this->getFeedDir($feed['name']);
-        if (file_exists($feed_dir)) {
-            rmdir($feed_dir);
-        }
-
+        # Delete from the database first (cascades will clean up related rows)
         parent::deleteFeed($feed_id);
+
+        # Remove the on-disk files we captured earlier
+        foreach ($files_to_delete as $file) {
+            if (!empty($file)) {
+                $filename = $file['filename'] ?? null;
+                if (!empty($filename) && file_exists($filename)) {
+                    @unlink($filename);
+                }
+            }
+        }
+
+        # Finally, try to remove the (now empty) feed directory
+        $feed_name = trim($feed['name']);
+
+        if ($feed_name !== '') {
+            $feed_dir = $this->getFeedDir($feed_name);
+            $media_dir = rtrim($this->getMediaDir(), DIRECTORY_SEPARATOR);
+
+            # Ensure the directory we are about to touch is not the media root
+            if ($feed_dir !== $media_dir && file_exists($feed_dir) && is_dir($feed_dir)) {
+                $dir_contents = @scandir($feed_dir);
+
+                # scandir() returns false on failure. Guard against that so we
+                # do not pass a boolean to array_diff(), which would raise a
+                # TypeError.
+                if (false !== $dir_contents) {
+                    $files_in_dir = array_diff($dir_contents, ['.', '..']);
+                    if (empty($files_in_dir)) {
+                        @rmdir($feed_dir);
+                    }
+                }
+            }
+        }
     }
 
     public function deleteItemMedia(int $item_id)
@@ -150,8 +174,12 @@ class FSState extends State
 
         $file = $this->getFileById($file_id);
 
-        if ($file['storage_mode'] == 'DISK' && file_exists($file['filename'])) {
-            unlink($file['filename']);
+        if (!empty($file)) {
+            $filename = $file['filename'] ?? null;
+
+            if (!empty($filename) && file_exists($filename)) {
+                @unlink($filename);
+            }
         }
 
         parent::deleteItemMedia($item_id);
