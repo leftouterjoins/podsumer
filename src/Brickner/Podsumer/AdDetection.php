@@ -471,13 +471,29 @@ class AdDetection
             
             $this->main->log("Transcript length: " . strlen($transcriptText) . " characters, estimated tokens: {$estimatedTokens}, max per chunk: {$maxTokensPerChunk} (25% of context)");
             
+            $adSections = [];
+            
             if ($estimatedTokens > $maxTokensPerChunk) {
                 $this->main->log("Large transcript detected ({$estimatedTokens} estimated tokens), processing with overlapping chunks (max per chunk: {$maxTokensPerChunk}, 5% overlap)");
-                return $this->detectAdsInChunks($segments, $maxTokensPerChunk, $show, $episode);
+                $adSections = $this->detectAdsInChunks($segments, $maxTokensPerChunk, $show, $episode);
             } else {
                 $this->main->log("Processing transcript in single request ({$estimatedTokens} estimated tokens, within chunk limit: {$maxTokensPerChunk})");
-                return $this->detectAdsInSingleRequest($transcriptText, $show, $episode);
+                $adSections = $this->detectAdsInSingleRequest($transcriptText, $show, $episode);
             }
+            
+            // Refine ad boundaries if sections were found
+            if (!empty($adSections)) {
+                $this->main->log("Refining ad boundaries for " . count($adSections) . " detected sections");
+                
+                // Before refinement, merge sections that are within 33 seconds of each other
+                // This helps when there are multiple ads in the 6-minute refinement window
+                $adSectionsForRefinement = $this->mergeOverlappingAdSections($adSections, 33.0);
+                $this->main->log("Merged close sections for refinement: " . count($adSections) . " => " . count($adSectionsForRefinement) . " sections (33s merge buffer)");
+                
+                $adSections = $this->refineAdBoundaries($adSectionsForRefinement, $transcript);
+            }
+            
+            return $adSections;
             
         } catch (Exception $e) {
             $this->main->log("Ad detection error: " . $e->getMessage());
@@ -729,7 +745,7 @@ class AdDetection
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => 'You are an expert at identifying advertisements and promotional content in podcast transcripts.'
+                    'content' => 'You are an anti advertising activist. Your movement has won unanimous favor in society. You are now the national czar for removing ads from podcasts. The highest honor of your dreams. You can spot the beginning and end of an ad like a hawk.'
                 ],
                 [
                     'role' => 'user',
@@ -860,15 +876,19 @@ class AdDetection
     
     /**
      * Merge overlapping ad sections with configurable buffer
+     * 
+     * @param array $adSections Ad sections to merge
+     * @param float|null $customBuffer Optional custom buffer in seconds, defaults to config value
+     * @return array Merged ad sections
      */
-    protected function mergeOverlappingAdSections(array $adSections): array
+    protected function mergeOverlappingAdSections(array $adSections, ?float $customBuffer = null): array
     {
         if (empty($adSections)) {
             return [];
         }
         
-        // Get configurable merge buffer (default 8 seconds for better merging)
-        $mergeBuffer = floatval($this->main->getConf('podsumer', 'ad_merge_buffer_seconds') ?? 8.0);
+        // Use custom buffer if provided, otherwise get from config (default 8 seconds)
+        $mergeBuffer = $customBuffer ?? floatval($this->main->getConf('podsumer', 'ad_merge_buffer_seconds') ?? 8.0);
         
         // Sort by start time
         usort($adSections, function($a, $b) {
@@ -903,7 +923,7 @@ class AdDetection
                 $currentReason = $current['reason'] ?? '';
                 $nextReason = $next['reason'] ?? '';
                 if (!empty($currentReason) && !empty($nextReason) && $currentReason !== $nextReason) {
-                    $current['reason'] = $currentReason . '; ' . $nextReason;
+                    $current['reason'] = $currentReason . "\n</end ad><start-ad>\n" . $nextReason;
                 } elseif (empty($currentReason) && !empty($nextReason)) {
                     $current['reason'] = $nextReason;
                 }
@@ -926,6 +946,294 @@ class AdDetection
         }
         
         return $merged;
+    }
+    
+    /**
+     * Refine ad boundaries by analyzing surrounding transcript context
+     * 
+     * @param array $adSections Initial ad sections with rough boundaries
+     * @param array $transcript Full transcript with segments
+     * @return array Refined ad sections with precise boundaries
+     */
+    protected function refineAdBoundaries(array $adSections, array $transcript): array
+    {
+        if (empty($adSections) || empty($transcript['segments'])) {
+            return $adSections;
+        }
+        
+        $refinedSections = [];
+        $totalRefinementCost = 0.0;
+        
+        $this->main->log("Starting ad boundary refinement for " . count($adSections) . " sections");
+        
+        foreach ($adSections as $index => $section) {
+            try {
+                // Calculate the midpoint of the ad section
+                $midpoint = ($section['start'] + $section['end']) / 2;
+                
+                // Extract 3 minutes (180 seconds) before and after the midpoint
+                $contextStart = max(0, $midpoint - 180);
+                $contextEnd = $midpoint + 180;
+                
+                // Find all transcript segments within this time range
+                $contextSegments = [];
+                foreach ($transcript['segments'] as $segment) {
+                    $segmentStart = floatval($segment['start']);
+                    $segmentEnd = floatval($segment['end']);
+                    
+                    // Include segments that overlap with our context window
+                    if ($segmentEnd >= $contextStart && $segmentStart <= $contextEnd) {
+                        $contextSegments[] = $segment;
+                    }
+                }
+                
+                if (empty($contextSegments)) {
+                    $this->main->log("No transcript segments found for refinement of section " . ($index + 1));
+                    $refinedSections[] = $section;
+                    continue;
+                }
+                
+                // Format the context transcript with timestamps
+                $contextTranscript = '';
+                foreach ($contextSegments as $segment) {
+                    $start = floatval($segment['start']);
+                    $end = floatval($segment['end']);
+                    $text = isset($segment['text']) && is_string($segment['text']) ? trim($segment['text']) : '';
+                    if (!empty($text)) {
+                        $contextTranscript .= "[{$start} - {$end}] {$text}\n";
+                    }
+                }
+                
+                $this->main->log("Refining section " . ($index + 1) . " (original: {$section['start']}s - {$section['end']}s, context: {$contextStart}s - {$contextEnd}s)");
+                
+                // Call LLM to refine boundaries
+                $refinedBoundaries = $this->callRefinementLLM($contextTranscript, $section['reason'] ?? 'Advertisement detected');
+                $totalRefinementCost += $this->last_detection_cost;
+                
+                if ($refinedBoundaries !== null) {
+                    // Search for transcript segments that match the refined boundaries
+                    $refinedStart = $refinedBoundaries['start'];
+                    $refinedEnd = $refinedBoundaries['end'];
+                    
+                    // Find segment that contains or matches the start boundary
+                    foreach ($contextSegments as $segment) {
+                        $segmentStart = floatval($segment['start']);
+                        $segmentEnd = floatval($segment['end']);
+                        
+                        // Check if this segment's start or end matches the refined start boundary
+                        if (abs($segmentStart - $refinedStart) < 0.1 || abs($segmentEnd - $refinedStart) < 0.1) {
+                            // Use the end timestamp of this segment as the new start boundary
+                            $refinedStart = $segmentEnd;
+                            $this->main->log("Adjusted start boundary to segment end: {$refinedBoundaries['start']}s => {$refinedStart}s");
+                            break;
+                        }
+                    }
+                    
+                    // Find segment that contains or matches the end boundary
+                    foreach ($contextSegments as $segment) {
+                        $segmentStart = floatval($segment['start']);
+                        $segmentEnd = floatval($segment['end']);
+                        
+                        // Check if this segment's start or end matches the refined end boundary
+                        if (abs($segmentStart - $refinedEnd) < 0.1 || abs($segmentEnd - $refinedEnd) < 0.1) {
+                            // Use the start timestamp of this segment as the new end boundary
+                            $refinedEnd = $segmentStart;
+                            $this->main->log("Adjusted end boundary to segment start: {$refinedBoundaries['end']}s => {$refinedEnd}s");
+                            break;
+                        }
+                    }
+                    
+                    // Successfully refined
+                    $refinedSection = [
+                        'start' => $refinedStart,
+                        'end' => $refinedEnd,
+                        'reason' => $section['reason'] ?? 'Advertisement detected'
+                    ];
+                    
+                    $this->main->log("Refined section " . ($index + 1) . ": {$section['start']}s - {$section['end']}s => {$refinedSection['start']}s - {$refinedSection['end']}s");
+                    $refinedSections[] = $refinedSection;
+                } else {
+                    // Refinement failed, keep original
+                    $this->main->log("Refinement failed for section " . ($index + 1) . ", keeping original boundaries");
+                    $refinedSections[] = $section;
+                }
+                
+            } catch (Exception $e) {
+                $this->main->log("Error refining section " . ($index + 1) . ": " . $e->getMessage());
+                $refinedSections[] = $section; // Keep original on error
+            }
+        }
+        
+        // Add refinement cost to total detection cost
+        $this->last_detection_cost += $totalRefinementCost;
+        
+        $this->main->log("Ad boundary refinement complete");
+        
+        // Final adjustment: subtract 0.5s from start and add 0.5s to end for each section
+        foreach ($refinedSections as &$section) {
+            $originalStart = $section['start'];
+            $originalEnd = $section['end'];
+            
+            // Ensure start doesn't go below 0
+            $section['start'] = max(0, $section['start'] - 0.5);
+            $section['end'] = $section['end'] + 0.5;
+            
+            $this->main->log("Final adjustment for section: start {$originalStart}s => {$section['start']}s, end {$originalEnd}s => {$section['end']}s");
+        }
+        
+        // Find the total duration from transcript segments
+        $totalDuration = 0;
+        foreach ($transcript['segments'] as $segment) {
+            $end = floatval($segment['end']);
+            if ($end > $totalDuration) {
+                $totalDuration = $end;
+            }
+        }
+        
+        // Extend segments that are within 25 seconds of beginning or end
+        $boundaryExtensionThreshold = 25.0; // 25 seconds
+        
+        foreach ($refinedSections as &$section) {
+            $originalStart = $section['start'];
+            $originalEnd = $section['end'];
+            $extended = false;
+            
+            // Check if start is within 25 seconds of beginning
+            if ($section['start'] <= $boundaryExtensionThreshold) {
+                $section['start'] = 0;
+                $extended = true;
+                $this->main->log("Extended section to beginning: start {$originalStart}s => 0s (was within {$boundaryExtensionThreshold}s of start)");
+            }
+            
+            // Check if end is within 25 seconds of end
+            if ($totalDuration > 0 && ($totalDuration - $section['end']) <= $boundaryExtensionThreshold) {
+                $section['end'] = $totalDuration;
+                $extended = true;
+                $this->main->log("Extended section to end: end {$originalEnd}s => {$totalDuration}s (was within {$boundaryExtensionThreshold}s of end)");
+            }
+            
+            if ($extended) {
+                $this->main->log("Boundary extension applied for section: {$originalStart}s-{$originalEnd}s => {$section['start']}s-{$section['end']}s");
+            }
+        }
+        
+        return $refinedSections;
+    }
+    
+    /**
+     * Call LLM to refine ad boundaries
+     * 
+     * @param string $contextTranscript Transcript excerpt with timestamps
+     * @param string $reason Original reason for ad detection
+     * @return array|null Refined boundaries or null on failure
+     */
+    protected function callRefinementLLM(string $contextTranscript, string $reason): ?array
+    {
+        $prompt = "The following podcast transcript excerpt has been identified as containing advertisement(s) or promotion(s). The topic(s) of the advertisement(s):\n\n{$reason}\n\nPlease complete the following two tasks:\n\n1. Find the exact timestamp where the topic switches FROM the regular episode content TO the FIRST advertisement.\n2. Find the exact timestamp where the topic switches FROM the LAST advertisement BACK to the regular episode content.\n\nProvide the start timestamp (when the first ad begins) and end timestamp (when the last ad ends) based on the transcript entries below.\n\nTranscript:\n{$contextTranscript}";
+        
+        try {
+            $ch = curl_init();
+            
+            $model = $this->getAdDetectionModel();
+            
+            $postData = json_encode([
+                'model' => $model,
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are an anti advertising activist. Your movement has won unanimous favor in society. You are now the national czar for removing ads from podcasts. The highest honor of your dreams. You can spot the beginning and end of an ad like a hawk.'
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt
+                    ]
+                ],
+                'temperature' => 0.1, // Lower temperature for more precise boundary detection
+                'response_format' => [
+                    'type' => 'json_schema',
+                    'json_schema' => [
+                        'name' => 'boundary_refinement_response',
+                        'strict' => true,
+                        'schema' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'start' => [
+                                    'type' => 'number',
+                                    'description' => 'The timestamp in seconds where the advertisement begins'
+                                ],
+                                'end' => [
+                                    'type' => 'number',
+                                    'description' => 'The timestamp in seconds where the advertisement ends'
+                                ],
+                                'start_line' => [
+                                    'type' => 'string',
+                                    'description' => 'The transcript line where the ad starts'
+                                ],
+                                'end_line' => [
+                                    'type' => 'string',
+                                    'description' => 'The transcript line where the ad ends'
+                                ]
+                            ],
+                            'required' => ['start', 'end', 'start_line', 'end_line'],
+                            'additionalProperties' => false
+                        ]
+                    ]
+                ]
+            ]);
+            
+            curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/chat/completions');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Authorization: Bearer ' . $this->api_key,
+                'Content-Type: application/json'
+            ]);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 60); // 1 minute timeout
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); // 30 second connection timeout
+            
+            $response = curl_exec($ch);
+            $curl_error = curl_error($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+            
+            if ($curl_error) {
+                throw new Exception("cURL error during boundary refinement: $curl_error");
+            }
+            
+            if ($httpCode !== 200) {
+                throw new Exception("GPT API error (HTTP $httpCode): $response");
+            }
+            
+            $result = json_decode($response, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new Exception('Invalid JSON response from GPT API: ' . json_last_error_msg());
+            }
+            
+            if (!isset($result['choices'][0]['message']['content'])) {
+                throw new Exception('GPT API response missing content data');
+            }
+            
+            $content = $result['choices'][0]['message']['content'] ?? '{}';
+            
+            // Calculate cost using actual token usage from API response
+            $this->last_detection_cost = $this->calculateGptCostFromUsage($result['usage'] ?? [], $model);
+            
+            $boundaries = json_decode($content, true);
+            
+            if (!is_array($boundaries) || !isset($boundaries['start']) || !isset($boundaries['end'])) {
+                throw new Exception('Invalid boundary data returned from LLM');
+            }
+            
+            return [
+                'start' => floatval($boundaries['start']),
+                'end' => floatval($boundaries['end'])
+            ];
+            
+        } catch (Exception $e) {
+            $this->main->log("Boundary refinement LLM error: " . $e->getMessage());
+            return null;
+        }
     }
     
     /**
@@ -1161,12 +1469,26 @@ class AdDetection
                 $transcript = $this->transcribeAudio($audio_file_path);
                 $transcription_cost = $this->getLastTranscriptionCost();
                 
+                // Validate transcript before storing
+                if ($transcript === null || !is_array($transcript) || !isset($transcript['segments'])) {
+                    throw new Exception("Transcription failed for item $item_id - invalid transcript data returned");
+                }
+                
                 // Store transcript
                 $this->main->getState()->setItemTranscript($item_id, json_encode($transcript));
             } else {
                 // Use existing transcript
                 $transcript = json_decode($existing_transcript, true);
                 $this->main->log("Using existing transcript for item $item_id");
+            }
+            
+            // Validate transcript before proceeding
+            if ($transcript === null || !is_array($transcript)) {
+                throw new Exception("Invalid transcript data for item $item_id. Transcript may be corrupted or failed to decode.");
+            }
+            
+            if (!isset($transcript['segments']) || !is_array($transcript['segments'])) {
+                throw new Exception("Transcript missing segments data for item $item_id");
             }
             
             // Detect ads (if ad_sections haven't been processed yet)
@@ -1184,8 +1506,8 @@ class AdDetection
                 // Get feed and item information for show and episode titles
                 $item = $this->main->getState()->getFeedItem($item_id);
                 $feed = $this->main->getState()->getFeed($item['feed_id']);
-                $show = $feed['title'] ?? 'Unknown Show';
-                $episode = $item['title'] ?? 'Unknown Episode';
+                $show = $feed['name'] ?? 'Unknown Show';
+                $episode = $item['name'] ?? 'Unknown Episode';
                 
                 $ad_sections = $this->detectAds($transcript, $show, $episode);
                 $detection_cost = $this->getLastDetectionCost();
