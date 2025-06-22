@@ -13,7 +13,7 @@ class State
 {
     use TStateSchemaMigrations;
 
-    CONST VERSION = 6; # The version of the schema for this commit.
+    CONST VERSION = 8; # The version of the schema for this commit.
 
     protected Main $main;
     protected $state_file_path;
@@ -455,6 +455,64 @@ class State
         $sections = json_decode($json, true);
         
         return is_array($sections) ? $sections : [];
+    }
+
+    public function addSegment(int $item_id, int $file_id, float $start, float $end, bool $has_sponsor = false): int
+    {
+        $sql = 'INSERT INTO segments (item_id, file_id, start, end, has_sponsor) VALUES (:item_id, :file_id, :start, :end, :has_sponsor)';
+        $this->query($sql, [
+            'item_id' => $item_id,
+            'file_id' => $file_id,
+            'start' => $start,
+            'end' => $end,
+            'has_sponsor' => $has_sponsor ? 1 : 0
+        ]);
+        return intval($this->pdo->lastInsertId());
+    }
+
+    public function getSegmentsForItem(int $item_id): array
+    {
+        $sql = 'SELECT * FROM segments WHERE item_id = :item_id ORDER BY start';
+        $result = $this->query($sql, ['item_id' => $item_id]);
+        return $result && is_array($result) ? $result : [];
+    }
+
+    public function getSegment(int $segment_id): array
+    {
+        $sql = 'SELECT * FROM segments WHERE id = :id';
+        $result = $this->query($sql, ['id' => $segment_id]);
+        return $result && isset($result[0]) ? $result[0] : [];
+    }
+
+    public function deleteSegment(int $segment_id): void
+    {
+        $sql = 'DELETE FROM segments WHERE id = :id';
+        $this->query($sql, ['id' => $segment_id]);
+    }
+
+    public function addClip(int $segment_id, int $file_id, bool $has_sponsor = false, ?int $spectrogram_file = null): int
+    {
+        $sql = 'INSERT INTO clips (segment_id, file_id, has_sponsor, spectrogram_file) VALUES (:segment_id, :file_id, :has_sponsor, :spectrogram_file)';
+        $this->query($sql, [
+            'segment_id' => $segment_id,
+            'file_id' => $file_id,
+            'has_sponsor' => $has_sponsor ? 1 : 0,
+            'spectrogram_file' => $spectrogram_file
+        ]);
+        return intval($this->pdo->lastInsertId());
+    }
+
+    public function getClipsForSegment(int $segment_id): array
+    {
+        $sql = 'SELECT * FROM clips WHERE segment_id = :segment_id';
+        $result = $this->query($sql, ['segment_id' => $segment_id]);
+        return $result && is_array($result) ? $result : [];
+    }
+
+    public function deleteClip(int $clip_id): void
+    {
+        $sql = 'DELETE FROM clips WHERE id = :id';
+        $this->query($sql, ['id' => $clip_id]);
     }
 
     protected function loadFile(string $filename): string

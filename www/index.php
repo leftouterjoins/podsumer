@@ -1022,3 +1022,82 @@ function reprocess_ads(array $args): void
     }
 }
 
+#[Route('/segments', 'GET', true)]
+function segments(array $args): void
+{
+    global $main;
+
+    if (empty($args['item_id'])) {
+        $main->setResponseCode(404);
+        return;
+    }
+
+    $item_id = intval($args['item_id']);
+    $segments = $main->getState()->getSegmentsForItem($item_id);
+    $item = $main->getState()->getFeedItem($item_id);
+
+    $vars = [
+        'segments' => $segments,
+        'item' => $item
+    ];
+
+    Template::render($main, 'segments', $vars);
+}
+
+#[Route('/clips', 'GET', true)]
+function clips(array $args): void
+{
+    global $main;
+
+    if (empty($args['segment_id'])) {
+        $main->setResponseCode(404);
+        return;
+    }
+
+    $segment_id = intval($args['segment_id']);
+    $clips = $main->getState()->getClipsForSegment($segment_id);
+    $segment = $main->getState()->getSegment($segment_id);
+
+    $vars = [
+        'clips' => $clips,
+        'segment' => $segment
+    ];
+
+    Template::render($main, 'clips', $vars);
+}
+
+#[Route('/delete_segment', 'GET', true)]
+function delete_segment(array $args): void
+{
+    global $main;
+
+    if (empty($args['segment_id'])) {
+        $main->setResponseCode(404);
+        return;
+    }
+
+    $segment_id = intval($args['segment_id']);
+    $segment = $main->getState()->getSegment($segment_id);
+    if (!empty($segment)) {
+        $main->getState()->deleteSegment($segment_id);
+        $main->redirect('/segments?item_id=' . $segment['item_id']);
+    } else {
+        $main->setResponseCode(404);
+    }
+}
+
+#[Route('/delete_clip', 'GET', true)]
+function delete_clip(array $args): void
+{
+    global $main;
+
+    if (empty($args['clip_id'])) {
+        $main->setResponseCode(404);
+        return;
+    }
+
+    $clip_id = intval($args['clip_id']);
+    $main->getState()->deleteClip($clip_id);
+    $main->redirect($_SERVER['HTTP_REFERER'] ?? '/');
+}
+

@@ -16,7 +16,8 @@ trait TStateSchemaMigrations
         'addJobsTable',
         'updateJobsTableConstraints',
         'addJobsLogColumn',
-        'removeJobsProgressColumn'
+        'removeJobsProgressColumn',
+        'addSegmentsAndClipsTables'
     ];
 
     protected function checkDBVersion()
@@ -187,6 +188,32 @@ trait TStateSchemaMigrations
         $createJobsTypeIndex = $this->query("CREATE INDEX idx_jobs_type_feed_item ON jobs(type, feed_id, item_id)");
         
         return $dropTable !== false && $createJobsTable !== false && $createJobsIndex !== false && $createJobsTypeIndex !== false;
+    }
+
+    public function addSegmentsAndClipsTables(): bool {
+        $createSegments = $this->query(
+            "CREATE TABLE IF NOT EXISTS segments (\n" .
+            "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" .
+            "    item_id INTEGER NOT NULL REFERENCES items(id) ON DELETE CASCADE,\n" .
+            "    file_id INTEGER NOT NULL REFERENCES files(id) ON DELETE CASCADE,\n" .
+            "    start REAL NOT NULL,\n" .
+            "    end REAL NOT NULL,\n" .
+            "    has_sponsor INTEGER NOT NULL DEFAULT 0\n" .
+            ")"
+        );
+
+        $createClips = $this->query(
+            "CREATE TABLE IF NOT EXISTS clips (\n" .
+            "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" .
+            "    segment_id INTEGER NOT NULL REFERENCES segments(id) ON DELETE CASCADE,\n" .
+            "    file_id INTEGER NOT NULL REFERENCES files(id) ON DELETE CASCADE,\n" .
+            "    has_sponsor INTEGER NOT NULL DEFAULT 0,\n" .
+            "    spectrogram_file INTEGER,\n" .
+            "    FOREIGN KEY (spectrogram_file) REFERENCES files(id) ON DELETE SET NULL\n" .
+            ")"
+        );
+
+        return $createSegments !== false && $createClips !== false;
     }
 }
 
